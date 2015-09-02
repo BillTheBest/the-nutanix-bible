@@ -2,6 +2,7 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
+    <title>{{ title }}</title>
     <meta name="description" content="The Nutanix Bible - A detailed narrative of the Nutanix architecture, how the software and features work and how to leverage it for maximum performance." />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta property="og:locale" content="en_US" />
@@ -22,11 +23,11 @@
 
     <link rel="stylesheet" type="text/css" href="css/nutanixbible.css">
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
-
-    <title>{{ title }}</title>
     {{ header }}
   </head>
   <body data-type="book">
+    <div class="container">
     {{ content }}
+    </div>
   </body>
 </html>
