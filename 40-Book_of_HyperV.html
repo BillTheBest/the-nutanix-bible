@@ -72,73 +72,73 @@
 
 <h3>Execute command on multiple remote hosts</h3>
 
-<p># Description: Execute a powershell on one or many remote hosts</p>
+<p class="codedescription">Description: Execute a powershell on one or many remote hosts</p>
 
-<p>$targetServers = "Host1","Host2","Etc"</p>
-
-<p>Invoke-Command -ComputerName&nbsp; $targetServers {</p>
-
-<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;COMMAND or SCRIPT BLOCK&gt;</p>
-
-<p>}</p>
+<p class="codetext">$targetServers = "Host1","Host2","Etc"
+<br/>
+Invoke-Command -ComputerName&nbsp; $targetServers {
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;COMMAND or SCRIPT BLOCK&gt;
+<br/>
+}</p>
 
 <h3>Check available VMQ Offloads</h3>
 
-<p># Description: Display the available number of VMQ offloads for a particular host</p>
+<p class="codedescription">Description: Display the available number of VMQ offloads for a particular host</p>
 
-<p>gwmi –Namespace “root\virtualization\v2” –Class Msvm_VirtualEthernetSwitch | select elementname, MaxVMQOffloads</p>
+<p class="codetext">gwmi –Namespace “root\virtualization\v2” –Class Msvm_VirtualEthernetSwitch | select elementname, MaxVMQOffloads</p>
 
 <h3>Disable VMQ for VMs matching a specific prefix</h3>
 
-<p># Description: Disable VMQ for specific VMs</p>
+<p class="codedescription">Description: Disable VMQ for specific VMs</p>
 
-<p>$vmPrefix = "myVMs"</p>
-
-<p>Get-VM | Where {$_.Name -match $vmPrefix} | Get-VMNetworkAdapter | Set-VMNetworkAdapter -VmqWeight 0</p>
+<p class="codetext">$vmPrefix = "myVMs"
+<br/>
+Get-VM | Where {$_.Name -match $vmPrefix} | Get-VMNetworkAdapter | Set-VMNetworkAdapter -VmqWeight 0</p>
 
 <h3>Enable VMQ for VMs matching a certain prefix</h3>
 
-<p># Description: Enable VMQ for specific VMs</p>
+<p class="codedescription">Description: Enable VMQ for specific VMs</p>
 
-<p>$vmPrefix = "myVMs"</p>
-
-<p>Get-VM | Where {$_.Name -match $vmPrefix} | Get-VMNetworkAdapter | Set-VMNetworkAdapter -VmqWeight 1</p>
+<p class="codetext">$vmPrefix = "myVMs"
+<br/>
+Get-VM | Where {$_.Name -match $vmPrefix} | Get-VMNetworkAdapter | Set-VMNetworkAdapter -VmqWeight 1</p>
 
 <h3>Power-On VMs matching a certain prefix</h3>
 
-<p># Description: Power-On VMs matchin a certain prefix</p>
+<p class="codedescription">Description: Power-On VMs matchin a certain prefix</p>
 
-<p>$vmPrefix = "myVMs"</p>
-
-<p>Get-VM | Where {$_.Name -match $vmPrefix -and $_.StatusString -eq "Stopped"} | Start-VM</p>
+<p class="codetext">$vmPrefix = "myVMs"
+<br/>
+Get-VM | Where {$_.Name -match $vmPrefix -and $_.StatusString -eq "Stopped"} | Start-VM</p>
 
 <h3>Shutdown VMs matching a certain prefix</h3>
 
-<p># Description: Shutdown VMs matchin a certain prefix</p>
+<p class="codedescription">Description: Shutdown VMs matchin a certain prefix</p>
 
-<p>$vmPrefix = "myVMs"</p>
-
-<p>Get-VM | Where {$_.Name -match $vmPrefix -and $_.StatusString -eq "Running"}} | Shutdown-VM -RunAsynchronously</p>
+<p class="codetext">$vmPrefix = "myVMs"
+<br/>
+Get-VM | Where {$_.Name -match $vmPrefix -and $_.StatusString -eq "Running"}} | Shutdown-VM -RunAsynchronously</p>
 
 <h3>Stop VMs matching a certain prefix</h3>
 
-<p># Description: Stop VMs matchin a certain prefix</p>
+<p class="codedescription">Description: Stop VMs matchin a certain prefix</p>
 
-<p>$vmPrefix = "myVMs"</p>
-
-<p>Get-VM | Where {$_.Name -match $vmPrefix} | Stop-VM</p>
+<p class="codetext">$vmPrefix = "myVMs"
+<br/>
+Get-VM | Where {$_.Name -match $vmPrefix} | Stop-VM</p>
 
 <h3>Get Hyper-V host RSS settings</h3>
 
-<p># Description: Get Hyper-V host RSS (recieve side scaling) settings</p>
+<p class="codedescription">Description: Get Hyper-V host RSS (recieve side scaling) settings</p>
 
-<p>Get-NetAdapterRss</p>
+<p class="codetext">Get-NetAdapterRss</p>
 
 <h3>Check Winsh and WinRM connectivity</h3>
 
-<p># Description: Check Winsh and WinRM connectivity / status by performing a sample query which should return the computer system object not an error</p>
+<p class="codedescription">Description: Check Winsh and WinRM connectivity / status by performing a sample query which should return the computer system object not an error</p>
 
-<p>allssh “'source /etc/profile &gt; /dev/null 2&gt;&amp;1; winsh "get-wmiobject win32_computersystem"'; done</p>
+<p class="codetext">allssh “'source /etc/profile &gt; /dev/null 2&gt;&amp;1; winsh "get-wmiobject win32_computersystem"'; done</p>
 </section>
 
 <section data-type="sect1">

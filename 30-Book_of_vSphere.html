@@ -94,85 +94,85 @@
 
 <h3>ESXi cluster upgrade</h3>
 
-<p># Description: Perform an automated upgrade of ESXi hosts using the CLI</p>
+ <p class="codedescription">Description: Perform an automated upgrade of ESXi hosts using the CLI
+<br/>
+# Upload upgrade offline bundle to a Nutanix NFS container
+<br/>
+# Log in to Nutanix CVM
+<br/>
+# Perform upgrade</p>
 
-<p># Upload upgrade offline bundle to a Nutanix NFS container</p>
-
-<p># Log in to Nutanix CVM</p>
-
-<p># Perform upgrade</p>
-
-<p>for i in `hostips`;do echo $i &amp;&amp; ssh root@$i “esxcli software vib install -d /vmfs/volumes/&lt;Datastore Name&gt;/&lt;Offline bundle name&gt;”;done</p>
+<p class="codetext">for i in `hostips`;do echo $i &amp;&amp; ssh root@$i “esxcli software vib install -d /vmfs/volumes/&lt;Datastore Name&gt;/&lt;Offline bundle name&gt;”;done</p>
 
 <p># Example</p>
 
-<p>for i in `hostips`;do echo $i &amp;&amp; ssh root@$i “esxcli software vib install -d /vmfs/volumes/NTNX-upgrade/update-from-esxi5.1-5.1_update01.zip”;done</p>
+<p class="codetext">for i in `hostips`;do echo $i &amp;&amp; ssh root@$i “esxcli software vib install -d /vmfs/volumes/NTNX-upgrade/update-from-esxi5.1-5.1_update01.zip”;done</p>
 
 <p>Performing a rolling reboot of ESXi hosts: For PowerCLI on automated hosts reboots</p>
 
 <h3>Restart ESXi host services</h3>
 
-<p># Description: Restart each ESXi hosts services in a incremental manner</p>
+ <p class="codedescription">Description: Restart each ESXi hosts services in a incremental manner</p>
 
-<p>for i in `hostips`;do ssh root@$i "services.sh restart";done</p>
+<p class="codetext">for i in `hostips`;do ssh root@$i "services.sh restart";done</p>
 
 <h3>Display ESXi host nics in ‘Up’ state</h3>
 
-<p># Description: Display the ESXi host's nics which are in a 'Up' state</p>
+ <p class="codedescription">Description: Display the ESXi host's nics which are in a 'Up' state</p>
 
-<p>for i in `hostips`;do echo $i &amp;&amp; ssh root@$i esxcfg-nics -l | grep Up;done</p>
+<p class="codetext">for i in `hostips`;do echo $i &amp;&amp; ssh root@$i esxcfg-nics -l | grep Up;done</p>
 
 <h3>Display ESXi host 10GbE nics and status</h3>
 
-<p># Description: Display the ESXi host's 10GbE nics and status</p>
+ <p class="codedescription">Description: Display the ESXi host's 10GbE nics and status</p>
 
-<p>for i in `hostips`;do echo $i &amp;&amp; ssh root@$i esxcfg-nics -l | grep ixgbe;done</p>
+<p class="codetext">for i in `hostips`;do echo $i &amp;&amp; ssh root@$i esxcfg-nics -l | grep ixgbe;done</p>
 
 <h3>Display ESXi host active adapters</h3>
 
-<p># Description: Display the ESXi host's active, standby and unused adapters</p>
+ <p class="codedescription">Description: Display the ESXi host's active, standby and unused adapters</p>
 
-<p>for i in `hostips`;do echo $i &amp;&amp;&nbsp; ssh root@$i "esxcli network vswitch standard policy failover get --vswitch-name vSwitch0";done</p>
+<p class="codetext">for i in `hostips`;do echo $i &amp;&amp;&nbsp; ssh root@$i "esxcli network vswitch standard policy failover get --vswitch-name vSwitch0";done</p>
 
 <h3>Display ESXi host routing tables</h3>
 
-<p># Description: Display the ESXi host's routing tables</p>
+ <p class="codedescription">Description: Display the ESXi host's routing tables</p>
 
-<p>for i in `hostips`;do ssh root@$i 'esxcfg-route -l';done</p>
+<p class="codetext">for i in `hostips`;do ssh root@$i 'esxcfg-route -l';done</p>
 
 <h3>Check if VAAI is enabled on datastore</h3>
 
-<p># Description: Check whether or not VAAI is enabled/supported for a datastore</p>
+ <p class="codedescription">Description: Check whether or not VAAI is enabled/supported for a datastore</p>
 
-<p>vmkfstools -Ph /vmfs/volumes/&lt;Datastore Name&gt;</p>
+<p class="codetext">vmkfstools -Ph /vmfs/volumes/&lt;Datastore Name&gt;</p>
 
 <h3>Set VIB acceptance level to community supported</h3>
 
-<p># Description: Set the vib acceptance level to CommunitySupported allowing for 3rd party vibs to be installed</p>
+ <p class="codedescription">Description: Set the vib acceptance level to CommunitySupported allowing for 3rd party vibs to be installed</p>
 
-<p>esxcli software acceptance set --level CommunitySupported</p>
+<p class="codetext">esxcli software acceptance set --level CommunitySupported</p>
 
 <h3>Install VIB</h3>
 
-<p># Description: Install a vib without checking the signature</p>
+ <p class="codedescription">Description: Install a vib without checking the signature</p>
 
-<p>esxcli software vib install --viburl=/&lt;VIB directory&gt;/&lt;VIB name&gt; --no-sig-check</p>
+<p class="codetext">esxcli software vib install --viburl=/&lt;VIB directory&gt;/&lt;VIB name&gt; --no-sig-check</p>
 
 <p># OR</p>
 
-<p>esxcli software vib install --depoturl=/&lt;VIB directory&gt;/&lt;VIB name&gt; --no-sig-check</p>
+<p class="codetext">esxcli software vib install --depoturl=/&lt;VIB directory&gt;/&lt;VIB name&gt; --no-sig-check</p>
 
 <h3>Check ESXi ramdisk space</h3>
 
-<p># Description: Check free space of ESXi ramdisk</p>
+ <p class="codedescription">Description: Check free space of ESXi ramdisk</p>
 
-<p>for i in `hostips`;do echo $i; ssh root@$i 'vdf -h';done</p>
+<p class="codetext">for i in `hostips`;do echo $i; ssh root@$i 'vdf -h';done</p>
 
 <h3>Clear pynfs logs</h3>
 
-<p># Description: Clears the pynfs logs on each ESXi host</p>
+ <p class="codedescription">Description: Clears the pynfs logs on each ESXi host</p>
 
-<p>for i in `hostips`;do echo $i; ssh root@$i '&gt; /pynfs/pynfs.log';done</p>
+<p class="codetext">for i in `hostips`;do echo $i; ssh root@$i '&gt; /pynfs/pynfs.log';done</p>
 </section>
 
 <section data-type="sect1">

@@ -1,17 +1,4 @@
 <div data-type="part">
-<h1>Book of Acropolis</h1>
-
-<p><strong>a · crop · o · lis</strong></p>
-
-<p>/ɘ ' kräpɘlis/</p>
-
-<p><i>noun</i></p>
-
-<p>data plane</p>
-
-<p>storage, compute and virtualization platform.</p>
-
-<section data-type="chapter">
 <h1><span class="label">Part III. </span>Book of Acropolis</h1>
 
 <p class="definition"><strong>a·crop·o·lis  -  /ɘ ' kräpɘlis/  -  noun  -  data plane</strong>
@@ -19,6 +6,7 @@
 storage, compute and virtualization platform.
 </p>
 
+<section data-type="chapter">
 <p>Acropolis is a distributed multi-resource manager,&nbsp;orchestration platform and data plane.</p>
 
 <p>It is broken down into three main components:</p>
@@ -1404,145 +1392,145 @@ This should only be used for non-production scenarios and the cluster IPs should
 </section>
 
 <section data-type="sect1">
-<h2>Command Reference</h2>
+	<h2>Command Reference</h2>
 
 <h3>Enable 10GbE links only on OVS</h3>
 
-<p># Description: Enable 10g only on bond0</p>
+ <p class="codedescription">Description: Enable 10g only on bond0</p>
 
-<p>manage_ovs --interfaces 10g update_uplinks</p>
-
-<p>allssh “source /etc/profile &gt; /dev/null 2&gt;&amp;1; manage_ovs --interfaces 10g update_uplinks”</p>
+<p class="codetext">manage_ovs --interfaces 10g update_uplinks
+<br/>
+allssh “source /etc/profile &gt; /dev/null 2&gt;&amp;1; manage_ovs --interfaces 10g update_uplinks”</p>
 
 <h3>Show OVS uplinks</h3>
 
-<p># Description: Show ovs uplinks</p>
+ <p class="codedescription">Description: Show ovs uplinks</p>
 
-<p>manage_ovs show_uplinks</p>
+<p class="codetext">manage_ovs show_uplinks</p>
 
-<p># Description: Show ovs uplinks for full cluster</p>
+ <p class="codedescription">Description: Show ovs uplinks for full cluster</p>
 
-<p>allssh “source /etc/profile &gt; /dev/null 2&gt;&amp;1; manage_ovs show_uplinks”</p>
+<p class="codetext">allssh “source /etc/profile &gt; /dev/null 2&gt;&amp;1; manage_ovs show_uplinks”</p>
 
 <h3>Show OVS interfaces</h3>
 
-<p># Description: Show ovs interfaces</p>
+ <p class="codedescription">Description: Show ovs interfaces</p>
 
-<p>manage_ovs show_interfaces</p>
+<p class="codetext">manage_ovs show_interfaces</p>
 
-<p># Show interfaces for full cluster</p>
+<p>Show interfaces for full cluster</p>
 
-<p>allssh “source /etc/profile &gt; /dev/null 2&gt;&amp;1; manage_ovs show_interfaces”</p>
+<p class="codetext">allssh “source /etc/profile &gt; /dev/null 2&gt;&amp;1; manage_ovs show_interfaces”</p>
 
 <h3>Show OVS switch information</h3>
 
-<p># Description: Show switch information</p>
+ <p class="codedescription">Description: Show switch information</p>
 
-<p>ovs-vsctl show</p>
+<p class="codetext">ovs-vsctl show</p>
 
 <h3>List OVS bridges</h3>
 
-<p># Description: List bridges</p>
+ <p class="codedescription">Description: List bridges</p>
 
-<p>ovs-vsctl list br</p>
+<p class="codetext">ovs-vsctl list br</p>
 
 <h3>Show OVS bridge information</h3>
 
-<p># Description: Show OVS port information</p>
+ <p class="codedescription">Description: Show OVS port information</p>
 
-<p>ovs-vsctl list port br0</p>
-
-<p>ovs-vsctl list port &lt;bond&gt;</p>
+<p class="codetext">ovs-vsctl list port br0
+<br/>
+ovs-vsctl list port &lt;bond&gt;</p>
 
 <h3>Show OVS interface information</h3>
 
-<p># Description: Show interface information</p>
+ <p class="codedescription">Description: Show interface information</p>
 
-<p>ovs-vsctl list interface br0</p>
+<p class="codetext">ovs-vsctl list interface br0</p>
 
 <h3>Show ports / interfaces on bridge</h3>
 
-<p># Description: Show ports on a bridge</p>
+<p class="codedescription">Description: Show ports on a bridge</p>
 
-<p>ovs-vsctl list-ports br0</p>
+<p class="codetext">ovs-vsctl list-ports br0</p>
 
-<p># Description: Show ifaces on a bridge</p>
+<p class="codedescription">Description: Show ifaces on a bridge</p>
 
-<p>ovs-vsctl list-ifaces br0</p>
+<p class="codetext">ovs-vsctl list-ifaces br0</p>
 
 <h3>Create OVS bridge</h3>
 
-<p># Description: Create bridge</p>
+<p class="codedescription">Description: Create bridge</p>
 
-<p>ovs-vsctl add-br &lt;bridge&gt;</p>
+<p class="codetext">ovs-vsctl add-br &lt;bridge&gt;</p>
 
 <h3>Add ports to bridge</h3>
 
-<p># Description: Add port to bridge</p>
+ <p class="codedescription">Description: Add port to bridge</p>
 
-<p>ovs-vsctl add-port &lt;bridge&gt; &lt;port&gt;</p>
+<p class="codetext">ovs-vsctl add-port &lt;bridge&gt; &lt;port&gt;</p>
 
-<p># Description: Add bond port to bridge</p>
+<p class="codedescription">Description: Add bond port to bridge</p>
 
-<p>ovs-vsctl add-bond &lt;bridge&gt; &lt;port&gt; &lt;iface&gt;</p>
+<p class="codetext">ovs-vsctl add-bond &lt;bridge&gt; &lt;port&gt; &lt;iface&gt;</p>
 
 <h3>Show OVS bond details</h3>
 
-<p># Description: Show bond details</p>
+<p class="codedescription">Description: Show bond details</p>
 
-<p>ovs-appctl bond/show &lt;bond&gt;</p>
+<p class="codetext">ovs-appctl bond/show &lt;bond&gt;</p>
 
 <p>Example:</p>
 
-<p>ovs-appctl bond/show bond0</p>
+<p class="codetext">ovs-appctl bond/show bond0</p>
 
 <h3>Set bond mode and configure LACP on bond</h3>
 
-<p># Description: Enable LACP on ports</p>
+<p class="codedescription">Description: Enable LACP on ports</p>
 
-<p>ovs-vsctl set port &lt;bond&gt; lacp=&lt;active/passive&gt;</p>
+<p class="codetext">ovs-vsctl set port &lt;bond&gt; lacp=&lt;active/passive&gt;</p>
 
-<p># Description: Enable on all hosts for bond0</p>
+<p class="codedescription">Description: Enable on all hosts for bond0</p>
 
-<p>for i in `hostips`;do echo $i; ssh $i source /etc/profile &gt; /dev/null 2&gt;&amp;1; ovs-vsctl set port bond0 lacp=active;done</p>
+<p class="codetext">for i in `hostips`;do echo $i; ssh $i source /etc/profile &gt; /dev/null 2&gt;&amp;1; ovs-vsctl set port bond0 lacp=active;done</p>
 
 <h3>Show LACP details on bond</h3>
 
-<p># Description: Show LACP details</p>
+<p class="codedescription">Description: Show LACP details</p>
 
-<p>ovs-appctl lacp/show &lt;bond&gt;</p>
+<p class="codetext">ovs-appctl lacp/show &lt;bond&gt;</p>
 
 <h3>Set bond mode</h3>
 
-<p># Description: Set bond mode on ports</p>
+<p class="codedescription">Description: Set bond mode on ports</p>
 
-<p>ovs-vsctl set port &lt;bond&gt; bond_mode=&lt;active-backup, balance-slb, balance-tcp&gt;</p>
+<p class="codetext">ovs-vsctl set port &lt;bond&gt; bond_mode=&lt;active-backup, balance-slb, balance-tcp&gt;</p>
 
 <h3>Show OpenFlow information</h3>
 
-<p># Description: Show OVS openflow details</p>
+<p class="codedescription">Description: Show OVS openflow details</p>
 
-<p>ovs-ofctl show br0</p>
+<p class="codetext">ovs-ofctl show br0</p>
 
-<p># Description: Show OpenFlow rules</p>
+<p class="codedescription">Description: Show OpenFlow rules</p>
 
-<p>ovs-ofctl dump-flows br0</p>
+<p class="codetext">ovs-ofctl dump-flows br0</p>
 
 <h3>Get QEMU PIDs and top information</h3>
 
-<p># Description: Get QEMU PIDs</p>
+<p class="codedescription">Description: Get QEMU PIDs</p>
 
-<p>ps aux | grep qemu | awk '{print $2}'</p>
+<p class="codetext">ps aux | grep qemu | awk '{print $2}'</p>
 
-<p># Description: Get top metrics for specific PID</p>
+<p class="codedescription">Description: Get top metrics for specific PID</p>
 
-<p>top -p &lt;PID&gt;</p>
+<p class="codetext">top -p &lt;PID&gt;</p>
 
 <h3>Get active Stargate for QEMU processes</h3>
 
-<p># Description: Get active Stargates for storage I/O for each QEMU processes</p>
+<p class="codedescription">Description: Get active Stargates for storage I/O for each QEMU processes</p>
 
-<p>netstat –np | egrep tcp.*qemu</p>
+<p class="codetext">netstat –np | egrep tcp.*qemu</p>
 </section>
 
 <section data-type="sect1">
@@ -1556,33 +1544,33 @@ This should only be used for non-production scenarios and the cluster IPs should
 
 <h3>Check iSCSI Redirector Logs</h3>
 
-<p># Description: Check iSCSI Redirector Logs for all hosts</p>
+<p class="codedescription">Description: Check iSCSI Redirector Logs for all hosts</p>
 
-<p>for i in `hostips`; do echo $i; ssh root@$i cat /var/log/iscsi_redirector;done</p>
+<p class="codetext">for i in `hostips`; do echo $i; ssh root@$i cat /var/log/iscsi_redirector;done</p>
 
-<p># Example for single host</p>
+<p>Example for single host</p>
 
-<p>Ssh root@&lt;HOST IP&gt;</p>
-
-<p>Cat /var/log/iscsi_redirector</p>
+<p class="codetext">Ssh root@&lt;HOST IP&gt;
+<br/>
+Cat /var/log/iscsi_redirector</p>
 
 <h3>Monitor CPU steal (stolen CPU)</h3>
 
-<p># Description: Monitor CPU steal time (stolen CPU)</p>
+<p class="codedescription">Description: Monitor CPU steal time (stolen CPU)</p>
 
-<p># Launch top and look for %st (bold below)</p>
+<p>Launch top and look for %st (bold below)</p>
 
-<p>Cpu(s):&nbsp; 0.0%us, 0.0%sy,&nbsp; 0.0%ni, 96.4%id,&nbsp; 0.0%wa,&nbsp; 0.0%hi,&nbsp; 0.1%si,&nbsp; <strong>0.0%st</strong></p>
+<p class="codetext">Cpu(s):&nbsp; 0.0%us, 0.0%sy,&nbsp; 0.0%ni, 96.4%id,&nbsp; 0.0%wa,&nbsp; 0.0%hi,&nbsp; 0.1%si,&nbsp; <strong>0.0%st</strong></p>
 
 <h3>Monitor VM network resource stats</h3>
 
-<p># Description: Monitor VM resource stats</p>
+<p class="codedescription">Description: Monitor VM resource stats</p>
 
-<p># Launch virt-top</p>
+<p>Launch virt-top</p>
 
-<p>Virt-top</p>
+<p class="codetext">Virt-top</p>
 
-<p># Go to networking page</p>
+<p>Go to networking page</p>
 
 <p>2 – Networking</p>
 </section>
@@ -1658,217 +1646,217 @@ This should only be used for non-production scenarios and the cluster IPs should
 
 <h3>Check cluster status</h3>
 
-<p># Description: Check cluster status from the CLI</p>
+<p class="codedescription">Description: Check cluster status from the CLI</p>
 
-<p>cluster status</p>
+<p class="codetext">cluster status</p>
 
 <h3>Check local CVM service status</h3>
 
-<p># Description: Check a single CVM's service status from the CLI</p>
+<p class="codedescription">Description: Check a single CVM's service status from the CLI</p>
 
-<p>genesis status</p>
+<p class="codetext">genesis status</p>
 
 <h3>Nutanix cluster upgrade</h3>
 
-<p># Description: Perform rolling (aka "live") cluster upgrade from the CLI</p>
+<p class="codedescription">Description: Perform rolling (aka "live") cluster upgrade from the CLI</p>
 
-<p># Upload upgrade package to ~/tmp/ on one CVM</p>
+<p>Upload upgrade package to ~/tmp/ on one CVM</p>
 
-<p># Untar package</p>
+<p>Untar package</p>
 
-<p>tar xzvf ~/tmp/nutanix*</p>
+<p class="codetext">tar xzvf ~/tmp/nutanix*</p>
 
-<p># Perform upgrade</p>
+<p>Perform upgrade</p>
 
-<p>~/tmp/install/bin/cluster -i ~/tmp/install upgrade</p>
+<p class="codetext">~/tmp/install/bin/cluster -i ~/tmp/install upgrade</p>
 
-<p># Check status</p>
+<p>Check status</p>
 
-<p>upgrade_status</p>
+<p class="codetext">upgrade_status</p>
 
 <h3>Hypervisor upgrade status</h3>
 
-<p># Description: Check hypervisor upgrade status from the CLI on any CVM</p>
+<p class="codedescription">Description: Check hypervisor upgrade status from the CLI on any CVM</p>
 
-<p>host_upgrade --status</p>
+<p class="codetext">host_upgrade --status</p>
 
-<p># Detailed logs (on every CVM)</p>
+<p>Detailed logs (on every CVM)</p>
 
-<p>~/data/logs/host_upgrade.out</p>
+<p class="codetext">~/data/logs/host_upgrade.out</p>
 
 <h3>Restart cluster service from CLI</h3>
 
-<p># Description: Restart a single cluster service from the CLI</p>
+<p class="codedescription">Description: Restart a single cluster service from the CLI</p>
 
-<p># Stop service</p>
+<p>Stop service</p>
 
-<p>cluster stop &lt;Service Name&gt;</p>
+<p class="codetext">cluster stop &lt;Service Name&gt;</p>
 
-<p># Start stopped services</p>
+<p>Start stopped services</p>
 
-<p>cluster start&nbsp; #NOTE: This will start all stopped services</p>
+<p class="codetext">cluster start&nbsp; #NOTE: This will start all stopped services</p>
 
 <h3>Start cluster service from CLI</h3>
 
-<p># Description: Start stopped cluster services from the CLI</p>
+<p class="codedescription">Description: Start stopped cluster services from the CLI</p>
 
-<p># Start stopped services</p>
+<p>Start stopped services</p>
 
-<p>cluster start&nbsp; #NOTE: This will start all stopped services</p>
+<p class="codetext">cluster start&nbsp; #NOTE: This will start all stopped services</p>
 
-<p># OR</p>
+<p>OR</p>
 
-<p># Start single service</p>
+<p>Start single service</p>
 
-<p>Start single service: cluster start&nbsp; &lt;Service Name&gt;</p>
+<p class="codetext">Start single service: cluster start&nbsp; &lt;Service Name&gt;</p>
 
 <h3>Restart local service from CLI</h3>
 
-<p># Description: Restart a single cluster service from the CLI</p>
+<p class="codedescription">Description: Restart a single cluster service from the CLI</p>
 
-<p># Stop Service</p>
+<p>Stop Service</p>
 
-<p>genesis stop &lt;Service Name&gt;</p>
+<p class="codetext">genesis stop &lt;Service Name&gt;</p>
 
-<p># Start Service</p>
+<p>Start Service</p>
 
-<p>cluster start</p>
+<p class="codetext">cluster start</p>
 
 <h3>Start local service from CLI</h3>
 
-<p># Description: Start stopped cluster services from the CLI</p>
+<p class="codedescription">Description: Start stopped cluster services from the CLI</p>
 
-<p>cluster start #NOTE: This will start all stopped services</p>
+<p class="codetext">cluster start #NOTE: This will start all stopped services</p>
 
 <h3>Cluster add node from cmdline</h3>
 
-<p># Description: Perform cluster add-node from CLI</p>
+<p class="codedescription">Description: Perform cluster add-node from CLI</p>
 
-<p>ncli cluster discover-nodes | egrep "Uuid" | awk '{print $4}' | xargs -I UUID ncli cluster add-node node-uuid=UUID</p>
+<p class="codetext">ncli cluster discover-nodes | egrep "Uuid" | awk '{print $4}' | xargs -I UUID ncli cluster add-node node-uuid=UUID</p>
 
 <h3>Find number of vDisks</h3>
 
-<p># Description: Displays the number of vDisks</p>
+<p class="codedescription">Description: Displays the number of vDisks</p>
 
-<p>vdisk_config_printer | grep vdisk_id | wc -l</p>
+<p class="codetext">vdisk_config_printer | grep vdisk_id | wc -l</p>
 
 <h3>Find cluster id</h3>
 
-<p># Description: Find the cluster ID for the current cluster</p>
+<p class="codedescription">Description: Find the cluster ID for the current cluster</p>
 
-<p>zeus_config_printer | grep cluster_id</p>
+<p class="codetext">zeus_config_printer | grep cluster_id</p>
 
 <h3>Open port</h3>
 
-<p># Description: Enable port through IPtables</p>
+<p class="codedescription">Description: Enable port through IPtables</p>
 
-<p>sudo vi /etc/sysconfig/iptables</p>
-
-<p>-A INPUT -m state --state NEW -m tcp -p tcp --dport &lt;PORT&gt; -j ACCEPT</p>
-
-<p>sudo service iptables restart</p>
+<p class="codetext">sudo vi /etc/sysconfig/iptables
+<br/>
+-A INPUT -m state --state NEW -m tcp -p tcp --dport &lt;PORT&gt; -j ACCEPT
+<br/>
+sudo service iptables restart</p>
 
 <h3>Check for Shadow Clones</h3>
 
-<p># Description: Displays the shadow clones in the following format:&nbsp; name#id@svm_id</p>
+<p class="codedescription">Description: Displays the shadow clones in the following format:&nbsp; name#id@svm_id</p>
 
-<p>vdisk_config_printer | grep '#'</p>
+<p class="codetext">vdisk_config_printer | grep '#'</p>
 
 <h3>Reset Latency Page Stats</h3>
 
-<p># Description: Reset the Latency Page (&lt;CVM IP&gt;:2009/latency) counters</p>
+<p class="codedescription">Description: Reset the Latency Page (&lt;CVM IP&gt;:2009/latency) counters</p>
 
-<p>allssh “ wget $i:2009/latency/reset”</p>
+<p class="codetext">allssh “ wget $i:2009/latency/reset”</p>
 
 <h3>Find Number of vDisks</h3>
 
-<p># Description: Find the current number of vDisks (files) on DSF</p>
+<p class="codedescription">Description: Find the current number of vDisks (files) on DSF</p>
 
-<p>vdisk_config_printer | grep vdisk_id | wc -l</p>
+<p class="codetext">vdisk_config_printer | grep vdisk_id | wc -l</p>
 
 <h3>Start Curator scan from CLI</h3>
 
-<p># Description: Starts a Curator full scan from the CLI</p>
+<p class="codedescription">Description: Starts a Curator full scan from the CLI</p>
 
-<p>allssh “ wget -O - "http://$i:2010/master/api/client/StartCuratorTasks?task_type=2"; “</p>
+<p class="codetext">allssh “ wget -O - "http://$i:2010/master/api/client/StartCuratorTasks?task_type=2"; “</p>
 
 <h3>Compact ring</h3>
 
-<p># Description: Compact the metadata ring</p>
+<p class="codedescription">Description: Compact the metadata ring</p>
 
-<p>allssh “nodetool -h localhost compact”</p>
+<p class="codetext">allssh “nodetool -h localhost compact”</p>
 
 <h3>Find NOS version</h3>
 
-<p># Description: Find the NOS&nbsp; version (NOTE: can also be done using NCLI)</p>
+<p class="codedescription">Description: Find the NOS&nbsp; version (NOTE: can also be done using NCLI)</p>
 
-<p>allssh “cat /etc/nutanix/release_version”</p>
+<p class="codetext">allssh “cat /etc/nutanix/release_version”</p>
 
 <h3>Find CVM version</h3>
 
-<p># Description: Find the CVM image version</p>
+<p class="codedescription">Description: Find the CVM image version</p>
 
-<p>allssh “cat /etc/nutanix/svm-version”</p>
+<p class="codetext">allssh “cat /etc/nutanix/svm-version”</p>
 
 <h3>Manually fingerprint vDisk(s)</h3>
 
-<p># Description: Create fingerprints for a particular vDisk (For dedupe)&nbsp; NOTE: dedupe must be enabled on the container</p>
+<p class="codedescription">Description: Create fingerprints for a particular vDisk (For dedupe)&nbsp; NOTE: dedupe must be enabled on the container</p>
 
-<p>vdisk_manipulator –vdisk_id=&lt;vDisk ID&gt; --operation=add_fingerprints</p>
+<p class="codetext">vdisk_manipulator –vdisk_id=&lt;vDisk ID&gt; --operation=add_fingerprints</p>
 
 <h3>Echo Factory_Config.json for all cluster nodes</h3>
 
-<p># Description: Echos the factory_config.jscon for all nodes in the cluster</p>
+<p class="codedescription">Description: Echos the factory_config.jscon for all nodes in the cluster</p>
 
-<p>allssh “cat /etc/nutanix/factory_config.json”</p>
+<p class="codetext">allssh “cat /etc/nutanix/factory_config.json”</p>
 
 <h3>Upgrade a single Nutanix node’s NOS version</h3>
 
-<p># Description: Upgrade a single node's NOS version to match that of the cluster</p>
+<p class="codedescription">Description: Upgrade a single node's NOS version to match that of the cluster</p>
 
-<p>~/cluster/bin/cluster -u &lt;NEW_NODE_IP&gt; upgrade_node</p>
+<p class="codetext">~/cluster/bin/cluster -u &lt;NEW_NODE_IP&gt; upgrade_node</p>
 
 <h3>&nbsp;List files (vDisk) on DSF</h3>
 
-<p># Description: List files and associated information for vDisks stored on DSF</p>
+<p class="codedescription">Description: List files and associated information for vDisks stored on DSF</p>
 
-<p>Nfs_ls</p>
+<p class="codetext">Nfs_ls</p>
 
-<p># Get help text</p>
+<p>Get help text</p>
 
-<p>Nfs_ls --help</p>
+<p class="codetext">Nfs_ls --help</p>
 
 <h3>Install Nutanix Cluster Check (NCC)</h3>
 
-<p># Description: Installs the Nutanix Cluster Check (NCC) health script to test for potential issues and cluster health</p>
+<p class="codedescription">Description: Installs the Nutanix Cluster Check (NCC) health script to test for potential issues and cluster health</p>
 
-<p># Download NCC from the Nutanix Support Portal (portal.nutanix.com)</p>
+<p>Download NCC from the Nutanix Support Portal (portal.nutanix.com)</p>
 
-<p># SCP .tar.gz to the /home/nutanix directory</p>
+<p>SCP .tar.gz to the /home/nutanix directory</p>
 
-<p># Untar NCC .tar.gz</p>
+<p>Untar NCC .tar.gz</p>
 
-<p>tar xzmf &lt;ncc .tar.gz file name&gt; --recursive-unlink</p>
+<p class="codetext">tar xzmf &lt;ncc .tar.gz file name&gt; --recursive-unlink</p>
 
-<p># Run install script</p>
+<p>Run install script</p>
 
-<p>./ncc/bin/install.sh -f &lt;ncc .tar.gz file name&gt;</p>
+<p class="codetext">./ncc/bin/install.sh -f &lt;ncc .tar.gz file name&gt;</p>
 
-<p># Create links</p>
+<p>Create links</p>
 
-<p>source ~/ncc/ncc_completion.bash</p>
-
-<p>echo "source ~/ncc/ncc_completion.bash" &gt;&gt; ~/.bashrc</p>
+<p class="codetext">source ~/ncc/ncc_completion.bash
+<br/>
+echo "source ~/ncc/ncc_completion.bash" &gt;&gt; ~/.bashrc</p>
 
 <h3>Run Nutanix Cluster Check (NCC)</h3>
 
-<p># Description: Runs the Nutanix Cluster Check (NCC) health script to test for potential issues and cluster health.&nbsp; This is a great first step when troubleshooting any cluster issues.</p>
+<p class="codedescription">Description: Runs the Nutanix Cluster Check (NCC) health script to test for potential issues and cluster health.&nbsp; This is a great first step when troubleshooting any cluster issues.</p>
 
-<p># Make sure NCC is installed (steps above)</p>
+<p>Make sure NCC is installed (steps above)</p>
 
-<p># Run NCC health checks</p>
+<p>Run NCC health checks</p>
 
-<p>ncc health_checks run_all</p>
+<p class="codetext">ncc health_checks run_all</p>
 </section>
 
 <section data-type="sect1">
@@ -1888,29 +1876,29 @@ This should only be used for non-production scenarios and the cluster IPs should
 
 <h3>Find Acropolis logs</h3>
 
-<p># Description: Find Acropolis logs for the cluster</p>
+<p class="codedescription">Description: Find Acropolis logs for the cluster</p>
 
-<p>allssh “cat ~/data/logs/Acropolis.log”</p>
+<p class="codetext">allssh “cat ~/data/logs/Acropolis.log”</p>
 
 <h3>Find cluster error logs</h3>
 
-<p># Description: Find ERROR logs for the cluster</p>
+<p class="codedescription">Description: Find ERROR logs for the cluster</p>
 
-<p>allssh "cat ~/data/logs/&lt;COMPONENT NAME or *&gt;.ERROR"</p>
+<p class="codetext">allssh "cat ~/data/logs/&lt;COMPONENT NAME or *&gt;.ERROR"</p>
 
-<p># Example for Stargate</p>
+<p>Example for Stargate</p>
 
-<p>allssh "cat ~/data/logs/Stargate.ERROR"</p>
+<p class="codetext">allssh "cat ~/data/logs/Stargate.ERROR"</p>
 
 <h3>Find cluster fatal logs</h3>
 
-<p># Description: Find FATAL logs for the cluster</p>
+<p class="codedescription">Description: Find FATAL logs for the cluster</p>
 
-<p>allssh "cat ~/data/logs/&lt;COMPONENT NAME or *&gt;.FATAL"</p>
+<p class="codetext">allssh "cat ~/data/logs/&lt;COMPONENT NAME or *&gt;.FATAL"</p>
 
-<p># Example for Stargate</p>
+<p>Example for Stargate</p>
 
-<p>allssh "cat ~/data/logs/Stargate.FATAL"</p>
+<p class="codetext">allssh "cat ~/data/logs/Stargate.FATAL"</p>
 
 <h3>Using the 2009 Page (Stargate)</h3>
 
