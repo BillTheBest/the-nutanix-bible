@@ -1,6 +1,6 @@
 {
   "name": "spoitras/the-nutanix-bible",
-  "branch": "master",
+  "branches": "master",
   "export_formats": ["html","pdf"]
   "files": [
     "01-titlepage.html",
