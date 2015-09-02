@@ -142,33 +142,83 @@
 
 <p>The figure below characterizes the various latencies for specific types of I/O:</p>
 
-<p><em>L1 cache reference&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0.5 ns</em></p>
-
-<p><em>Branch mispredict&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 5&nbsp;&nbsp; ns</em></p>
-
-<p><em>L2 cache reference&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 7&nbsp;&nbsp; ns&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 14x L1 cache</em></p>
-
-<p><em>Mutex lock/unlock&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 25&nbsp;&nbsp; ns</em></p>
-
-<p><em>Main memory reference&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 100&nbsp;&nbsp; ns&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 20x L2 cache, 200x L1 cache</em></p>
-
-<p><em>Compress 1K bytes with Zippy&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 3,000&nbsp;&nbsp; ns</em></p>
-
-<p><em>Send 1K bytes over 1 Gbps network&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 10,000&nbsp;&nbsp; ns&nbsp;&nbsp;&nbsp; 0.01 ms</em></p>
-
-<p><em>Read 4K randomly from SSD*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 150,000&nbsp;&nbsp; ns&nbsp;&nbsp;&nbsp; 0.15 ms</em></p>
-
-<p><em>Read 1 MB sequentially from memory&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 250,000&nbsp;&nbsp; ns&nbsp;&nbsp;&nbsp; 0.25 ms</em></p>
-
-<p><em>Round trip within same datacenter&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 500,000&nbsp;&nbsp; ns&nbsp;&nbsp;&nbsp; 0.5&nbsp; ms</em></p>
-
-<p><em>Read 1 MB sequentially from SSD*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1,000,000&nbsp;&nbsp; ns&nbsp;&nbsp;&nbsp; 1&nbsp;&nbsp;&nbsp; ms &nbsp;4X memory</em></p>
-
-<p><em>Disk seek&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 10,000,000&nbsp;&nbsp; ns&nbsp;&nbsp; 10&nbsp;&nbsp;&nbsp; ms&nbsp; 20x datacenter roundtrip</em></p>
-
-<p><em>Read 1 MB sequentially from disk&nbsp;&nbsp;&nbsp;&nbsp; 20,000,000&nbsp;&nbsp; ns&nbsp;&nbsp; 20&nbsp;&nbsp;&nbsp; ms&nbsp; 80x memory, 20X SSD</em></p>
-
-<p><em>Send packet CA-&gt;Netherlands-&gt;CA&nbsp;&nbsp;&nbsp;&nbsp; 150,000,000&nbsp;&nbsp; ns&nbsp; 150&nbsp;&nbsp;&nbsp; ms</em></p>
+<table>
+  <tr>
+    <th>Item</th>
+    <th>Latnecy</th>
+    <th>Comments</th>
+  </tr>
+  <tr>
+    <td>L1 cache reference</td>
+    <td>0.5 ns</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>Branch Mispredict</td>
+    <td>5 ns</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>L2 cache reference</td>
+    <td>7 ns</td>
+    <td>14x L1 cache</td>
+  </tr>
+  <tr>
+    <td>Mutex lock/unlock</td>
+    <td>25 ns</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>Main memory reference</td>
+    <td>100 ns</td>
+    <td>20x L2 cache, 200x L1 cache</td>
+  </tr>
+  <tr>
+    <td>Compress 1KB with Zippy</td>
+    <td>3,000 ns</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>Sent 1KB over 1Gbps network</td>
+    <td>10,000 ns</td>
+    <td>0.01 ms</td>
+  </tr>
+  <tr>
+    <td>Read 4K randomly from SSD</td>
+    <td>150,000 ns</td>
+    <td>0.15 ms</td>
+  </tr>
+  <tr>
+    <td>Read 1MB sequentially from memory</td>
+    <td>250,000 ns</td>
+    <td>0.25 ms</td>
+  </tr>
+  <tr>
+    <td>Round trip within datacenter</td>
+    <td>500,000 ns</td>
+    <td>0.5 ms</td>
+  </tr>
+  <tr>
+    <td>Read 1MB sequentially from SSD</td>
+    <td>1,000,000 ns</td>
+    <td>1 ms, 4x memory</td>
+  </tr>
+  <tr>
+    <td>Disk seek</td>
+    <td>10,000,000 ns</td>
+    <td>10 ms, 20x datacenter round trip</td>
+  </tr>
+  <tr>
+    <td>Read 1MB sequentially from disk</td>
+    <td>20,000,000 ns</td>
+    <td>20 ms, 80x memory, 20x SSD</td>
+  </tr>
+  <tr>
+    <td>Send packet CA -&gt; Netherlands -&gt; CA</td>
+    <td>150,000,000 ns</td>
+    <td>150 ms</td>
+  </tr>
+</table>
 
 <p><em>(credit: Jeff Dean, https://gist.github.com/jboner/2841832)</em></p>
 
