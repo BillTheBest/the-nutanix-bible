@@ -72,7 +72,7 @@ storage, compute and virtualization platform.
 
 <p>Here we show a conceptual view of the Acropolis Master / Slave relationship:</p>
 
-<figure><img alt="" class="iimagesv2acrop_componentspng image" src="imagesv2/acrop_components.png" />
+<figure class="small"><img alt="" class="iimagesv2acrop_componentspng image" src="imagesv2/acrop_components.png" />
 <figcaption>Acropolis Services</figcaption>
 </figure>
 </section>
@@ -90,7 +90,7 @@ storage, compute and virtualization platform.
 
 <p>The following figure provides an example of what a typical node logically looks like:</p>
 
-<figure><img alt="" class="iimagesv2converged_platformpng" src="imagesv2/converged_platform.png" />
+<figure class="small"><img alt="" class="iimagesv2converged_platformpng" src="imagesv2/converged_platform.png" />
 <figcaption>Converged Platform</figcaption>
 </figure>
 </section>
@@ -120,7 +120,7 @@ storage, compute and virtualization platform.
 
 <p>The Nutanix platform is composed of the following high-level components:</p>
 
-<figure><img alt="" class="iimagesv2cluster_componentspng" src="imagesv2/cluster_components.png" />
+<figure class="small"><img alt="" class="iimagesv2cluster_componentspng" src="imagesv2/cluster_components.png" />
 <figcaption>Cluster Components</figcaption>
 </figure>
 
@@ -241,7 +241,7 @@ storage, compute and virtualization platform.
 
 <p>The following figure shows an example of how these Nutanix nodes form DSF:</p>
 
-<figure><img alt="" class="iimagesv2dsf_overviewpng" src="imagesv2/dsf_overview.png" />
+<figure class="large"><img alt="" class="iimagesv2dsf_overviewpng" src="imagesv2/dsf_overview.png" />
 <figcaption>Distributed Storage Fabric Overview</figcaption>
 </figure>
 
@@ -389,7 +389,7 @@ storage, compute and virtualization platform.
 
 <p>The following figure shows an example of the metadata “ring” and how it scales:</p>
 
-<figure><img alt="" class="iimagesv2metadata_2png" src="imagesv2/metadata_2.png" />
+<figure class="large"><img alt="" class="iimagesv2metadata_2png" src="imagesv2/metadata_2.png" />
 <figcaption>Cassandra Ring Scale Out</figcaption>
 </figure>
 
@@ -493,7 +493,7 @@ storage, compute and virtualization platform.
 
 <p>The following figure shows an example of how the Elastic Dedupe Engine scales and handles local VM I/O requests:</p>
 
-<figure><img alt="" class="iimagesv2dedup_1png" src="imagesv2/dedup_1.png" />
+<figure class="large"><img alt="" class="iimagesv2dedup_1png" src="imagesv2/dedup_1.png" />
 <figcaption>Elastic Dedupe Engine - Scale</figcaption>
 </figure>
 
@@ -623,13 +623,13 @@ storage, compute and virtualization platform.
 
 <p>The following figure shows a high level example of what this pooled tiering looks like:</p>
 
-<figure><img alt="" class="iimagesv2tiering_2png" src="imagesv2/tiering_2.png" />
+<figure class="large"><img alt="" class="iimagesv2tiering_2png" src="imagesv2/tiering_2.png" />
 <figcaption>DSF Cluster-wide Tiering</figcaption>
 </figure>
 
 <p>A common question is what happens when a local node’s SSD becomes full?&nbsp; As mentioned in the Disk Balancing section, a key concept is trying to keep uniform utilization of devices within disk tiers.&nbsp; In the case where a local node’s SSD utilization is high, disk balancing will kick in to move the coldest data on the local SSDs to the other SSDs throughout the cluster.&nbsp; This will free up space on the local SSD to allow the local node to write to SSD locally instead of going over the network.&nbsp; A key point to mention is that all CVMs and SSDs are used for this remote I/O to eliminate any potential bottlenecks and remediate some of the hit by performing I/O over the network.</p>
 
-<figure><img alt="" class="iimagesv2tiering_3png" src="imagesv2/tiering_3.png" />
+<figure class="large"><img alt="" class="iimagesv2tiering_3png" src="imagesv2/tiering_3.png" />
 <figcaption>DSF Cluster-wide Tier Balancing</figcaption>
 </figure>
 
@@ -637,7 +637,7 @@ storage, compute and virtualization platform.
 
 <p>However, if the utilization was 80%, only 15% of the data would be moved to the HDD tier using the minimum tier free up amount.</p>
 
-<figure><img alt="" class="iimagesv2tiering_4png" src="imagesv2/tiering_4.png" />
+<figure class="large"><img alt="" class="iimagesv2tiering_4png" src="imagesv2/tiering_4.png" />
 <figcaption>DSF Tier ILM</figcaption>
 </figure>
 
@@ -655,7 +655,7 @@ storage, compute and virtualization platform.
 
 <p>The following figure shows an example of a mixed cluster (3050 + 6050) in an “unbalanced” state:</p>
 
-<figure><img alt="" class="iimagesv2disk_balancing_1png" src="imagesv2/disk_balancing_1.png" />
+<figure class="large"><img alt="" class="iimagesv2disk_balancing_1png" src="imagesv2/disk_balancing_1.png" />
 <figcaption>Disk Balancing - Unbalanced State</figcaption>
 </figure>
 
@@ -663,7 +663,7 @@ storage, compute and virtualization platform.
 
 <p>The following figure shows an example the mixed cluster after disk balancing has been run in a “balanced” state:</p>
 
-<figure><img alt="" class="iimagesv2disk_balancing_2png" src="imagesv2/disk_balancing_2.png" />
+<figure class="large"><img alt="" class="iimagesv2disk_balancing_2png" src="imagesv2/disk_balancing_2.png" />
 <figcaption>Disk Balancing - Balanced State</figcaption>
 </figure>
 
@@ -671,7 +671,7 @@ storage, compute and virtualization platform.
 
 <p>The following figure shows an example of how a storage only node would look in a mixed cluster with disk balancing moving data to it from the active VM nodes:</p>
 
-<figure><img alt="" class="iimagesv2disk_balancing_3png" src="imagesv2/disk_balancing_3.png" />
+<figure class="large"><img alt="" class="iimagesv2disk_balancing_3png" src="imagesv2/disk_balancing_3.png" />
 <figcaption>Disk Balancing - Storage Only Node</figcaption>
 </figure>
 </section>
@@ -790,13 +790,13 @@ storage, compute and virtualization platform.
 
 <p>The following figure shows an example of how this works when a snapshot is taken (NOTE: I need to give some credit to NTAP as a base for these diagrams, as I thought their representation was the clearest):</p>
 
-<figure><img alt="" class="iimagesv2snap_1png" src="imagesv2/snap_1.png" />
+<figure class="large"><img alt="" class="iimagesv2snap_1png" src="imagesv2/snap_1.png" />
 <figcaption>Example Snapshot Block Map</figcaption>
 </figure>
 
 <p>The same method applies when a snapshot or clone of a previously snapped or cloned vDisk is performed:</p>
 
-<figure><img alt="" class="iimagesv2snap_2png" src="imagesv2/snap_2.png" />
+<figure class="large"><img alt="" class="iimagesv2snap_2png" src="imagesv2/snap_2.png" />
 <figcaption>Multi-snap Block Map &amp; New Write</figcaption>
 </figure>
 
@@ -996,7 +996,7 @@ This should only be used for non-production scenarios and the cluster IPs should
 
 <p>The following figure shows a logical representation of an AWS based “remote site” used for Cloud Connect:</p>
 
-<figure><img alt="" class="iimagesv2cloudconn_1png" src="imagesv2/cloudconn_1.png" />
+<figure class="small"><img alt="" class="iimagesv2cloudconn_1png" src="imagesv2/cloudconn_1.png" />
 <figcaption>Cloud Connect Region</figcaption>
 </figure>
 
@@ -1116,25 +1116,25 @@ This should only be used for non-production scenarios and the cluster IPs should
 
 <p>The following figure shows an example with a VM running on Nutanix, with its OS hosted on the normal Nutanix storage, mounting the volumes directly:</p>
 
-<figure><img alt="" class="iimagesv2volapi_1png" src="imagesv2/volapi_1.png" />
+<figure class="small"><img alt="" class="iimagesv2volapi_1png" src="imagesv2/volapi_1.png" />
 <figcaption>Volume API - Example</figcaption>
 </figure>
 
 <p>In Windows deployments, iSCSI multi-pathing can be configured leveraging the Windows MPIO feature.&nbsp; It is recommended to leverage the ‘Failover only’ policy (default) to ensure vDisk ownership doesn’t change.</p>
 
-<figure><img alt="" class="iimagesv2volapi_2png" src="imagesv2/volapi_2.png" />
+<figure class="small"><img alt="" class="iimagesv2volapi_2png" src="imagesv2/volapi_2.png" />
 <figcaption>MPIO Example - Normal State</figcaption>
 </figure>
 
 <p>In the event there are multiple disk devices, each disk will have an active path to the local CVM:</p>
 
-<figure><img alt="" class="iimagesv2volapi_3png" src="imagesv2/volapi_3.png" />
+<figure class="small"><img alt="" class="iimagesv2volapi_3png" src="imagesv2/volapi_3.png" />
 <figcaption>MPIO Example - Multi-disk</figcaption>
 </figure>
 
 <p>In the event where the active CVM goes down, another path would become active and I/Os would resume:</p>
 
-<figure><img alt="" class="iimagesv2volapi_4png" src="imagesv2/volapi_4.png" />
+<figure class="small"><img alt="" class="iimagesv2volapi_4png" src="imagesv2/volapi_4.png" />
 <figcaption>MPIO Example - Path Failure</figcaption>
 </figure>
 
@@ -1142,13 +1142,13 @@ This should only be used for non-production scenarios and the cluster IPs should
 
 <p>If RAID or LVM is desired, the attached disk devices can be put into a dynamic or logical disk:</p>
 
-<figure><img alt="" class="iimagesv2volapi_5png" src="imagesv2/volapi_5.png" />
+<figure class="small"><img alt="" class="iimagesv2volapi_5png" src="imagesv2/volapi_5.png" />
 <figcaption>RAID / LVM Example - Single-path</figcaption>
 </figure>
 
 <p>In the event where the local CVM is under heavy utilization, it is possible to have active paths to other CVMs.&nbsp; This will balance the I/O load across multiple CVMs, however will take a hit by having to traverse the network for the primary I/O:</p>
 
-<figure><img alt="" class="iimagesv2volapi_6png" src="imagesv2/volapi_6.png" />
+<figure class="small"><img alt="" class="iimagesv2volapi_6png" src="imagesv2/volapi_6.png" />
 <figcaption>RAID / LVM Example - Multi-path</figcaption>
 </figure>
 </section>
@@ -1164,7 +1164,7 @@ This should only be used for non-production scenarios and the cluster IPs should
 
 <p>The following figure shows an example of how the VM’s I/O path interacts with the private and public 10GbE network:</p>
 
-<figure><img alt="" class="iimagesv2net_iopng" src="imagesv2/net_io.png" />
+<figure class="large"><img alt="" class="iimagesv2net_iopng" src="imagesv2/net_io.png" />
 <figcaption>DSF Networking</figcaption>
 </figure>
 
@@ -1182,7 +1182,7 @@ This should only be used for non-production scenarios and the cluster IPs should
 
 <p>The following figure shows an example of how data will “follow” the VM as it moves between hypervisor nodes:</p>
 
-<figure><img alt="" class="iimagesv2data_locality2png" src="imagesv2/data_locality2.png" />
+<figure class="large"><img alt="" class="iimagesv2data_locality2png" src="imagesv2/data_locality2.png" />
 <figcaption>Data Locality</figcaption>
 </figure>
 </section>
@@ -1200,7 +1200,7 @@ This should only be used for non-production scenarios and the cluster IPs should
 
 <p>The following figure shows an example of how Shadow Clones work and allow for distributed caching:</p>
 
-<figure><img alt="" class="iimagesv2shadow_clonepng" src="imagesv2/shadow_clone.png" />
+<figure class="large"><img alt="" class="iimagesv2shadow_clonepng" src="imagesv2/shadow_clone.png" />
 <figcaption>Shadow Clones</figcaption>
 </figure>
 </section>
@@ -1264,7 +1264,7 @@ This should only be used for non-production scenarios and the cluster IPs should
 
 <p>In Acropolis Hypervisor deployments, the Controller VM (CVM) runs as a VM and disks are presented using PCI passthrough.&nbsp; This allows the full PCI controller (and attached devices) to be passed through directly to the CVM and bypass the hypervisor.&nbsp; Acropolis Hypervisor is based upon CentOS KVM.</p>
 
-<figure><img alt="" class="iimagesv2acrop_nodepng" src="imagesv2/acrop_node.png" />
+<figure class="small"><img alt="" class="iimagesv2acrop_nodepng" src="imagesv2/acrop_node.png" />
 <figcaption>Acropolis Hypervisor Node</figcaption>
 </figure>
 
@@ -1341,19 +1341,19 @@ This should only be used for non-production scenarios and the cluster IPs should
 
 <p>QEMU is configured with the iSCSI redirector as the iSCSI target portal.&nbsp; Upon a login request, the redirector will perform and iSCSI login redirect to a healthy Stargate (preferably the local one).</p>
 
-<figure><img alt="" class="iimagesv2iscsi_mp_1png" src="imagesv2/iscsi_mp_1.png" />
+<figure class="small"><img alt="" class="iimagesv2iscsi_mp_1png" src="imagesv2/iscsi_mp_1.png" />
 <figcaption>iSCSI Multi-pathing - Normal State</figcaption>
 </figure>
 
 <p>In the event where the active Stargate goes down (thus failing to respond to the NOP OUT command), the iSCSI redirector will mark the local Stargate as unhealthy.&nbsp; When QEMU retries the iSCSI login, the redirector will redirect the login to another healthy Stargate.</p>
 
-<figure><img alt="" class="iimagesv2iscsi_mp_2png" src="imagesv2/iscsi_mp_2.png" />
+<figure class="small"><img alt="" class="iimagesv2iscsi_mp_2png" src="imagesv2/iscsi_mp_2.png" />
 <figcaption>iSCSI Multi-pathing - Local CVM Down</figcaption>
 </figure>
 
 <p>Once the local Stargate comes back up (and begins responding to the NOP OUT commands), the iSCSI redirector will perform a TCP kill to kill all connections to remote Stargates.&nbsp; QEMU will then attempt an iSCSI login again and will be redirected to the local Stargate.</p>
 
-<figure><img alt="" class="iimagesv2iscsi_mp_3png" src="imagesv2/iscsi_mp_3.png" />
+<figure class="small"><img alt="" class="iimagesv2iscsi_mp_3png" src="imagesv2/iscsi_mp_3.png" />
 <figcaption>iSCSI Multi-pathing - Local CVM Back Up</figcaption>
 </figure>
 </section>
@@ -1365,7 +1365,7 @@ This should only be used for non-production scenarios and the cluster IPs should
 
 <p>Here we show an example DHCP request using the Nutanix IPAM solution where the Acropolis Master is running locally:</p>
 
-<figure><img alt="" class="iimagesv2acrop_ipam_1png" src="imagesv2/acrop_ipam_1.png" />
+<figure class="small"><img alt="" class="iimagesv2acrop_ipam_1png" src="imagesv2/acrop_ipam_1.png" />
 <figcaption>IPAM - Local Acropolis Master</figcaption>
 </figure>
 
@@ -2154,7 +2154,7 @@ echo "source ~/ncc/ncc_completion.bash" &gt;&gt; ~/.bashrc</p>
 
 <p>The figure shows the job details table:</p>
 
-<figure><img alt="" class="iimagesv22010pagesjob_details2png" src="imagesv2/2010Pages/job_details2.png" />
+<figure class="small"><img alt="" class="iimagesv22010pagesjob_details2png" src="imagesv2/2010Pages/job_details2.png" />
 <figcaption>2010 Page - Curator Job - Details</figcaption>
 </figure>
 
@@ -2176,7 +2176,7 @@ echo "source ~/ncc/ncc_completion.bash" &gt;&gt; ~/.bashrc</p>
 
 <p>The figure shows a sample of some of the job counters:</p>
 
-<figure><img alt="" class="iimagesv22010pagesjob_counters2png" src="imagesv2/2010Pages/job_counters2.png" />
+<figure class="small"><img alt="" class="iimagesv22010pagesjob_counters2png" src="imagesv2/2010Pages/job_counters2.png" />
 <figcaption>2010 Page - MapReduce Job - Counters</figcaption>
 </figure>
 
