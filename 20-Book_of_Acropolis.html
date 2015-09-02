@@ -46,7 +46,7 @@
 <figcaption>High-level Acropolis Architecture</figcaption>
 </figure>
 
-<div data-type="note">
+<div data-type="note" class="note">
 <h1>Supported Hypervisors for VM Management</h1>
 
 <p>Currently, the only fully supported hypervisor for VM management is Acropolis Hypervisor, however this may expand in the future. &nbsp;The Volumes API and read-only operations are still supported on all.</p>
@@ -514,7 +514,7 @@
 
 <p>You can view the current deduplication rates via Prism on the Storage &gt; Dashboard page.</p>
 
-<div data-type="note">
+<div data-type="note" class="note">
 <h1>Pro tip</h1>
 
 <p>Use performance tier deduplication on your base images (you can manually fingerprint them using vdisk_manipulator) to take advantage of the content cache.</p>
@@ -560,7 +560,7 @@
 
 <p>You can view the current compression rates via Prism on the Storage &gt; Dashboard page.</p>
 
-<div data-type="note">
+<div data-type="note" class="note">
 <h1>Pro tip</h1>
 
 <p>Almost always use inline compression (compression delay = 0) as it will only compress larger / sequential writes and not impact random write performance.</p>
@@ -584,7 +584,7 @@
 
 <p>The encoding is done post-process and leverages the Curator MapReduce framework for task distribution.&nbsp; Since this is a post-process framework, the traditional write I/O path is unaffected.</p>
 
-<div data-type="note">
+<div data-type="note" class="note">
 <h1>Pro tip</h1>
 
 <p>You can override the default strip size (4/1 for “RF2 like” or 4/2 for “RF3 like”) via NCLI ‘ctr [create / edit] … erasure-code=&lt;N&gt;/&lt;K&gt;’ where N is the number of data blocks and K is the number of parity blocks.</p>
@@ -864,7 +864,7 @@
 	<li>cases,</li>
 </ul>
 
-<div data-type="note">
+<div data-type="note" class="note">
 <h1>Pro tip</h1>
 
 <p>Ensure the target site has ample capacity (compute/storage) to handle a full site failure.&nbsp; In certain cases replication/DR between racks within a single site can also make sense.</p>
@@ -878,7 +878,7 @@
 	<li>(e.g.,</li>
 </ul>
 
-<div data-type="note">
+<div data-type="note" class="note">
 <h1>Pro tip</h1>
 
 <p>Create multiple PDs for various services tiers driven by a desired RPO/RTO.&nbsp; For file distribution (e.g. golden images, ISOs, etc.) you can create a PD with the files to replication.</p>
@@ -892,7 +892,7 @@
 	<li>Group-dependent(e.g.,</li>
 </ul>
 
-<div data-type="note">
+<div data-type="note" class="note">
 <h1>Pro tip</h1>
 
 <p>Group dependent application or service VMs in a consistency group to ensure they are recovered in a consistent state (e.g. App and DB)</p>
@@ -905,7 +905,7 @@
 	<li>Description: Snapshot and replication schedule for VMs in a particular PD and CG</li>
 </ul>
 
-<div data-type="note">
+<div data-type="note" class="note">
 <h1>Pro tip</h1>
 
 <p>The snapshot schedule should be equal to your desired RPO</p>
@@ -919,7 +919,7 @@
 	<li>VM/file.</li>
 </ul>
 
-<div data-type="note">
+<div data-type="note" class="note">
 <h1>Pro tip</h1>
 
 <p>The retention policy should equal the number of restore points required per VM/file</p>
@@ -949,7 +949,7 @@
 
 <p>It is also possible to configure a remote site with a proxy which will be used as a bridgehead for all coordination and replication traffic coming from a cluster.</p>
 
-<div data-type="note">
+<div data-type="note" class="note">
 <h1>Pro Tip</h1>
 
 <p>When using a remote site configured with a proxy, always utilize the cluster IP as that will always be hosted by the Prism Leader and available, even if CVM(s) go down.</p>
@@ -963,7 +963,7 @@
 
 <p>In certain scenarios, it is also possible to configure a remote site using a SSH tunnel where all traffic will flow between two CVMs.</p>
 
-<div data-type="note">
+<div data-type="note" class="note">
 <h1>Note</h1>
 This should only be used for non-production scenarios and the cluster IPs should be used to ensure availability.</div>
 
@@ -983,7 +983,7 @@ This should only be used for non-production scenarios and the cluster IPs should
 <figcaption>Replication Deduplication</figcaption>
 </figure>
 
-<div data-type="note">
+<div data-type="note" class="note">
 <h1>Note</h1>
 
 <p>Fingerprinting must be enabled on the source and target container / vstore for replication deduplication to occur.</p>
@@ -1911,7 +1911,7 @@ This should only be used for non-production scenarios and the cluster IPs should
 
 <p>In most cases Prism should be able to give you all of the information and data points you require. &nbsp;However,&nbsp;in certain scenarios, or if you want some more detailed data you can leverage the Stargate aka 2009 page. &nbsp;The 2009 page can be viewed by navigating to &lt;CVM IP&gt;:2009.</p>
 
-<div data-type="note">
+<div data-type="note" class="note">
 <h1>Accessing back-end pages</h1>
 
 <p>If you're on a different network segment (L2 subnet)&nbsp;you'll need to add a rule in IP tables to access any of the back-end pages.</p>
@@ -1939,7 +1939,7 @@ This should only be used for non-production scenarios and the cluster IPs should
 <figcaption>2009 Page - Stargate Overview - Content Cache</figcaption>
 </figure>
 
-<div data-type="note">
+<div data-type="note" class="note">
 <h1>Pro tip</h1>
 
 <p>In ideal cases the hit rates should be above 80-90%+ if the workload is read heavy for the best possible read performance.</p>
@@ -1963,7 +1963,7 @@ This should only be used for non-production scenarios and the cluster IPs should
 <figcaption>2009 Page - NFS Slave - vDisk Stats</figcaption>
 </figure>
 
-<div data-type="note">
+<div data-type="note" class="note">
 <h1>Pro tip</h1>
 
 <p>When looking at any potential performance issues I always look at the following:</p>
@@ -2043,7 +2043,7 @@ This should only be used for non-production scenarios and the cluster IPs should
 <figcaption>2009 Page - vDisk Stats - Read Source</figcaption>
 </figure>
 
-<div data-type="note">
+<div data-type="note" class="note">
 <h1>Pro tip</h1>
 
 <p>If you're seeing high read latency take a look at the read source for the vDisk and take a look where the I/Os are being served from. &nbsp;In most cases high latency could be caused by reads coming from HDD (Estore HDD).</p>
@@ -2057,7 +2057,7 @@ This should only be used for non-production scenarios and the cluster IPs should
 <figcaption>2009 Page - vDisk Stats - Write Destination</figcaption>
 </figure>
 
-<div data-type="note">
+<div data-type="note" class="note">
 <h1>Pro tip</h1>
 
 <p>Random or smaller I/Os (&lt;64K) will be written to the Oplog. &nbsp;Larger or sequential I/Os will bypass the Oplog and be directly written to the Extent Store (Estore).</p>
