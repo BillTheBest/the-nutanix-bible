@@ -1,0 +1,50 @@
+{
+  "branch": "master",
+  "files": [
+    "01-titlepage.html",
+    "02-copyright.html",
+    "03-toc.html",
+    "04-preface.html",
+    "10-Lesson_in_History.html",
+    "15-Book_of_Prism.html",
+    "20-Book_of_Acropolis.html",
+    "30-Book_of_vSphere.html",
+    "40-Book_of_HyperV.html",
+    "100-Outro.html"
+  ],
+  "formats": {
+    "pdf": {
+      "version": "web",
+      "toc": true,
+      "index": true,
+      "syntaxhighlighting": true,
+      "show_comments": false,
+      "colors": false,
+      "trim_size": false
+    },
+    "epub": {
+      "toc": true,
+      "index": true,
+      "syntaxhighlighting": true,
+      "epubcheck": true,
+      "show_comments": false
+    },
+    "mobi": {
+      "toc": true,
+      "index": true,
+      "syntaxhighlighting": true,
+      "show_comments": false
+    },
+    "html": {
+      "toc": true,
+      "index": true,
+      "syntaxhighlighting": true,
+      "show_comments": false,
+      "consolidated": true
+    }
+  },
+  "theme": "oreillymedia/atlas_tech1c_theme",
+  "title": "The Nutanix Bible",
+  "print_isbn13": "",
+  "lang": "en"
+}

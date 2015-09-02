@@ -1,0 +1,437 @@
+<div data-type="part">
+<h1>A Brief Lesson in History</h1>
+
+<p>A brief look at the history of infrastructure and what has led us to where we are today.</p>
+
+<section data-type="chapter">
+<h1>The Evolution of the Datacenter</h1>
+
+<p>The datacenter has evolved significantly over the last several decades. The following sections will examine each era in detail.&nbsp;&nbsp;</p>
+
+<section data-type="sect1">
+<h2>The Era of the Mainframe</h2>
+
+<p>The mainframe ruled for many years and laid the core foundation of where we are today. It allowed companies to leverage the following key characteristics:</p>
+
+<ul>
+	<li>Natively converged CPU, main memory, and storage</li>
+	<li>Engineered internal redundancy</li>
+</ul>
+
+<p>But the mainframe also introduced the following issues:</p>
+
+<ul>
+	<li>The high costs of procuring infrastructure</li>
+	<li>Inherent complexity</li>
+	<li>&nbsp;A lack of flexibility and highly siloed environments</li>
+</ul>
+</section>
+
+<section data-type="sect1">
+<h2>The Move to Stand-Alone Servers</h2>
+
+<p>With mainframes, it was very difficult for organizations within a business to leverage these capabilities which partly led to the entrance of pizza boxes or stand-alone servers. Key characteristics of stand-alone servers included:</p>
+
+<ul>
+	<li>CPU, main memory, and DAS storage</li>
+	<li>Higher flexibility than the mainframe</li>
+	<li>Accessed over the network</li>
+</ul>
+
+<p>These stand-alone servers introduced more issues:</p>
+
+<ul>
+	<li>Increased number of silos</li>
+	<li>Low or unequal resource utilization</li>
+	<li>The server became a single point of failure (SPOF) for both compute AND storage</li>
+</ul>
+</section>
+
+<section data-type="sect1">
+<h2>Centralized Storage</h2>
+
+<p>Businesses always need to make money and data is a key piece of that puzzle. With direct-attached storage (DAS), organizations either needed more space than was locally available, or data high availability (HA) where a server failure wouldn’t cause data unavailability.</p>
+
+<p>Centralized storage replaced both the mainframe and the stand-alone server with sharable, larger pools of storage that also provided data protection. Key characteristics of centralized storage included:</p>
+
+<ul>
+	<li>Pooled storage resources led to better storage utilization</li>
+	<li>Centralized data protection via RAID eliminated the chance that server loss caused data loss</li>
+	<li>Storage were performed over the network</li>
+</ul>
+
+<p>Issues with centralized storage included:</p>
+
+<ul>
+	<li>They were potentially more expensive, however data is more valuable than the hardware</li>
+	<li>Increased complexity (SAN Fabric, WWPNs, RAID groups, volumes, spindle counts, etc.)</li>
+	<li>They required another management tool / team</li>
+</ul>
+</section>
+
+<section data-type="sect1">
+<h2>The Introduction of Virtualization</h2>
+
+<p>At this point in time, compute utilization was low and resource efficiency was impacting the bottom line. Virtualization was then introduced and enabled multiple workloads and operating systems (OSs) to run as virtual machines (VMs) on a single piece of hardware. Virtualization enabled businesses to increase utilization of their pizza boxes, but also increased the number of silos and the impacts of an outage. Key characteristics of virtualization included:</p>
+
+<ul>
+	<li>Abstracting the OS from hardware (VM)</li>
+	<li>Very efficient compute utilization led to workload consolidation</li>
+</ul>
+
+<p>Issues with virtualization included:</p>
+
+<ul>
+	<li>An increase in the number of silos and management complexity</li>
+	<li>A lack of VM high-availability, so if a compute node failed the impact was much larger</li>
+	<li>A lack of pooled resources</li>
+	<li>The need for another management tool / team</li>
+</ul>
+</section>
+
+<section data-type="sect1">
+<h2>Virtualization Matures</h2>
+
+<p>The hypervisor became a very efficient and feature-filled solution. With the advent of tools, including VMware vMotion, HA, and DRS, users obtained the ability to provide VM high availability and migrate compute workloads dynamically. The only caveat was the reliance on centralized storage, causing the two paths to merge. The only down turn was the increased load on the storage array before and VM sprawl led to contention for storage I/O. Key characteristics included:</p>
+
+<ul>
+	<li>Clustering led to pooled compute resources</li>
+	<li>The ability to dynamically migrate workloads between compute nodes (DRS / vMotion)</li>
+	<li>The introduction of VM high availability (HA) in the case of a compute node failure</li>
+	<li>A requirement for centralized storage</li>
+</ul>
+
+<p>Issues included:</p>
+
+<ul>
+	<li>Higher demand on storage due to VM sprawl</li>
+	<li>Requirements to scale out more arrays creating more silos and more complexity</li>
+	<li>Higher $ / GB due to requirement of an array</li>
+	<li>The possibility of resource contention on array</li>
+	<li>It made storage configuration much more complex due to the necessity to ensure:
+	<ul>
+		<li>VM to datastore / LUN ratios</li>
+		<li>Spindle count to facilitate I/O requirements</li>
+	</ul>
+	</li>
+</ul>
+</section>
+
+<section data-type="sect1">
+<h2>Solid State Disks (SSDs)</h2>
+
+<p>SSDs helped alleviate this I/O bottleneck by providing much higher I/O performance without the need for tons of disk enclosures.&nbsp; However, given the extreme advances in performance, the controllers and network had not yet evolved to handle the vast I/O available. Key characteristics of SSDs included:</p>
+
+<ul>
+	<li>Much higher I/O characteristics than traditional HDD</li>
+	<li>Essentially eliminated seek times</li>
+</ul>
+
+<p>SSD issues included:</p>
+
+<ul>
+	<li>The bottleneck shifted from storage I/O on disk to the controller / network</li>
+	<li>Silos still remained</li>
+	<li>Array configuration complexity still remained</li>
+</ul>
+</section>
+</section>
+
+<section data-type="chapter">
+<h2>The Importance of Latency</h2>
+
+<p>The figure below characterizes the various latencies for specific types of I/O:</p>
+
+<p><em>L1 cache reference&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0.5 ns</em></p>
+
+<p><em>Branch mispredict&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 5&nbsp;&nbsp; ns</em></p>
+
+<p><em>L2 cache reference&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 7&nbsp;&nbsp; ns&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 14x L1 cache</em></p>
+
+<p><em>Mutex lock/unlock&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 25&nbsp;&nbsp; ns</em></p>
+
+<p><em>Main memory reference&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 100&nbsp;&nbsp; ns&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 20x L2 cache, 200x L1 cache</em></p>
+
+<p><em>Compress 1K bytes with Zippy&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 3,000&nbsp;&nbsp; ns</em></p>
+
+<p><em>Send 1K bytes over 1 Gbps network&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 10,000&nbsp;&nbsp; ns&nbsp;&nbsp;&nbsp; 0.01 ms</em></p>
+
+<p><em>Read 4K randomly from SSD*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 150,000&nbsp;&nbsp; ns&nbsp;&nbsp;&nbsp; 0.15 ms</em></p>
+
+<p><em>Read 1 MB sequentially from memory&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 250,000&nbsp;&nbsp; ns&nbsp;&nbsp;&nbsp; 0.25 ms</em></p>
+
+<p><em>Round trip within same datacenter&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 500,000&nbsp;&nbsp; ns&nbsp;&nbsp;&nbsp; 0.5&nbsp; ms</em></p>
+
+<p><em>Read 1 MB sequentially from SSD*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1,000,000&nbsp;&nbsp; ns&nbsp;&nbsp;&nbsp; 1&nbsp;&nbsp;&nbsp; ms &nbsp;4X memory</em></p>
+
+<p><em>Disk seek&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 10,000,000&nbsp;&nbsp; ns&nbsp;&nbsp; 10&nbsp;&nbsp;&nbsp; ms&nbsp; 20x datacenter roundtrip</em></p>
+
+<p><em>Read 1 MB sequentially from disk&nbsp;&nbsp;&nbsp;&nbsp; 20,000,000&nbsp;&nbsp; ns&nbsp;&nbsp; 20&nbsp;&nbsp;&nbsp; ms&nbsp; 80x memory, 20X SSD</em></p>
+
+<p><em>Send packet CA-&gt;Netherlands-&gt;CA&nbsp;&nbsp;&nbsp;&nbsp; 150,000,000&nbsp;&nbsp; ns&nbsp; 150&nbsp;&nbsp;&nbsp; ms</em></p>
+
+<p><em>(credit: Jeff Dean, https://gist.github.com/jboner/2841832)</em></p>
+
+<p>The table above shows that the CPU can access its caches at anywhere from ~0.5-7ns (L1 vs. L2). For main memory, these accesses occur at ~100ns, whereas a local 4K SSD read is ~150,000ns or 0.15ms.</p>
+
+<p>If we take a typical enterprise-class SSD (in this case the Intel S3700 - <a href="http://download.intel.com/newsroom/kits/ssd/pdfs/Intel_SSD_DC_S3700_Product_Specification.pdf">SPEC</a>), this device is capable of the following:</p>
+
+<ul>
+	<li>Random I/O performance:
+	<ul>
+		<li>Random 4K Reads: Up to 75,000 IOPS</li>
+		<li>Random 4K Writes: Up to 36,000 IOPS</li>
+	</ul>
+	</li>
+	<li>Sequential bandwidth:
+	<ul>
+		<li>Sustained Sequential Read: Up to 500MB/s</li>
+		<li>Sustained Sequential Write: Up to 460MB/s</li>
+	</ul>
+	</li>
+	<li>Latency:
+	<ul>
+		<li>Read: 50us</li>
+		<li>Write: 65us</li>
+	</ul>
+	</li>
+</ul>
+
+<section data-type="sect1">
+<h2>Looking at the Bandwidth</h2>
+
+<p>For traditional storage, there are a few main types of media for I/O:</p>
+
+<ul>
+	<li>Fiber Channel (FC)
+	<ul>
+		<li>4-, 8-, and 10-Gb</li>
+	</ul>
+	</li>
+	<li>Ethernet (including FCoE)
+	<ul>
+		<li>1-, 10-Gb, (40-Gb IB), etc.</li>
+	</ul>
+	</li>
+</ul>
+
+<p>For the calculation below, we are using the 500MB/s Read and 460MB/s Write BW available from the Intel S3700.</p>
+
+<p>The calculation is done as follows:</p>
+
+<p>numSSD = ROUNDUP((numConnections * connBW (in GB/s))/ ssdBW (R or W))</p>
+
+<p><i>NOTE:&nbsp;</i><em>Numbers were rounded up as a partial SSD isn’t possible. This also does not account for the necessary CPU required to handle all of the I/O and assumes unlimited controller CPU power.</em></p>
+
+<table align="center" border="1" cellpadding="1" cellspacing="1" style="width: 500px;">
+	<tbody>
+		<tr>
+			<td colspan="2" rowspan="1">Network BW</td>
+			<td colspan="2" rowspan="1">SSDs required to saturate network BW</td>
+		</tr>
+		<tr>
+			<td style="text-align: center;">
+			<p>Controller Connectivity</p>
+			</td>
+			<td style="text-align: center;">Available Network BW</td>
+			<td style="text-align: center;">Read I/O</td>
+			<td style="text-align: center;">Write I/O</td>
+		</tr>
+		<tr>
+			<td style="text-align: center;">Dual 4Gb FC</td>
+			<td style="text-align: center;">8Gb == 1GB</td>
+			<td style="text-align: center;">2</td>
+			<td style="text-align: center;">3</td>
+		</tr>
+		<tr>
+			<td style="text-align: center;">Dual 8Gb FC</td>
+			<td style="text-align: center;">16Gb == 2GB</td>
+			<td style="text-align: center;">4</td>
+			<td style="text-align: center;">5</td>
+		</tr>
+		<tr>
+			<td style="text-align: center;">Dual 16Gb FC</td>
+			<td style="text-align: center;">32Gb == 4GB</td>
+			<td style="text-align: center;">8</td>
+			<td style="text-align: center;">9</td>
+		</tr>
+		<tr>
+			<td style="text-align: center;">Dual 1Gb ETH</td>
+			<td style="text-align: center;">2Gb == 0.25GB</td>
+			<td style="text-align: center;">1</td>
+			<td style="text-align: center;">1</td>
+		</tr>
+		<tr>
+			<td style="text-align: center;">Dual 10Gb ETH</td>
+			<td style="text-align: center;">20Gb == 2.5GB</td>
+			<td style="text-align: center;">5</td>
+			<td style="text-align: center;">6</td>
+		</tr>
+	</tbody>
+</table>
+
+<p>As the table shows, if you wanted to leverage the theoretical maximum performance an SSD could offer, the network can become a bottleneck with anywhere from 1 to 9 SSDs depending on the type of networking leveraged</p>
+</section>
+
+<section data-type="sect1">
+<h2>The Impact to Memory Latency</h2>
+
+<p>Typical main memory latency is ~100ns (will vary), we can perform the following calculations:</p>
+
+<ul>
+	<li>Local memory read latency = 100ns + [OS / hypervisor overhead]</li>
+	<li>Network memory read latency = 100ns + NW RTT latency + [2 x OS / hypervisor overhead]</li>
+</ul>
+
+<p>If we assume a typical network RTT is ~0.5ms (will vary by switch vendor) which is ~500,000ns that would come down to:</p>
+
+<ul>
+	<li>Network memory read latency = 100ns + 500,000ns + [2 x OS / hypervisor overhead]</li>
+</ul>
+
+<p>If we theoretically assume a very fast network with a 10,000ns RTT:</p>
+
+<ul>
+	<li>Network memory read latency = 100ns + 10,000ns + [2 x OS / hypervisor overhead]</li>
+</ul>
+
+<p>What that means is even with a theoretically fast network, there is a 10,000% overhead when compared to a non-network memory access. With a slow network this can be upwards of a 500,000% latency overhead.</p>
+
+<p>In order to alleviate this overhead, server side caching technologies are introduced.</p>
+</section>
+</section>
+
+<section data-type="chapter">
+<h1>Book of Web-Scale</h1>
+
+<p>This section will present some of the core concepts behind “Web-scale” infrastructure and why we leverage them. Before I get started, I just wanted to clearly state the Web-scale doesn’t mean you need to be “web-scale” (e.g. Google, Facebook, or Microsoft).&nbsp; These constructs are applicable and beneficial at any scale (3-nodes or thousands of nodes).</p>
+
+<p>Historical challenges included:</p>
+
+<ul>
+	<li>Complexity, complexity, complexity</li>
+	<li>Desire for incremental based growth</li>
+	<li>The need to be agile</li>
+</ul>
+
+<p>There are a few key constructs used when talking about “Web-scale” infrastructure:</p>
+
+<ul>
+	<li>Hyper-convergence</li>
+	<li>Software defined intelligence</li>
+	<li>Distributed autonomous systems</li>
+	<li>Incremental and linear scale out</li>
+</ul>
+
+<p>Other related items:</p>
+
+<ul>
+	<li>API-based automation and rich analytics</li>
+	<li>Self-healing</li>
+</ul>
+
+<p>The following sections will provide a technical perspective on what they actually mean.</p>
+
+<section data-type="sect1">
+<h2>Hyper-Convergence</h2>
+
+<p>There are differing opinions on what hyper-convergence actually is.&nbsp; It also varies based on the scope of components (e.g. virtualization, networking, etc.). However, the core concept comes down to the following: natively combining two or more components into a single unit. ‘Natively’ is the key word here. In order to be the most effective, the components must be natively integrated and not just bundled together. In the case of Nutanix, we natively converge compute + storage to form a single node used in our appliance.&nbsp; For others, this might be converging storage with the network, etc. What it really means:</p>
+
+<ul>
+	<li>Natively integrating two or more components into a single unit which can be easily scaled</li>
+</ul>
+
+<p>Benefits include:</p>
+
+<ul>
+	<li>Single unit to scale</li>
+	<li>Localized I/O</li>
+	<li>Eliminates traditional compute / storage silos by converging them</li>
+</ul>
+</section>
+
+<section data-type="sect1">
+<h2>Software-Defined Intelligence</h2>
+
+<p>Software-defined intelligence is taking the core logic from normally proprietary or specialized hardware (e.g. ASIC / FPGA) and doing it in software on commodity hardware. For Nutanix, we take the traditional storage logic (e.g. RAID, deduplication, compression, etc.) and put that into software that runs in each of the Nutanix CVMs on standard x86 hardware. What it really means:</p>
+
+<ul>
+	<li>Pulling key logic from hardware and doing it in software on commodity hardware</li>
+</ul>
+
+<p>Benefits include:</p>
+
+<ul>
+	<li>Rapid release cycles</li>
+	<li>Elimination of proprietary hardware reliance</li>
+	<li>Utilization of commodity hardware for better economics</li>
+</ul>
+</section>
+
+<section data-type="sect1">
+<h2>Distributed Autonomous Systems</h2>
+
+<p>Distributed autonomous systems involve moving away from the traditional concept of having a single unit responsible for doing something and distributing that role among all nodes within the cluster.&nbsp; You can think of this as creating a purely distributed system. Traditionally, vendors have assumed that hardware will be reliable, which, in most cases can be true.&nbsp; However, core to distributed systems is the idea that hardware will eventually fail and handling that fault in an elegant and non-disruptive way is key.</p>
+
+<p>These distributed systems are designed to accommodate and remediate failure, to form something that is self-healing and autonomous.&nbsp; In the event of a component failure, the system will transparently handle and remediate the failure, continuing to operate as expected. Alerting will make the user aware, but rather than being a critical time-sensitive item, any remediation (e.g. replace a failed node) can be done on the admin’s schedule.&nbsp; Another way to put it is fail in-place (rebuild without replace) For items where a “master” is needed an election process is utilized, in the event this master fails a new master is elected.&nbsp; To distribute the processing of tasks MapReduce concepts are leveraged. What it really means:</p>
+
+<ul>
+	<li>Distributing roles and responsibilities to all nodes within the system</li>
+	<li>Utilizing concepts like MapReduce to perform distributed processing of tasks</li>
+	<li>Using an election process in the case where a “master” is needed</li>
+</ul>
+
+<p>Benefits include:</p>
+
+<ul>
+	<li>Eliminates any single points of failure (SPOF)</li>
+	<li>Distributes workload to eliminate any bottlenecks</li>
+</ul>
+</section>
+
+<section data-type="sect1">
+<h2>Incremental and linear scale out</h2>
+
+<p>Incremental and linear scale out relates to the ability to start with a certain set of resources and as needed scale them out while linearly increasing the performance of the system.&nbsp; All of the constructs mentioned above are critical enablers in making this a reality. For example, traditionally you’d have 3-layers of components for running virtual workloads: servers, storage, and network – all of which are scaled independently.&nbsp; As an example, when you scale out the number of servers you’re not scaling out your storage performance. With a hyper-converged platform like Nutanix, when you scale out with new node(s) you’re scaling out:</p>
+
+<ul>
+	<li>The number of hypervisor / compute nodes</li>
+	<li>The number of storage controllers</li>
+	<li>The compute and storage performance / capacity</li>
+	<li>The number of nodes participating in cluster wide operations</li>
+</ul>
+
+<p>What it really means:</p>
+
+<ul>
+	<li>The ability to incrementally scale storage / compute with linear increases to performance / ability</li>
+</ul>
+
+<p>Benefits include:</p>
+
+<ul>
+	<li>The ability to start small and scale</li>
+	<li>Uniform and consistent performance at any scale</li>
+</ul>
+</section>
+</section>
+
+<section data-type="sect1">
+<h2>Making Sense of It All</h2>
+
+<p>In summary:</p>
+
+<ol>
+	<li>Inefficient compute utilization led to the move to virtualization</li>
+	<li>Features including vMotion, HA, and DRS led to the requirement of centralized storage</li>
+	<li>VM sprawl led to the increase load and contention on storage</li>
+	<li>SSDs came in to alleviate the issues but changed the bottleneck to the network / controllers</li>
+	<li>Cache / memory accesses over the network face large overheads, minimizing their benefits</li>
+	<li>Array configuration complexity still remains the same</li>
+	<li>Server side caches were introduced to alleviate the load on the array / impact of the network, however introduces another component to the solution</li>
+	<li>Locality helps alleviate the bottlenecks / overheads traditionally faced when going over the network</li>
+	<li>Shifts the focus from infrastructure to ease of management and simplifying the stack</li>
+	<li>The birth of the Web-Scale world!</li>
+</ol>
+</section>
+</div>

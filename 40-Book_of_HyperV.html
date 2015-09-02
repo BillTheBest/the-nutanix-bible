@@ -1,0 +1,156 @@
+<div data-type="part">
+<h1>Book of Hyper-V</h1>
+
+<section data-type="chapter">
+<h1>Architecture</h1>
+
+<section data-type="sect1">
+<h2>Node Architecture</h2>
+
+<p>In Hyper-V deployments, the Controller VM (CVM) runs as a VM and disks are presented using disk passthrough.</p>
+
+<figure><img alt="" class="iimagesv2hyperv_nodepng" src="imagesv2/hyperv_node.png" />
+<figcaption>Hyper-V Node Architecture</figcaption>
+</figure>
+</section>
+
+<section data-type="sect1">
+<h2>Configuration Maximums and Scalability</h2>
+
+<p>The following configuration maximums and scalability limits are applicable:</p>
+
+<ul>
+	<li>Maximum cluster size: <strong>64</strong></li>
+	<li>Maximum vCPUs per VM: <strong>64</strong></li>
+	<li>Maximum memory per VM: <strong>1TB</strong></li>
+	<li>Maximum VMs per host: <strong>1,024</strong></li>
+	<li>Maximum VMs per cluster: <strong>8,000</strong></li>
+</ul>
+
+<p>NOTE: As of Hyper-V 2012 R2</p>
+</section>
+</section>
+
+<section data-type="chapter">
+<h1>How It Works</h1>
+
+<section data-type="sect1">
+<h2>Array Offloads – ODX</h2>
+
+<p>The Nutanix platform supports the Microsoft Offloaded Data Transfers (ODX), which allow the hypervisor to offload certain tasks to the array.&nbsp; This is much more efficient as the hypervisor doesn’t need to be the 'man in the middle'. Nutanix currently supports the ODX primitives for SMB, which include full copy and zeroing operations.&nbsp; However, contrary to VAAI which has a 'fast file' clone operation (using writable snapshots), the ODX primitives do not have an equivalent and perform a full copy.&nbsp; Given this, it is more efficient to rely on the native DSF clones which can currently be invoked via nCLI, REST, or Powershell CMDlets. Currently ODX IS invoked for the following operations:</p>
+
+<ul>
+	<li>In VM or VM to VM file copy on DSF SMB share</li>
+	<li>SMB share file copy</li>
+</ul>
+
+<p>Deploy the template from the SCVMM Library (DSF SMB share) – NOTE: Shares must be added to the SCVMM cluster using short names (e.g., not FQDN).&nbsp; An easy way to force this is to add an entry into the hosts file for the cluster (e.g. 10.10.10.10&nbsp;&nbsp;&nbsp;&nbsp; nutanix-130).</p>
+
+<p>ODX is NOT invoked for the following operations:</p>
+
+<ul>
+	<li>Clone VM through SCVMM</li>
+	<li>Deploy template from SCVMM Library (non-DSF SMB Share)</li>
+	<li>XenDesktop Clone Deployment</li>
+</ul>
+
+<p>You can validate ODX operations are taking place by using the ‘NFS Adapter’ Activity Traces page (yes, I said NFS, even though this is being performed via SMB).&nbsp; The operations activity show will be ‘NfsSlaveVaaiCopyDataOp‘ when copying a vDisk and ‘NfsSlaveVaaiWriteZerosOp‘ when zeroing out a disk.</p>
+</section>
+</section>
+
+<section data-type="chapter">
+<h1>Administration</h1>
+
+<section data-type="sect1">
+<h2>Important Pages</h2>
+
+<p>More coming soon!</p>
+</section>
+
+<section data-type="sect1">
+<h2>Command Reference</h2>
+
+<h3>Execute command on multiple remote hosts</h3>
+
+<p># Description: Execute a powershell on one or many remote hosts</p>
+
+<p>$targetServers = "Host1","Host2","Etc"</p>
+
+<p>Invoke-Command -ComputerName&nbsp; $targetServers {</p>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;COMMAND or SCRIPT BLOCK&gt;</p>
+
+<p>}</p>
+
+<h3>Check available VMQ Offloads</h3>
+
+<p># Description: Display the available number of VMQ offloads for a particular host</p>
+
+<p>gwmi –Namespace “root\virtualization\v2” –Class Msvm_VirtualEthernetSwitch | select elementname, MaxVMQOffloads</p>
+
+<h3>Disable VMQ for VMs matching a specific prefix</h3>
+
+<p># Description: Disable VMQ for specific VMs</p>
+
+<p>$vmPrefix = "myVMs"</p>
+
+<p>Get-VM | Where {$_.Name -match $vmPrefix} | Get-VMNetworkAdapter | Set-VMNetworkAdapter -VmqWeight 0</p>
+
+<h3>Enable VMQ for VMs matching a certain prefix</h3>
+
+<p># Description: Enable VMQ for specific VMs</p>
+
+<p>$vmPrefix = "myVMs"</p>
+
+<p>Get-VM | Where {$_.Name -match $vmPrefix} | Get-VMNetworkAdapter | Set-VMNetworkAdapter -VmqWeight 1</p>
+
+<h3>Power-On VMs matching a certain prefix</h3>
+
+<p># Description: Power-On VMs matchin a certain prefix</p>
+
+<p>$vmPrefix = "myVMs"</p>
+
+<p>Get-VM | Where {$_.Name -match $vmPrefix -and $_.StatusString -eq "Stopped"} | Start-VM</p>
+
+<h3>Shutdown VMs matching a certain prefix</h3>
+
+<p># Description: Shutdown VMs matchin a certain prefix</p>
+
+<p>$vmPrefix = "myVMs"</p>
+
+<p>Get-VM | Where {$_.Name -match $vmPrefix -and $_.StatusString -eq "Running"}} | Shutdown-VM -RunAsynchronously</p>
+
+<h3>Stop VMs matching a certain prefix</h3>
+
+<p># Description: Stop VMs matchin a certain prefix</p>
+
+<p>$vmPrefix = "myVMs"</p>
+
+<p>Get-VM | Where {$_.Name -match $vmPrefix} | Stop-VM</p>
+
+<h3>Get Hyper-V host RSS settings</h3>
+
+<p># Description: Get Hyper-V host RSS (recieve side scaling) settings</p>
+
+<p>Get-NetAdapterRss</p>
+
+<h3>Check Winsh and WinRM connectivity</h3>
+
+<p># Description: Check Winsh and WinRM connectivity / status by performing a sample query which should return the computer system object not an error</p>
+
+<p>allssh “'source /etc/profile &gt; /dev/null 2&gt;&amp;1; winsh "get-wmiobject win32_computersystem"'; done</p>
+</section>
+
+<section data-type="sect1">
+<h2>Metrics and Thresholds</h2>
+
+<p>More coming soon!</p>
+</section>
+</section>
+
+<section data-type="sect1">
+<h2>Troubleshooting &amp; Advanced Administration</h2>
+
+<p>More coming soon!</p>
+</section>
+</div>

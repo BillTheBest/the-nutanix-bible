@@ -1,0 +1,190 @@
+<div data-type="part">
+<h1>Book of vSphere</h1>
+
+<section data-type="chapter">
+<h1>Architecture</h1>
+
+<section data-type="sect1">
+<h1>Node Architecture</h1>
+
+<p>In ESXi deployments, the Controller VM (CVM) runs as a VM and disks are presented using VMDirectPath I/O.&nbsp; This allows the full PCI controller (and attached devices) to be passed through directly to the CVM and bypass the hypervisor.</p>
+
+<figure><img alt="" class="iimagesv2esx_nodepng" src="imagesv2/esx_node.png" />
+<figcaption>ESXi Node Architecture</figcaption>
+</figure>
+</section>
+
+<section data-type="sect1">
+<h1>Configuration Maximums and Scalability</h1>
+
+<p>The following configuration maximums and scalability limits are applicable:</p>
+
+<ul>
+	<li>Maximum cluster size: <strong>64</strong></li>
+	<li>Maximum vCPUs per VM: <strong>128</strong></li>
+	<li>Maximum memory per VM: <strong>4TB</strong></li>
+	<li>Maximum VMs per host: <strong>1,024</strong></li>
+	<li>Maximum VMs per cluster: <strong>8,000 (2,048 per datastore if HA is enabled)</strong></li>
+</ul>
+
+<p>NOTE: As of vSphere 6.0</p>
+</section>
+</section>
+
+<section data-type="chapter">
+<h1>How It Works</h1>
+
+<section data-type="sect1">
+<h2>Array Offloads – VAAI</h2>
+
+<p>The Nutanix platform supports the VMware APIs for Array Integration (VAAI),&nbsp;which allows the hypervisor to offload certain tasks to the array.&nbsp; This is much more efficient as the hypervisor doesn’t need to be the 'man in the middle'. Nutanix currently supports the VAAI primitives for NAS, including the ‘full file clone’, ‘fast file clone’, and ‘reserve space’ primitives.&nbsp; Here’s a good article explaining the various primitives: http://cormachogan.com/2012/11/08/vaai-comparison-block-versus-nas/.&nbsp;</p>
+
+<p>For both the full and fast file clones, a DSF 'fast clone' is done, meaning a writable snapshot (using re-direct on write) for each clone that is created.&nbsp; Each of these clones has its own block map, meaning that chain depth isn’t anything to worry about. The following will determine whether or not VAAI will be used for specific scenarios:</p>
+
+<ul>
+	<li>Clone VM with Snapshot –&gt; VAAI will NOT be used</li>
+	<li>Clone VM without Snapshot which is Powered Off –&gt; VAAI WILL be used</li>
+	<li>Clone VM to a different Datastore/Container –&gt; VAAI will NOT be used</li>
+	<li>Clone VM which is Powered On&nbsp; –&gt; VAAI will NOT be used</li>
+</ul>
+
+<p>These scenarios apply to VMware View:</p>
+
+<ul>
+	<li>View Full Clone (Template with Snapshot) –&gt; VAAI will NOT be used</li>
+	<li>View Full Clone (Template w/o Snapshot) –&gt; VAAI WILL be used</li>
+	<li>View Linked Clone (VCAI) –&gt; VAAI WILL be used</li>
+</ul>
+
+<p>You can validate VAAI operations are taking place by using the ‘NFS Adapter’ Activity Traces page.</p>
+</section>
+
+<section data-type="sect1">
+<h2>CVM Autopathing aka Ha.py</h2>
+
+<p>In this section, I’ll cover how CVM 'failures' are handled (I’ll cover how we handle component failures in future update).&nbsp; A CVM 'failure' could include a user powering down the CVM, a CVM rolling upgrade, or any event which might bring down the CVM. DSF has a feature called autopathing where when a local CVM becomes unavailable, the I/Os are then transparently handled by other CVMs in the cluster. The hypervisor and CVM communicate using a private 192.168.5.0 network on a dedicated vSwitch (more on this above).&nbsp; This means that for all storage I/Os, these are happening to the internal IP addresses on the CVM (192.168.5.2).&nbsp; The external IP address of the CVM is used for remote replication and for CVM communication.</p>
+
+<p>The following figure shows an example of what this looks like:</p>
+
+<figure><img alt="" class="iimagesv2esx_hapy_1png" src="imagesv2/esx_hapy_1.png" />
+<figcaption>ESXi Host Networking</figcaption>
+</figure>
+
+<p>In the event of a local CVM failure, the local 192.168.5.2 addresses previously hosted by the local CVM are unavailable.&nbsp; DSF will automatically detect this outage and will redirect these I/Os to another CVM in the cluster over 10GbE.&nbsp; The re-routing is done transparently to the hypervisor and VMs running on the host.&nbsp; This means that even if a CVM is powered down, the VMs will still continue to be able to perform I/Os to DSF.&nbsp; DSF is also self-healing, meaning it will detect the CVM has been powered off and will automatically reboot or power-on the local CVM.&nbsp; Once the local CVM is back up and available, traffic will then seamlessly be transferred back and served by the local CVM.</p>
+
+<p>The following figure shows a graphical representation of how this looks for a failed CVM:</p>
+
+<figure><img alt="" class="iimagesv2esx_hapy_2png" src="imagesv2/esx_hapy_2.png" />
+<figcaption>ESXi Host Networking - Local CVM Down</figcaption>
+</figure>
+</section>
+</section>
+
+<section data-type="chapter">
+<h1>Administration</h1>
+
+<section data-type="sect1">
+<h2>Important Pages</h2>
+
+<p>More coming soon!</p>
+</section>
+
+<section data-type="sect1">
+<h2>Command Reference</h2>
+
+<h3>ESXi cluster upgrade</h3>
+
+<p># Description: Perform an automated upgrade of ESXi hosts using the CLI</p>
+
+<p># Upload upgrade offline bundle to a Nutanix NFS container</p>
+
+<p># Log in to Nutanix CVM</p>
+
+<p># Perform upgrade</p>
+
+<p>for i in `hostips`;do echo $i &amp;&amp; ssh root@$i “esxcli software vib install -d /vmfs/volumes/&lt;Datastore Name&gt;/&lt;Offline bundle name&gt;”;done</p>
+
+<p># Example</p>
+
+<p>for i in `hostips`;do echo $i &amp;&amp; ssh root@$i “esxcli software vib install -d /vmfs/volumes/NTNX-upgrade/update-from-esxi5.1-5.1_update01.zip”;done</p>
+
+<p>Performing a rolling reboot of ESXi hosts: For PowerCLI on automated hosts reboots</p>
+
+<h3>Restart ESXi host services</h3>
+
+<p># Description: Restart each ESXi hosts services in a incremental manner</p>
+
+<p>for i in `hostips`;do ssh root@$i "services.sh restart";done</p>
+
+<h3>Display ESXi host nics in ‘Up’ state</h3>
+
+<p># Description: Display the ESXi host's nics which are in a 'Up' state</p>
+
+<p>for i in `hostips`;do echo $i &amp;&amp; ssh root@$i esxcfg-nics -l | grep Up;done</p>
+
+<h3>Display ESXi host 10GbE nics and status</h3>
+
+<p># Description: Display the ESXi host's 10GbE nics and status</p>
+
+<p>for i in `hostips`;do echo $i &amp;&amp; ssh root@$i esxcfg-nics -l | grep ixgbe;done</p>
+
+<h3>Display ESXi host active adapters</h3>
+
+<p># Description: Display the ESXi host's active, standby and unused adapters</p>
+
+<p>for i in `hostips`;do echo $i &amp;&amp;&nbsp; ssh root@$i "esxcli network vswitch standard policy failover get --vswitch-name vSwitch0";done</p>
+
+<h3>Display ESXi host routing tables</h3>
+
+<p># Description: Display the ESXi host's routing tables</p>
+
+<p>for i in `hostips`;do ssh root@$i 'esxcfg-route -l';done</p>
+
+<h3>Check if VAAI is enabled on datastore</h3>
+
+<p># Description: Check whether or not VAAI is enabled/supported for a datastore</p>
+
+<p>vmkfstools -Ph /vmfs/volumes/&lt;Datastore Name&gt;</p>
+
+<h3>Set VIB acceptance level to community supported</h3>
+
+<p># Description: Set the vib acceptance level to CommunitySupported allowing for 3rd party vibs to be installed</p>
+
+<p>esxcli software acceptance set --level CommunitySupported</p>
+
+<h3>Install VIB</h3>
+
+<p># Description: Install a vib without checking the signature</p>
+
+<p>esxcli software vib install --viburl=/&lt;VIB directory&gt;/&lt;VIB name&gt; --no-sig-check</p>
+
+<p># OR</p>
+
+<p>esxcli software vib install --depoturl=/&lt;VIB directory&gt;/&lt;VIB name&gt; --no-sig-check</p>
+
+<h3>Check ESXi ramdisk space</h3>
+
+<p># Description: Check free space of ESXi ramdisk</p>
+
+<p>for i in `hostips`;do echo $i; ssh root@$i 'vdf -h';done</p>
+
+<h3>Clear pynfs logs</h3>
+
+<p># Description: Clears the pynfs logs on each ESXi host</p>
+
+<p>for i in `hostips`;do echo $i; ssh root@$i '&gt; /pynfs/pynfs.log';done</p>
+</section>
+
+<section data-type="sect1">
+<h2>Metrics and Thresholds</h2>
+
+<p>More coming soon!</p>
+</section>
+</section>
+
+<section data-type="sect1">
+<h2>Troubleshooting &amp; Advanced Administration</h2>
+
+<p>More coming soon!</p>
+</section>
+</div>
