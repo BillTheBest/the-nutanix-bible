@@ -42,7 +42,10 @@
       "index": true,
       "syntaxhighlighting": true,
       "show_comments": false,
-      "consolidated": true
+      "consolidated": true,
+      "stylesheets": [
+        "css/nutanixbible.css"
+      ]
     }
   },
   "theme": "oreillymedia/atlas_tech1c_theme",

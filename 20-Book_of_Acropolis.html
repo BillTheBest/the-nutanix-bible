@@ -72,7 +72,7 @@ storage, compute and virtualization platform.
 
 <p>Here we show a conceptual view of the Acropolis Master / Slave relationship:</p>
 
-<figure class="small"><img alt="" class="iimagesv2acrop_componentspng image" src="imagesv2/acrop_components.png" />
+<figure><img alt="" class="iimagesv2acrop_componentspng image" src="imagesv2/acrop_components.png" />
 <figcaption>Acropolis Services</figcaption>
 </figure>
 </section>
@@ -90,7 +90,7 @@ storage, compute and virtualization platform.
 
 <p>The following figure provides an example of what a typical node logically looks like:</p>
 
-<figure class="small"><img alt="" class="iimagesv2converged_platformpng" src="imagesv2/converged_platform.png" />
+<figure><img alt="" class="iimagesv2converged_platformpng" src="imagesv2/converged_platform.png" />
 <figcaption>Converged Platform</figcaption>
 </figure>
 </section>
@@ -120,7 +120,7 @@ storage, compute and virtualization platform.
 
 <p>The Nutanix platform is composed of the following high-level components:</p>
 
-<figure class="small"><img alt="" class="iimagesv2cluster_componentspng" src="imagesv2/cluster_components.png" />
+<figure><img alt="" class="iimagesv2cluster_componentspng" src="imagesv2/cluster_components.png" />
 <figcaption>Cluster Components</figcaption>
 </figure>
 
@@ -540,8 +540,6 @@ storage, compute and virtualization platform.
 <figure><img alt="" class="iimagesv2compression_2png" src="imagesv2/compression_2.png" />
 <figcaption>Post-process Compression I/O Path</figcaption>
 </figure>
-
-<p>&nbsp;</p>
 
 <p>For read I/O, the data is first decompressed in memory and then the I/O is served.&nbsp; For data that is heavily accessed, the data will become decompressed in the HDD tier and can then leverage ILM to move up to the SSD tier as well as be stored in the cache.</p>
 
@@ -996,7 +994,7 @@ This should only be used for non-production scenarios and the cluster IPs should
 
 <p>The following figure shows a logical representation of an AWS based “remote site” used for Cloud Connect:</p>
 
-<figure class="small"><img alt="" class="iimagesv2cloudconn_1png" src="imagesv2/cloudconn_1.png" />
+<figure><img alt="" class="iimagesv2cloudconn_1png" src="imagesv2/cloudconn_1.png" />
 <figcaption>Cloud Connect Region</figcaption>
 </figure>
 
@@ -1116,25 +1114,25 @@ This should only be used for non-production scenarios and the cluster IPs should
 
 <p>The following figure shows an example with a VM running on Nutanix, with its OS hosted on the normal Nutanix storage, mounting the volumes directly:</p>
 
-<figure class="small"><img alt="" class="iimagesv2volapi_1png" src="imagesv2/volapi_1.png" />
+<figure><img alt="" class="iimagesv2volapi_1png" src="imagesv2/volapi_1.png" />
 <figcaption>Volume API - Example</figcaption>
 </figure>
 
 <p>In Windows deployments, iSCSI multi-pathing can be configured leveraging the Windows MPIO feature.&nbsp; It is recommended to leverage the ‘Failover only’ policy (default) to ensure vDisk ownership doesn’t change.</p>
 
-<figure class="small"><img alt="" class="iimagesv2volapi_2png" src="imagesv2/volapi_2.png" />
+<figure><img alt="" class="iimagesv2volapi_2png" src="imagesv2/volapi_2.png" />
 <figcaption>MPIO Example - Normal State</figcaption>
 </figure>
 
 <p>In the event there are multiple disk devices, each disk will have an active path to the local CVM:</p>
 
-<figure class="small"><img alt="" class="iimagesv2volapi_3png" src="imagesv2/volapi_3.png" />
+<figure><img alt="" class="iimagesv2volapi_3png" src="imagesv2/volapi_3.png" />
 <figcaption>MPIO Example - Multi-disk</figcaption>
 </figure>
 
 <p>In the event where the active CVM goes down, another path would become active and I/Os would resume:</p>
 
-<figure class="small"><img alt="" class="iimagesv2volapi_4png" src="imagesv2/volapi_4.png" />
+<figure><img alt="" class="iimagesv2volapi_4png" src="imagesv2/volapi_4.png" />
 <figcaption>MPIO Example - Path Failure</figcaption>
 </figure>
 
@@ -1142,13 +1140,13 @@ This should only be used for non-production scenarios and the cluster IPs should
 
 <p>If RAID or LVM is desired, the attached disk devices can be put into a dynamic or logical disk:</p>
 
-<figure class="small"><img alt="" class="iimagesv2volapi_5png" src="imagesv2/volapi_5.png" />
+<figure><img alt="" class="iimagesv2volapi_5png" src="imagesv2/volapi_5.png" />
 <figcaption>RAID / LVM Example - Single-path</figcaption>
 </figure>
 
 <p>In the event where the local CVM is under heavy utilization, it is possible to have active paths to other CVMs.&nbsp; This will balance the I/O load across multiple CVMs, however will take a hit by having to traverse the network for the primary I/O:</p>
 
-<figure class="small"><img alt="" class="iimagesv2volapi_6png" src="imagesv2/volapi_6.png" />
+<figure><img alt="" class="iimagesv2volapi_6png" src="imagesv2/volapi_6.png" />
 <figcaption>RAID / LVM Example - Multi-path</figcaption>
 </figure>
 </section>
@@ -1264,7 +1262,7 @@ This should only be used for non-production scenarios and the cluster IPs should
 
 <p>In Acropolis Hypervisor deployments, the Controller VM (CVM) runs as a VM and disks are presented using PCI passthrough.&nbsp; This allows the full PCI controller (and attached devices) to be passed through directly to the CVM and bypass the hypervisor.&nbsp; Acropolis Hypervisor is based upon CentOS KVM.</p>
 
-<figure class="small"><img alt="" class="iimagesv2acrop_nodepng" src="imagesv2/acrop_node.png" />
+<figure><img alt="" class="iimagesv2acrop_nodepng" src="imagesv2/acrop_node.png" />
 <figcaption>Acropolis Hypervisor Node</figcaption>
 </figure>
 
@@ -1298,7 +1296,7 @@ This should only be used for non-production scenarios and the cluster IPs should
 
 <p>The following figure shows the relationship between the various components:</p>
 
-<figure class="small"><img alt="" class="iimagesv2kvm_overviewpng" src="imagesv2/kvm_overview.png" />
+<figure><img alt="" class="iimagesv2kvm_overviewpng" src="imagesv2/kvm_overview.png" />
 <figcaption>KVM Component Relationship</figcaption>
 </figure>
 
@@ -1341,19 +1339,19 @@ This should only be used for non-production scenarios and the cluster IPs should
 
 <p>QEMU is configured with the iSCSI redirector as the iSCSI target portal.&nbsp; Upon a login request, the redirector will perform and iSCSI login redirect to a healthy Stargate (preferably the local one).</p>
 
-<figure class="small"><img alt="" class="iimagesv2iscsi_mp_1png" src="imagesv2/iscsi_mp_1.png" />
+<figure><img alt="" class="iimagesv2iscsi_mp_1png" src="imagesv2/iscsi_mp_1.png" />
 <figcaption>iSCSI Multi-pathing - Normal State</figcaption>
 </figure>
 
 <p>In the event where the active Stargate goes down (thus failing to respond to the NOP OUT command), the iSCSI redirector will mark the local Stargate as unhealthy.&nbsp; When QEMU retries the iSCSI login, the redirector will redirect the login to another healthy Stargate.</p>
 
-<figure class="small"><img alt="" class="iimagesv2iscsi_mp_2png" src="imagesv2/iscsi_mp_2.png" />
+<figure><img alt="" class="iimagesv2iscsi_mp_2png" src="imagesv2/iscsi_mp_2.png" />
 <figcaption>iSCSI Multi-pathing - Local CVM Down</figcaption>
 </figure>
 
 <p>Once the local Stargate comes back up (and begins responding to the NOP OUT commands), the iSCSI redirector will perform a TCP kill to kill all connections to remote Stargates.&nbsp; QEMU will then attempt an iSCSI login again and will be redirected to the local Stargate.</p>
 
-<figure class="small"><img alt="" class="iimagesv2iscsi_mp_3png" src="imagesv2/iscsi_mp_3.png" />
+<figure><img alt="" class="iimagesv2iscsi_mp_3png" src="imagesv2/iscsi_mp_3.png" />
 <figcaption>iSCSI Multi-pathing - Local CVM Back Up</figcaption>
 </figure>
 </section>
@@ -1365,7 +1363,7 @@ This should only be used for non-production scenarios and the cluster IPs should
 
 <p>Here we show an example DHCP request using the Nutanix IPAM solution where the Acropolis Master is running locally:</p>
 
-<figure class="small"><img alt="" class="iimagesv2acrop_ipam_1png" src="imagesv2/acrop_ipam_1.png" />
+<figure><img alt="" class="iimagesv2acrop_ipam_1png" src="imagesv2/acrop_ipam_1.png" />
 <figcaption>IPAM - Local Acropolis Master</figcaption>
 </figure>
 
@@ -2024,7 +2022,7 @@ echo "source ~/ncc/ncc_completion.bash" &gt;&gt; ~/.bashrc</p>
 
 <p>The figure shows the 'Working Set Sizes' table:</p>
 
-<figure class="small"><img alt="" class="iimagesv22009pagesstargate_workingsetpng" src="imagesv2/2009Pages/stargate_workingSet.png" />
+<figure><img alt="" class="iimagesv22009pagesstargate_workingsetpng" src="imagesv2/2009Pages/stargate_workingSet.png" />
 <figcaption>2009 Page - vDisk Stats - Working Set</figcaption>
 </figure>
 
@@ -2032,7 +2030,7 @@ echo "source ~/ncc/ncc_completion.bash" &gt;&gt; ~/.bashrc</p>
 
 <p>The figure shows the 'Read Source' details:</p>
 
-<figure class="small"><img alt="" class="iimagesv22009pagesstargate_readsourcepng" src="imagesv2/2009Pages/stargate_readSource.png" />
+<figure><img alt="" class="iimagesv22009pagesstargate_readsourcepng" src="imagesv2/2009Pages/stargate_readSource.png" />
 <figcaption>2009 Page - vDisk Stats - Read Source</figcaption>
 </figure>
 
@@ -2046,7 +2044,7 @@ echo "source ~/ncc/ncc_completion.bash" &gt;&gt; ~/.bashrc</p>
 
 <p>The figure shows the 'Write Destination' table:</p>
 
-<figure class="small"><img alt="" class="iimagesv22009pagesstargate_writedestpng" src="imagesv2/2009Pages/stargate_writeDest.png" />
+<figure><img alt="" class="iimagesv22009pagesstargate_writedestpng" src="imagesv2/2009Pages/stargate_writeDest.png" />
 <figcaption>2009 Page - vDisk Stats - Write Destination</figcaption>
 </figure>
 
@@ -2154,7 +2152,7 @@ echo "source ~/ncc/ncc_completion.bash" &gt;&gt; ~/.bashrc</p>
 
 <p>The figure shows the job details table:</p>
 
-<figure class="small"><img alt="" class="iimagesv22010pagesjob_details2png" src="imagesv2/2010Pages/job_details2.png" />
+<figure><img alt="" class="iimagesv22010pagesjob_details2png" src="imagesv2/2010Pages/job_details2.png" />
 <figcaption>2010 Page - Curator Job - Details</figcaption>
 </figure>
 
@@ -2176,7 +2174,7 @@ echo "source ~/ncc/ncc_completion.bash" &gt;&gt; ~/.bashrc</p>
 
 <p>The figure shows a sample of some of the job counters:</p>
 
-<figure class="small"><img alt="" class="iimagesv22010pagesjob_counters2png" src="imagesv2/2010Pages/job_counters2.png" />
+<figure><img alt="" class="iimagesv22010pagesjob_counters2png" src="imagesv2/2010Pages/job_counters2.png" />
 <figcaption>2010 Page - MapReduce Job - Counters</figcaption>
 </figure>
 
