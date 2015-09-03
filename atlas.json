@@ -43,6 +43,7 @@
       "syntaxhighlighting": true,
       "show_comments": false,
       "consolidated": true,
+      "consolidatedFile": "index.html",
       "stylesheets": [
         "css/nutanixbible.css"
       ]
