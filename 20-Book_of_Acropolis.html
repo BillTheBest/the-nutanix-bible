@@ -571,15 +571,66 @@ storage, compute and virtualization platform.
 
 <p>For example, “RF2 like” availability (e.g., N+1) could consist of 3 or 4 data blocks and 1 parity block in a strip (e.g., 3/1 or 4/1).&nbsp; “RF3 like” availability (e.g. N+2) could consist of 3 or 4 data blocks and 2 parity blocks in a strip (e.g. 3/2 or 4/2).</p>
 
-<p>The expected overhead can be calculated as &lt;# parity blocks&gt; / &lt;# parity blocks + # data blocks&gt;.&nbsp; For example, a 4/1 strip has a 20% overhead or 1.2X compared to the 2X of RF2.</p>
-
-<p>The encoding is done post-process and leverages the Curator MapReduce framework for task distribution.&nbsp; Since this is a post-process framework, the traditional write I/O path is unaffected.</p>
-
 <div data-type="note" class="note">
 <h1>Pro tip</h1>
 
 <p>You can override the default strip size (4/1 for “RF2 like” or 4/2 for “RF3 like”) via NCLI ‘ctr [create / edit] … erasure-code=&lt;N&gt;/&lt;K&gt;’ where N is the number of data blocks and K is the number of parity blocks.</p>
 </div>
+
+<p>The expected overhead can be calculated as &lt;# parity blocks&gt; / &lt;# parity blocks + # data blocks&gt;.&nbsp; For example, a 4/1 strip has a 25% overhead or 1.25X compared to the 2X of RF2.&nbsp; A 4/2 strip has a 50% overhead or 1.5X compared to the 3X of RF3.</p>
+
+<p>The following table characterizes the encoded strip size and overheads:</p>
+
+<table>
+  <tr>
+    <th></th>
+    <th colspan="2">FT1 ("RF2")</th>
+    <th colspan="2">FT2 ("RF3")</th>
+  </tr>
+  <tr>
+    <td>Cluster Size<br>(nodes)</td>
+    <td>EC Strip Size<br>(data/parity blocks)</td>
+    <td>EC Overhead<br>(vs. 2)</td>
+    <td>EC Strip Size<br>(data/parity)</td>
+    <td>EC Overhead<br>(vs. 3)</td>
+  </tr>
+  <tr>
+    <td>4</td>
+    <td>2/1</td>
+    <td>1.5</td>
+    <td>N/A</td>
+    <td>N/A</td>
+  </tr>
+  <tr>
+    <td>5</td>
+    <td>3/1</td>
+    <td>1.33</td>
+    <td>N/A</td>
+    <td>N/A</td>
+  </tr>
+  <tr>
+    <td>6</td>
+    <td>4/1</td>
+    <td>1.25</td>
+    <td>N/A</td>
+    <td>N/A</td>
+  </tr>
+  <tr>
+    <td>7+</td>
+    <td>4/1</td>
+    <td>1.25</td>
+    <td>4/2</td>
+    <td>1.5</td>
+  </tr>
+</table>
+
+<div data-type="note" class="note">
+<h1>Pro tip</h1>
+
+<p>It is always recommended to have a cluster size which has at least 1 more node than the combined strip size (data + parity) to allow for rebuilding of the strips in the event of a node failure.  This eliminates any computation overhead on reads once the strips have been rebuilt (automated via Curator).  For example, a 4/1 strip should have at least 6 nodes in the cluster.  The previous table follows this best practice.</p>
+</div>
+
+<p>The encoding is done post-process and leverages the Curator MapReduce framework for task distribution.&nbsp; Since this is a post-process framework, the traditional write I/O path is unaffected.</p>
 
 <p>A normal environment using RF would look like the following:</p>
 
