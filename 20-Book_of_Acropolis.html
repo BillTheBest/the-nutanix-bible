@@ -1,5 +1,5 @@
 <div data-type="part">
-<h1><span class="label">Part III. </span>Book of Acropolis</h1>
+<h1>Book of Acropolis</h1>
 
 <p class="definition"><strong>a·crop·o·lis  -  /ɘ ' kräpɘlis/  -  noun  -  data plane</strong>
 <br/>
@@ -46,7 +46,7 @@ storage, compute and virtualization platform.
 </div>
 
 <section data-type="sect1">
-<h2>Acropolis Services</h2>
+<h1>Acropolis Services</h1>
 
 <p>An Acropolis Slave runs on every CVM with an elected Acropolis Master which is responsible for task scheduling, execution, IPAM, etc.&nbsp; Similar to other components which have a Master, if the Acropolis Master fails, a new one will be elected.</p>
 
@@ -78,7 +78,7 @@ storage, compute and virtualization platform.
 </section>
 
 <section data-type="sect1">
-<h2>Converged Platform</h2>
+<h1>Converged Platform</h1>
 
 <p>For a video explanation you can watch the following video: <a href="https://youtu.be/OPYA5-V0yRo">LINK</a></p>
 
@@ -96,7 +96,7 @@ storage, compute and virtualization platform.
 </section>
 
 <section data-type="sect1">
-<h2>Software-Defined</h2>
+<h1>Software-Defined</h1>
 
 <p>As mentioned above (likely numerous times), the Nutanix platform is a software-based solution which ships as a bundled software + hardware appliance.&nbsp; The controller VM is where the vast majority of the Nutanix software and logic sits and was designed from the beginning to be an extensible and pluggable architecture. A key benefit to being software-defined and not relying upon any hardware offloads or constructs is around extensibility.&nbsp; As with any product life cycle,&nbsp;advancements and new features will always be introduced.&nbsp;</p>
 
@@ -112,7 +112,7 @@ storage, compute and virtualization platform.
 </section>
 
 <section data-type="sect1">
-<h2>Cluster Components</h2>
+<h1>Cluster Components</h1>
 
 <p>For a visual explanation you can watch the following video:&nbsp;<a href="https://youtu.be/3v5RI_IbfV4">LINK</a></p>
 
@@ -124,63 +124,63 @@ storage, compute and virtualization platform.
 <figcaption>Cluster Components</figcaption>
 </figure>
 
-<h3>Cassandra</h3>
+<h2>Cassandra</h2>
 
 <ul>
 	<li>Key Role: Distributed metadata store</li>
 	<li>Description: Cassandra stores and manages all of the cluster metadata in a distributed ring-like manner based upon a heavily modified Apache Cassandra.&nbsp; The Paxos algorithm is utilized to enforce strict consistency.&nbsp; This service runs on every node in the cluster.&nbsp; The Cassandra is accessed via an interface called Medusa.</li>
 </ul>
 
-<h3>Zookeeper</h3>
+<h2>Zookeeper</h2>
 
 <ul>
 	<li>Key Role: Cluster configuration manager</li>
 	<li>Description: Zeus stores all of the cluster configuration including hosts, IPs, state, etc. and is based upon Apache Zookeeper.&nbsp; This service runs on three nodes in the cluster, one of which is elected as a leader.&nbsp; The leader receives all requests and forwards them to its peers.&nbsp; If the leader fails to respond, a new leader is automatically elected.&nbsp;&nbsp; Zookeeper is accessed via an interface called Zeus.</li>
 </ul>
 
-<h3>Stargate</h3>
+<h2>Stargate</h2>
 
 <ul>
 	<li>Key Role: Data I/O manager</li>
 	<li>Description: Stargate is responsible for all data management and I/O operations and is the main interface from the hypervisor (via NFS, iSCSI, or SMB).&nbsp; This service runs on every node in the cluster in order to serve localized I/O.</li>
 </ul>
 
-<h3>Curator</h3>
+<h2>Curator</h2>
 
 <ul>
 	<li>Key Role: Map reduce cluster management and cleanup</li>
 	<li>Description: Curator is responsible for managing and distributing tasks throughout the cluster, including disk balancing, proactive scrubbing, and many more items.&nbsp; Curator runs on every node and is controlled by an elected Curator Master who is responsible for the task and job delegation.&nbsp; There are two scan types for Curator, a full scan which occurs around every 6 hours and a partial scan which occurs every hour.</li>
 </ul>
 
-<h3>Prism</h3>
+<h2>Prism</h2>
 
 <ul>
 	<li>Key Role: UI and API</li>
 	<li>Description: Prism is the management gateway for component and administrators to configure and monitor the Nutanix cluster.&nbsp; This includes Ncli, the HTML5 UI, and REST API.&nbsp; Prism runs on every node in the cluster and uses an elected leader like all components in the cluster.</li>
 </ul>
 
-<h3>Genesis</h3>
+<h2>Genesis</h2>
 
 <ul>
 	<li>Key Role: Cluster component &amp; service manager</li>
 	<li>Description:&nbsp; Genesis is a process which runs on each node and is responsible for any services interactions (start/stop/etc.) as well as for the initial configuration.&nbsp; Genesis is a process which runs independently of the cluster and does not require the cluster to be configured/running.&nbsp; The only requirement for Genesis to be running is that Zookeeper is up and running.&nbsp; The cluster_init and cluster_status pages are displayed by the Genesis process.</li>
 </ul>
 
-<h3>Chronos</h3>
+<h2>Chronos</h2>
 
 <ul>
 	<li>Key Role: Job and task scheduler</li>
 	<li>Description: Chronos is responsible for taking the jobs and tasks resulting from a Curator scan and scheduling/throttling tasks among nodes.&nbsp; Chronos runs on every node and is controlled by an elected Chronos Master that is responsible for the task and job delegation and runs on the same node as the Curator Master.</li>
 </ul>
 
-<h3>Cerebro</h3>
+<h2>Cerebro</h2>
 
 <ul>
 	<li>Key Role: Replication/DR manager</li>
 	<li>Description: Cerebro is responsible for the replication and DR capabilities of DSF.&nbsp; This includes the scheduling of snapshots, the replication to remote sites, and the site migration/failover.&nbsp; Cerebro runs on every node in the Nutanix cluster and all nodes participate in replication to remote clusters/sites.</li>
 </ul>
 
-<h3>Pithos</h3>
+<h2>Pithos</h2>
 
 <ul>
 	<li>Key Role: vDisk configuration manager</li>
@@ -189,11 +189,11 @@ storage, compute and virtualization platform.
 </section>
 
 <section data-type="sect1">
-<h2>Drive Breakdown</h2>
+<h1>Drive Breakdown</h1>
 
 <p>In this section, I’ll cover how the various storage devices (SSD / HDD) are broken down, partitioned, and utilized by the Nutanix platform. NOTE: All of the capacities used are in Base2 Gibibyte (GiB) instead of the Base10 Gigabyte (GB).&nbsp; Formatting of the drives with a filesystem and associated overheads has also been taken into account.</p>
 
-<h3>SSD Devices</h3>
+<h2>SSD Devices</h2>
 
 <p>SSD devices store a few key items which are explained in greater detail above:</p>
 
@@ -215,7 +215,7 @@ storage, compute and virtualization platform.
 
 <p>Most models ship with 1 or 2 SSDs, however the same construct applies for models shipping with more SSD devices. For example, if we apply this to an example 3060 or 6060 node which has 2 x 400GB SSDs, this would give us 100GiB of OpLog, 40GiB of Content Cache, and ~440GiB of Extent Store SSD capacity per node.</p>
 
-<h3>HDD Devices</h3>
+<h2>HDD Devices</h2>
 
 <p>Since HDD devices are primarily used for bulk storage, their breakdown is much simpler:</p>
 
@@ -235,7 +235,7 @@ storage, compute and virtualization platform.
 </section>
 
 <section data-type="chapter">
-<h2>Distributed Storage Fabric</h2>
+<h1>Distributed Storage Fabric</h1>
 
 <p>Together, a group of Nutanix nodes forms a distributed platform called the Acropolis Distributed Storage Fabric (DSF).&nbsp; DSF appears to the hypervisor like any centralized storage array, however all of the I/Os are handled locally to provide the highest performance.&nbsp; More detail on how these nodes form a distributed system can be found in the next section.</p>
 
@@ -246,25 +246,25 @@ storage, compute and virtualization platform.
 </figure>
 
 <section data-type="sect1">
-<h2>Data Structure</h2>
+<h1>Data Structure</h1>
 
 <p>The Acropolis Distributed Storage Fabric is composed of the following high-level struct:</p>
 
-<h3>Storage Pool</h3>
+<h2>Storage Pool</h2>
 
 <ul>
 	<li>Key Role: Group of physical devices</li>
 	<li>Description: A storage pool is a group of physical storage devices including PCIe SSD, SSD, and HDD devices for the cluster.&nbsp; The storage pool can span multiple Nutanix nodes and is expanded as the cluster scales.&nbsp; In most configurations, only a single storage pool is leveraged.</li>
 </ul>
 
-<h3>Container</h3>
+<h2>Container</h2>
 
 <ul>
 	<li>Key Role: Group of VMs/files</li>
 	<li>Description: A container is a logical segmentation of the Storage Pool and contains a group of VM or files (vDisks).&nbsp; Some configuration options (e.g., RF) are configured at the container level, however are applied at the individual VM/file level.&nbsp; Containers typically have a 1 to 1 mapping with a datastore (in the case of NFS/SMB).</li>
 </ul>
 
-<h3>vDisk</h3>
+<h2>vDisk</h2>
 
 <ul>
 	<li>Key Role: vDisk</li>
@@ -277,14 +277,14 @@ storage, compute and virtualization platform.
 <figcaption>High-level Filesystem Breakdown</figcaption>
 </figure>
 
-<h3>Extent</h3>
+<h2>Extent</h2>
 
 <ul>
 	<li>Key Role: Logically contiguous data</li>
 	<li>Description: An extent is a 1MB piece of logically contiguous data which consists of n number of contiguous blocks (varies depending on guest OS block size).&nbsp; Extents are written/read/modified on a sub-extent basis (aka slice) for granularity and efficiency.&nbsp; An extent’s slice may be trimmed when moving into the cache depending on the amount of data being read/cached.</li>
 </ul>
 
-<h3>Extent Group</h3>
+<h2>Extent Group</h2>
 
 <ul>
 	<li>Key Role: Physically contiguous stored data</li>
@@ -305,7 +305,7 @@ storage, compute and virtualization platform.
 </section>
 
 <section data-type="sect1">
-<h2>I/O Path Overview</h2>
+<h1>I/O Path Overview</h1>
 
 <p>For a visual explanation, you can watch the following video: <a href="https://youtu.be/SULqVPVXefY">LINK</a></p>
 
@@ -317,21 +317,21 @@ storage, compute and virtualization platform.
 <figcaption>DSF I/O Path</figcaption>
 </figure>
 
-<h3>OpLog</h3>
+<h2>OpLog</h2>
 
 <ul>
 	<li>Key Role: Persistent write buffer</li>
 	<li>Description: The OpLog is similar to a filesystem journal and is built to handle bursts of random writes, coalesce them, and then sequentially drain the data to the extent store.&nbsp; Upon a write, the OpLog is synchronously replicated to another n number of CVM’s OpLog before the write is acknowledged for data availability purposes.&nbsp; All CVM OpLogs partake in the replication and are dynamically chosen based upon load.&nbsp; The OpLog is stored on the SSD tier on the CVM to provide extremely fast write I/O performance, especially for random I/O workloads.&nbsp; For sequential workloads, the OpLog is bypassed and the writes go directly to the extent store.&nbsp; If data is currently sitting in the OpLog and has not been drained, all read requests will be directly fulfilled from the OpLog until they have been drained, where they would then be served by the extent store/content cache.&nbsp; For containers where fingerprinting (aka Dedupe) has been enabled, all write I/Os will be fingerprinted using a hashing scheme allowing them to be deduplicated based upon fingerprint in the content cache.</li>
 </ul>
 
-<h3>Extent Store</h3>
+<h2>Extent Store</h2>
 
 <ul>
 	<li>Key Role: Persistent data storage</li>
 	<li>Description: The Extent Store is the persistent bulk storage of DSF and spans SSD and HDD and is extensible to facilitate additional devices/tiers.&nbsp; Data entering the extent store is either being A) drained from the OpLog or B) is sequential in nature and has bypassed the OpLog directly.&nbsp; Nutanix ILM will determine tier placement dynamically based upon I/O patterns and will move data between tiers.</li>
 </ul>
 
-<h3>Content Cache</h3>
+<h2>Content Cache</h2>
 
 <ul>
 	<li>Key Role: Dynamic read cache</li>
@@ -344,7 +344,7 @@ storage, compute and virtualization platform.
 <figcaption>DSF Content Cache</figcaption>
 </figure>
 
-<h3>1.1.1.4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Extent Cache</h3>
+<h2>1.1.1.4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Extent Cache</h2>
 
 <ul>
 	<li>Key Role: In-memory read cache</li>
@@ -353,7 +353,7 @@ storage, compute and virtualization platform.
 </section>
 
 <section data-type="sect1">
-<h2>Data Protection</h2>
+<h1>Data Protection</h1>
 
 <p>For a visual explanation, you can watch the following video: <a href="https://youtu.be/OWhdo81yTpk">LINK</a></p>
 
@@ -371,7 +371,7 @@ storage, compute and virtualization platform.
 </section>
 
 <section data-type="sect1">
-<h2>Scalable Metadata</h2>
+<h1>Scalable Metadata</h1>
 
 <p>For a visual explanation, you can watch the following video: <a href="https://youtu.be/MlQczJhQI3U">LINK</a></p>
 
@@ -397,7 +397,7 @@ storage, compute and virtualization platform.
 </section>
 
 <section data-type="sect1">
-<h2>Data Path Resiliency</h2>
+<h1>Data Path Resiliency</h1>
 
 <p>For a visual explanation, you can watch the following video: <a href="https://youtu.be/SJIb_mTdMPg">LINK</a></p>
 
@@ -419,7 +419,7 @@ storage, compute and virtualization platform.
 	<li>Node Failure</li>
 </ul>
 
-<h3>Disk Failure</h3>
+<h2>Disk Failure</h2>
 
 <p>A disk failure can be characterized as just that, a disk which has either been removed, had a dye failure, or is experiencing I/O errors and has been proactively removed.</p>
 
@@ -439,7 +439,7 @@ storage, compute and virtualization platform.
 
 <p>This substantially reduces the time required for re-protection, as the power of the full cluster can be utilized; the larger the cluster, the faster the re-protection.</p>
 
-<h3>CVM “Failure”</h3>
+<h2>CVM “Failure”</h2>
 
 <p>A CVM "failure” can be characterized as a CVM power action causing the CVM to be temporarily unavailable.&nbsp; The system is designed to transparently handle these gracefully.&nbsp; In the event of a failure, I/Os will be re-directed to other CVMs within the cluster.&nbsp; The mechanism for this will vary by hypervisor.&nbsp;</p>
 
@@ -461,7 +461,7 @@ storage, compute and virtualization platform.
 
 <p>Similar to Autopathing with ESXi and Hyper-V, when the local CVM comes back online, it’ll take over as the primary path.</p>
 
-<h3>Node Failure</h3>
+<h2>Node Failure</h2>
 
 <p>VM Impact:</p>
 
@@ -481,7 +481,7 @@ storage, compute and virtualization platform.
 </section>
 
 <section data-type="sect1">
-<h2>Elastic Dedupe Engine</h2>
+<h1>Elastic Dedupe Engine</h1>
 
 <p>For a visual explanation, you can watch the following video: <a href="https://youtu.be/C-rp13cDpNw">LINK</a></p>
 
@@ -517,7 +517,7 @@ storage, compute and virtualization platform.
 </section>
 
 <section data-type="sect1">
-<h2>Compression</h2>
+<h1>Compression</h1>
 
 <p>For a visual explanation, you can watch the following video: <a href="https://youtu.be/ERDqOCzDcQY">LINK</a></p>
 
@@ -559,7 +559,7 @@ storage, compute and virtualization platform.
 </section>
 
 <section data-type="sect1">
-<h2>Erasure Coding</h2>
+<h1>Erasure Coding</h1>
 
 <p>The Nutanix platform relies on a replication factor (RF) for data protection and availability.&nbsp; This method provides the highest degree of availability because it does not require reading from more than one storage location or data re-computation on failure.&nbsp; However, this does come at the cost of storage resources as full copies are required.&nbsp;</p>
 
@@ -584,8 +584,8 @@ storage, compute and virtualization platform.
 <table>
   <tr>
     <th></th>
-    <th colspan="2">FT1 ("RF2")</th>
-    <th colspan="2">FT2 ("RF3")</th>
+    <th colspan="2">FT1 (RF2 equiv.)</th>
+    <th colspan="2">FT2 (RF3 equiv.)</th>
   </tr>
   <tr>
     <td>Cluster Size<br/>(nodes)</td>
@@ -658,7 +658,7 @@ storage, compute and virtualization platform.
 </section>
 
 <section data-type="sect1">
-<h2>Storage Tiering and Prioritization</h2>
+<h1>Storage Tiering and Prioritization</h1>
 
 <p>The Disk Balancing section above talked about how storage capacity was pooled among all nodes in a Nutanix cluster and that ILM would be used to keep hot data local.&nbsp; A similar concept applies to disk tiering, in which the cluster’s SSD and HDD tiers are cluster-wide and DSF ILM is responsible for triggering data movement events. A local node’s SSD tier is always the highest priority tier for all I/O generated by VMs running on that node, however all of the cluster’s SSD resources are made available to all nodes within the cluster.&nbsp; The SSD tier will always offer the highest performance and is a very important thing to manage for hybrid arrays.</p>
 
@@ -694,7 +694,7 @@ storage, compute and virtualization platform.
 </section>
 
 <section data-type="sect1">
-<h2>Disk Balancing</h2>
+<h1>Disk Balancing</h1>
 
 <p>For a visual explanation, you can watch the following video: <a href="https://youtu.be/atbkgrmpVNo">LINK</a></p>
 
@@ -726,7 +726,7 @@ storage, compute and virtualization platform.
 </section>
 
 <section data-type="sect1">
-<h2>Availability Domains</h2>
+<h1>Availability Domains</h1>
 
 <p>For a visual explanation, you can watch the following video: <a href="https://youtu.be/LDaNY9AJDn8">LINK</a></p>
 
@@ -742,7 +742,7 @@ storage, compute and virtualization platform.
 	<li>Configuration Data (Zookeeper)</li>
 </ul>
 
-<h3>Data</h3>
+<h2>Data</h2>
 
 <p>With DSF, data replicas will be written to other blocks in the cluster to ensure that in the case of a block failure or planned downtime, the data remains available.&nbsp; This is true for both RF2 and RF3 scenarios, as well as in the case of a block failure. An easy comparison would be “node awareness”, where a replica would need to be replicated to another node which will provide protection in the case of a node failure.&nbsp; Block awareness further enhances this by providing data availability assurances in the case of block outages.</p>
 
@@ -758,7 +758,7 @@ storage, compute and virtualization platform.
 <figcaption>Block Failure Replica Placement</figcaption>
 </figure>
 
-<h3>Metadata</h3>
+<h2>Metadata</h2>
 
 <p>As mentioned in the Scalable Metadata section above, Nutanix leverages a heavily modified Cassandra platform to store metadata and other essential information.&nbsp; Cassandra leverages a ring-like structure and replicates to n number of peers within the ring to ensure data consistency and availability.</p>
 
@@ -786,7 +786,7 @@ storage, compute and virtualization platform.
 
 <p>&nbsp;</p>
 
-<h3>Configuration Data</h3>
+<h2>Configuration Data</h2>
 
 <p>Nutanix leverages Zookeeper to store essential configuration data for the cluster.&nbsp; This role is also distributed in a block-aware manner to ensure availability in the case of a block failure.</p>
 
@@ -827,7 +827,7 @@ storage, compute and virtualization platform.
 </section>
 
 <section data-type="sect1">
-<h2>Snapshots and Clones</h2>
+<h1>Snapshots and Clones</h1>
 
 <p>For a visual explanation, you can watch the following video: <a href="https://youtu.be/uK5wWR44UYE">LINK</a></p>
 
@@ -869,7 +869,7 @@ storage, compute and virtualization platform.
 </section>
 
 <section data-type="sect1">
-<h2>Replication and Multi-Site Disaster Recovery</h2>
+<h1>Replication and Multi-Site Disaster Recovery</h1>
 
 <p>For a visual explanation, you can watch the following video: <a href="https://youtu.be/AoKwKI7CXIM">LINK</a></p>
 
@@ -884,7 +884,7 @@ storage, compute and virtualization platform.
 	<li>Global Deduplication</li>
 </ul>
 
-<h3>Replication Topologies</h3>
+<h2>Replication Topologies</h2>
 
 <p>Traditionally, there are a few key replication topologies: Site to site, hub and spoke, and full and/or partial mesh.&nbsp; Contrary to traditional solutions which only allow for site to site or hub and spoke, Nutanix provides a fully mesh or flexible many-to-many model.</p>
 
@@ -894,7 +894,7 @@ storage, compute and virtualization platform.
 
 <p>Essentially, this allows the admin to determine a replication capability that meets their company's needs.</p>
 
-<h3>Implementation Constructs</h3>
+<h2>Implementation Constructs</h2>
 
 <p>Within Nutanix DR, there are a few key constructs which are explained below:</p>
 
@@ -975,7 +975,7 @@ storage, compute and virtualization platform.
 
 <p>It’s important to mention that a full container can be protected for simplicity; however the platform provides the ability to protect down to the granularity of a single VM and/or file level.</p>
 
-<h3>Replication Lifecycle</h3>
+<h2>Replication Lifecycle</h2>
 
 <p>Nutanix replication leverages the Cerebro service mentioned above.&nbsp; The Cerebro service is broken into a “Cerebro Master”, which is a dynamically elected CVM, and Cerebro Slaves, which run on every CVM.&nbsp; In the event where the CVM acting as the “Cerebro Master” fails, a new “Master” is elected.</p>
 
@@ -1015,7 +1015,7 @@ This should only be used for non-production scenarios and the cluster IPs should
 <figcaption>Replication Architecture - SSH Tunnel</figcaption>
 </figure>
 
-<h3>Global Deduplication</h3>
+<h2>Global Deduplication</h2>
 
 <p>As explained in the Elastic Deduplication Engine section above, DSF has the ability to deduplicate data by just updating metadata pointers. The same concept is applied to the DR and replication feature.&nbsp; Before sending data over the wire, DSF will query the remote site and check whether or not the fingerprint(s) already exist on the target (meaning the data already exists).&nbsp; If so, no data will be shipped over the wire and only a metadata update will occur. For data which doesn’t exist on the target, the data will be compressed and sent to the target site.&nbsp; At this point, the data exists on both sites is usable for deduplication.</p>
 
@@ -1033,7 +1033,7 @@ This should only be used for non-production scenarios and the cluster IPs should
 </section>
 
 <section data-type="sect1">
-<h2>Cloud Connect</h2>
+<h1>Cloud Connect</h1>
 
 <p>Building upon the native DR / replication capabilities of DSF, Cloud Connect extends this capability into cloud providers (currently Amazon Web Services, or AWS).&nbsp; NOTE: This feature is currently limited to just backup / replication.</p>
 
@@ -1067,7 +1067,7 @@ This should only be used for non-production scenarios and the cluster IPs should
 </section>
 
 <section data-type="sect1">
-<h2>Metro Availability</h2>
+<h1>Metro Availability</h1>
 
 <p>Nutanix provides native “stretch clustering” capabilities which allow for a compute and storage cluster to span multiple physical sites.&nbsp; In these deployments, the compute cluster spans two locations and has access to a shared pool of storage.</p>
 
@@ -1101,7 +1101,7 @@ This should only be used for non-production scenarios and the cluster IPs should
 </section>
 
 <section data-type="sect1">
-<h2>Volumes API</h2>
+<h1>Volumes API</h1>
 
 <p>The Acropolis Volumes API exposes back-end DSF storage to external consumers (guest OS, physical hosts, containers, etc.) via iSCSI (today).</p>
 
@@ -1203,7 +1203,7 @@ This should only be used for non-production scenarios and the cluster IPs should
 </section>
 
 <section data-type="sect1">
-<h2>Networking and I/O</h2>
+<h1>Networking and I/O</h1>
 
 <p>For a visual explanation, you can watch the following video: <a href="https://youtu.be/Bz37Eu_TgxY">LINK</a></p>
 
@@ -1221,7 +1221,7 @@ This should only be used for non-production scenarios and the cluster IPs should
 </section>
 
 <section data-type="sect1">
-<h2>Data Locality</h2>
+<h1>Data Locality</h1>
 
 <p>For a visual explanation, you can watch the following video: <a href="https://youtu.be/ocLD5nBbUTU">LINK</a></p>
 
@@ -1237,7 +1237,7 @@ This should only be used for non-production scenarios and the cluster IPs should
 </section>
 
 <section data-type="sect1">
-<h2>Shadow Clones</h2>
+<h1>Shadow Clones</h1>
 
 <p>For a visual explanation, you can watch the following video: <a href="https://youtu.be/oqfFDMYQFJg">LINK</a></p>
 
@@ -1255,7 +1255,7 @@ This should only be used for non-production scenarios and the cluster IPs should
 </section>
 
 <section data-type="sect1">
-<h2>Storage Layers and Monitoring</h2>
+<h1>Storage Layers and Monitoring</h1>
 
 <p>The Nutanix platform monitors storage at multiple layers throughout the stack, ranging from the VM/Guest OS all the way down to the physical disk devices.&nbsp; Knowing the various tiers and how these relate is important whenever monitoring the solution and allows you to get full visibility of how the ops relate. The following figure shows the various layers of where operations are monitored and the relative granularity which are explained below:</p>
 
@@ -1265,7 +1265,7 @@ This should only be used for non-production scenarios and the cluster IPs should
 
 <p>&nbsp;</p>
 
-<h3>Virtual Machine Layer</h3>
+<h2>Virtual Machine Layer</h2>
 
 <ul>
 	<li>Key Role: Metrics reported by the hypervisor for the VM</li>
@@ -1273,7 +1273,7 @@ This should only be used for non-production scenarios and the cluster IPs should
 	<li>When to use: When troubleshooting or looking for VM level detail</li>
 </ul>
 
-<h3>Hypervisor Layer</h3>
+<h2>Hypervisor Layer</h2>
 
 <ul>
 	<li>Key Role: Metrics reported by the Hypervisor(s)</li>
@@ -1281,7 +1281,7 @@ This should only be used for non-production scenarios and the cluster IPs should
 	<li>When to use: Most common cases as this will provide the most detailed and valuable metrics.</li>
 </ul>
 
-<h3>Controller Layer</h3>
+<h2>Controller Layer</h2>
 
 <ul>
 	<li>Key Role: Metrics reported by the Nutanix Controller(s)</li>
@@ -1289,7 +1289,7 @@ This should only be used for non-production scenarios and the cluster IPs should
 	<li>When to use: Similar to the hypervisor layer, can be used to show how much backend operation is taking place.</li>
 </ul>
 
-<h3>Disk Layer</h3>
+<h2>Disk Layer</h2>
 
 <ul>
 	<li>Key Role: Metrics reported by the Disk Device(s)</li>
@@ -1300,16 +1300,16 @@ This should only be used for non-production scenarios and the cluster IPs should
 </section>
 
 <section data-type="chapter">
-<h2>Application Mobility Fabric - coming soon!</h2>
+<h1>Application Mobility Fabric - coming soon!</h1>
 
 <p>More coming soon!</p>
 </section>
 
 <section data-type="chapter">
-<h2>Hypervisor</h2>
+<h1>Hypervisor</h1>
 
 <section data-type="sect1">
-<h2>Node Architecture</h2>
+<h1>Node Architecture</h1>
 
 <p>In Acropolis Hypervisor deployments, the Controller VM (CVM) runs as a VM and disks are presented using PCI passthrough.&nbsp; This allows the full PCI controller (and attached devices) to be passed through directly to the CVM and bypass the hypervisor.&nbsp; Acropolis Hypervisor is based upon CentOS KVM.</p>
 
@@ -1323,7 +1323,7 @@ This should only be used for non-production scenarios and the cluster IPs should
 </section>
 
 <section data-type="sect1">
-<h2>KVM Architecture</h2>
+<h1>KVM Architecture</h1>
 
 <p>Within KVM there are a few main components:</p>
 
@@ -1355,7 +1355,7 @@ This should only be used for non-production scenarios and the cluster IPs should
 </section>
 
 <section data-type="sect1">
-<h2>Configuration Maximums and Scalability</h2>
+<h1>Configuration Maximums and Scalability</h1>
 
 <p>The following configuration maximums and scalability limits are applicable:</p>
 
@@ -1369,7 +1369,7 @@ This should only be used for non-production scenarios and the cluster IPs should
 </section>
 
 <section data-type="sect1">
-<h2>Networking</h2>
+<h1>Networking</h1>
 
 <p>Acropolis Hypervisor leverages Open vSwitch (OVS) for all VM networking.&nbsp; VM networking is configured through Prism / ACLI and each VM nic is connected into a tap interface.</p>
 
@@ -1381,10 +1381,10 @@ This should only be used for non-production scenarios and the cluster IPs should
 </section>
 
 <section data-type="sect1">
-<h2>How It Works</h2>
+<h1>How It Works</h1>
 
 <section data-type="sect2">
-<h3>iSCSI Multi-pathing</h3>
+<h2>iSCSI Multi-pathing</h2>
 
 <p>On each KVM host there is a iSCSI redirector daemon running which checks Stargate health throughout the cluster using NOP OUT commands.</p>
 
@@ -1408,7 +1408,7 @@ This should only be used for non-production scenarios and the cluster IPs should
 </section>
 
 <section data-type="sect2">
-<h3>IP Address Management</h3>
+<h2>IP Address Management</h2>
 
 <p>The Acropolis IP address management (IPAM) solution provides the ability to establish a DHCP scope and assign addresses to VMs.&nbsp; This leverages VXLAN and OpenFlow rules to intercept the DHCP request and respond with a DHCP response.</p>
 
@@ -1429,21 +1429,21 @@ This should only be used for non-production scenarios and the cluster IPs should
 </section>
 
 <section data-type="sect1">
-<h2>Administration</h2>
+<h1>Administration</h1>
 
 <p>More coming soon!</p>
 </section>
 
 <section data-type="sect1">
-<h2>Important Pages</h2>
+<h1>Important Pages</h1>
 
 <p>More coming soon!</p>
 </section>
 
 <section data-type="sect1">
-	<h2>Command Reference</h2>
+<h1>Command Reference</h1>
 
-<h3>Enable 10GbE links only on OVS</h3>
+<h2>Enable 10GbE links only on OVS</h2>
 
  <p class="codedescription">Description: Enable 10g only on bond0</p>
 
@@ -1451,7 +1451,7 @@ This should only be used for non-production scenarios and the cluster IPs should
 <br/>
 allssh “source /etc/profile &gt; /dev/null 2&gt;&amp;1; manage_ovs --interfaces 10g update_uplinks”</p>
 
-<h3>Show OVS uplinks</h3>
+<h2>Show OVS uplinks</h2>
 
  <p class="codedescription">Description: Show ovs uplinks</p>
 
@@ -1461,7 +1461,7 @@ allssh “source /etc/profile &gt; /dev/null 2&gt;&amp;1; manage_ovs --interface
 
 <p class="codetext">allssh “source /etc/profile &gt; /dev/null 2&gt;&amp;1; manage_ovs show_uplinks”</p>
 
-<h3>Show OVS interfaces</h3>
+<h2>Show OVS interfaces</h2>
 
  <p class="codedescription">Description: Show ovs interfaces</p>
 
@@ -1471,19 +1471,19 @@ allssh “source /etc/profile &gt; /dev/null 2&gt;&amp;1; manage_ovs --interface
 
 <p class="codetext">allssh “source /etc/profile &gt; /dev/null 2&gt;&amp;1; manage_ovs show_interfaces”</p>
 
-<h3>Show OVS switch information</h3>
+<h2>Show OVS switch information</h2>
 
  <p class="codedescription">Description: Show switch information</p>
 
 <p class="codetext">ovs-vsctl show</p>
 
-<h3>List OVS bridges</h3>
+<h2>List OVS bridges</h2>
 
  <p class="codedescription">Description: List bridges</p>
 
 <p class="codetext">ovs-vsctl list br</p>
 
-<h3>Show OVS bridge information</h3>
+<h2>Show OVS bridge information</h2>
 
  <p class="codedescription">Description: Show OVS port information</p>
 
@@ -1491,13 +1491,13 @@ allssh “source /etc/profile &gt; /dev/null 2&gt;&amp;1; manage_ovs --interface
 <br/>
 ovs-vsctl list port &lt;bond&gt;</p>
 
-<h3>Show OVS interface information</h3>
+<h2>Show OVS interface information</h2>
 
  <p class="codedescription">Description: Show interface information</p>
 
 <p class="codetext">ovs-vsctl list interface br0</p>
 
-<h3>Show ports / interfaces on bridge</h3>
+<h2>Show ports / interfaces on bridge</h2>
 
 <p class="codedescription">Description: Show ports on a bridge</p>
 
@@ -1507,13 +1507,13 @@ ovs-vsctl list port &lt;bond&gt;</p>
 
 <p class="codetext">ovs-vsctl list-ifaces br0</p>
 
-<h3>Create OVS bridge</h3>
+<h2>Create OVS bridge</h2>
 
 <p class="codedescription">Description: Create bridge</p>
 
 <p class="codetext">ovs-vsctl add-br &lt;bridge&gt;</p>
 
-<h3>Add ports to bridge</h3>
+<h2>Add ports to bridge</h2>
 
  <p class="codedescription">Description: Add port to bridge</p>
 
@@ -1523,7 +1523,7 @@ ovs-vsctl list port &lt;bond&gt;</p>
 
 <p class="codetext">ovs-vsctl add-bond &lt;bridge&gt; &lt;port&gt; &lt;iface&gt;</p>
 
-<h3>Show OVS bond details</h3>
+<h2>Show OVS bond details</h2>
 
 <p class="codedescription">Description: Show bond details</p>
 
@@ -1533,7 +1533,7 @@ ovs-vsctl list port &lt;bond&gt;</p>
 
 <p class="codetext">ovs-appctl bond/show bond0</p>
 
-<h3>Set bond mode and configure LACP on bond</h3>
+<h2>Set bond mode and configure LACP on bond</h2>
 
 <p class="codedescription">Description: Enable LACP on ports</p>
 
@@ -1543,19 +1543,19 @@ ovs-vsctl list port &lt;bond&gt;</p>
 
 <p class="codetext">for i in `hostips`;do echo $i; ssh $i source /etc/profile &gt; /dev/null 2&gt;&amp;1; ovs-vsctl set port bond0 lacp=active;done</p>
 
-<h3>Show LACP details on bond</h3>
+<h2>Show LACP details on bond</h2>
 
 <p class="codedescription">Description: Show LACP details</p>
 
 <p class="codetext">ovs-appctl lacp/show &lt;bond&gt;</p>
 
-<h3>Set bond mode</h3>
+<h2>Set bond mode</h2>
 
 <p class="codedescription">Description: Set bond mode on ports</p>
 
 <p class="codetext">ovs-vsctl set port &lt;bond&gt; bond_mode=&lt;active-backup, balance-slb, balance-tcp&gt;</p>
 
-<h3>Show OpenFlow information</h3>
+<h2>Show OpenFlow information</h2>
 
 <p class="codedescription">Description: Show OVS openflow details</p>
 
@@ -1565,7 +1565,7 @@ ovs-vsctl list port &lt;bond&gt;</p>
 
 <p class="codetext">ovs-ofctl dump-flows br0</p>
 
-<h3>Get QEMU PIDs and top information</h3>
+<h2>Get QEMU PIDs and top information</h2>
 
 <p class="codedescription">Description: Get QEMU PIDs</p>
 
@@ -1575,7 +1575,7 @@ ovs-vsctl list port &lt;bond&gt;</p>
 
 <p class="codetext">top -p &lt;PID&gt;</p>
 
-<h3>Get active Stargate for QEMU processes</h3>
+<h2>Get active Stargate for QEMU processes</h2>
 
 <p class="codedescription">Description: Get active Stargates for storage I/O for each QEMU processes</p>
 
@@ -1583,15 +1583,15 @@ ovs-vsctl list port &lt;bond&gt;</p>
 </section>
 
 <section data-type="sect1">
-<h2>Metrics and Thresholds</h2>
+<h1>Metrics and Thresholds</h1>
 
 <p>More coming soon!</p>
 </section>
 
 <section data-type="sect1">
-<h2>Troubleshooting &amp; Advanced Administration</h2>
+<h1>Troubleshooting &amp; Advanced Administration</h1>
 
-<h3>Check iSCSI Redirector Logs</h3>
+<h2>Check iSCSI Redirector Logs</h2>
 
 <p class="codedescription">Description: Check iSCSI Redirector Logs for all hosts</p>
 
@@ -1603,7 +1603,7 @@ ovs-vsctl list port &lt;bond&gt;</p>
 <br/>
 Cat /var/log/iscsi_redirector</p>
 
-<h3>Monitor CPU steal (stolen CPU)</h3>
+<h2>Monitor CPU steal (stolen CPU)</h2>
 
 <p class="codedescription">Description: Monitor CPU steal time (stolen CPU)</p>
 
@@ -1611,7 +1611,7 @@ Cat /var/log/iscsi_redirector</p>
 
 <p class="codetext">Cpu(s):&nbsp; 0.0%us, 0.0%sy,&nbsp; 0.0%ni, 96.4%id,&nbsp; 0.0%wa,&nbsp; 0.0%hi,&nbsp; 0.1%si,&nbsp; <strong>0.0%st</strong></p>
 
-<h3>Monitor VM network resource stats</h3>
+<h2>Monitor VM network resource stats</h2>
 
 <p class="codedescription">Description: Monitor VM resource stats</p>
 
@@ -1626,86 +1626,86 @@ Cat /var/log/iscsi_redirector</p>
 </section>
 
 <section data-type="chapter">
-<h2>Administration</h2>
+<h1>Administration</h1>
 
 <section data-type="sect1">
-<h2>Important Pages</h2>
+<h1>Important Pages</h1>
 
 <p>These are advanced Nutanix pages besides the standard user interface that allow you to monitor detailed stats and metrics.&nbsp; The URLs are formatted in the following way: http://&lt;Nutanix CVM IP/DNS&gt;:&lt;Port/path (mentioned below)&gt;&nbsp; Example: http://MyCVM-A:2009&nbsp; NOTE: if you’re on a different subnet IPtables will need to be disabled on the CVM to access the pages.</p>
 
-<h3>2009 Page</h3>
+<h2>2009 Page</h2>
 
 <p>This is a Stargate page used to monitor the back end storage system and should only be used by advanced users.&nbsp; I’ll have a post that explains the 2009 pages and things to look for.</p>
 
-<h3>2009/latency Page</h3>
+<h2>2009/latency Page</h2>
 
 <p>This is a Stargate page used to monitor the back end latency.</p>
 
-<h3>2009/vdisk_stats Page</h3>
+<h2>2009/vdisk_stats Page</h2>
 
 <p>This is a Stargate page used to show various vDisk stats including histograms of I/O sizes, latency, write hits (e.g., OpLog, eStore), read hits (cache, SSD, HDD, etc.) and more.</p>
 
-<h3>2009/h/traces Page</h3>
+<h2>2009/h/traces Page</h2>
 
 <p>This is the Stargate page used to monitor activity traces for operations.</p>
 
-<h3>2009/h/vars Page</h3>
+<h2>2009/h/vars Page</h2>
 
 <p>This is the Stargate page used to monitor various counters.</p>
 
-<h3>2010 Page</h3>
+<h2>2010 Page</h2>
 
 <p>This is the Curator page which is used for monitoring Curator runs.</p>
 
-<h3>2010/master/control Page</h3>
+<h2>2010/master/control Page</h2>
 
 <p>This is the Curator control page which is used to manually start Curator jobs</p>
 
-<h3>2011 Page</h3>
+<h2>2011 Page</h2>
 
 <p>This is the Chronos page which monitors jobs and tasks scheduled by Curator.</p>
 
-<h3>2020 Page</h3>
+<h2>2020 Page</h2>
 
 <p>&nbsp;This is the Cerebro page which monitors the protection domains, replication status and DR.</p>
 
-<h3>2020/h/traces Page</h3>
+<h2>2020/h/traces Page</h2>
 
 <p>This is the Cerebro page used to monitor activity traces for PD operations and replication.</p>
 
-<h3>2030 Page</h3>
+<h2>2030 Page</h2>
 
 <p>This is the main Acropolis page and shows details about the environment hosts, any currently running tasks and networking details..</p>
 
-<h3>2030/sched Page</h3>
+<h2>2030/sched Page</h2>
 
 <p>This is an Acropolis page used to show information about VM and resource scheduling used for placement decisions.&nbsp; This page shows the available host resources and VMs running on each host.</p>
 
-<h3>2030/tasks Page</h3>
+<h2>2030/tasks Page</h2>
 
 <p>This is an Acropolis page used to show information about Acropolis tasks and their state.&nbsp; You can click on the task UUID to get detailed JSON about the task.</p>
 
-<h3>2030/vms Page</h3>
+<h2>2030/vms Page</h2>
 
 <p>This is an Acropolis page used to show information about Acropolis VMs and details about them.&nbsp; You can click on the VM Name to connect to the console.</p>
 </section>
 
 <section data-type="sect1">
-<h2>Cluster Commands</h2>
+<h1>Cluster Commands</h1>
 
-<h3>Check cluster status</h3>
+<h2>Check cluster status</h2>
 
 <p class="codedescription">Description: Check cluster status from the CLI</p>
 
 <p class="codetext">cluster status</p>
 
-<h3>Check local CVM service status</h3>
+<h2>Check local CVM service status</h2>
 
 <p class="codedescription">Description: Check a single CVM's service status from the CLI</p>
 
 <p class="codetext">genesis status</p>
 
-<h3>Nutanix cluster upgrade</h3>
+<h2>Nutanix cluster upgrade</h2>
 
 <p class="codedescription">Description: Perform rolling (aka "live") cluster upgrade from the CLI</p>
 
@@ -1723,7 +1723,7 @@ Cat /var/log/iscsi_redirector</p>
 
 <p class="codetext">upgrade_status</p>
 
-<h3>Hypervisor upgrade status</h3>
+<h2>Hypervisor upgrade status</h2>
 
 <p class="codedescription">Description: Check hypervisor upgrade status from the CLI on any CVM</p>
 
@@ -1733,7 +1733,7 @@ Cat /var/log/iscsi_redirector</p>
 
 <p class="codetext">~/data/logs/host_upgrade.out</p>
 
-<h3>Restart cluster service from CLI</h3>
+<h2>Restart cluster service from CLI</h2>
 
 <p class="codedescription">Description: Restart a single cluster service from the CLI</p>
 
@@ -1745,7 +1745,7 @@ Cat /var/log/iscsi_redirector</p>
 
 <p class="codetext">cluster start&nbsp; #NOTE: This will start all stopped services</p>
 
-<h3>Start cluster service from CLI</h3>
+<h2>Start cluster service from CLI</h2>
 
 <p class="codedescription">Description: Start stopped cluster services from the CLI</p>
 
@@ -1759,7 +1759,7 @@ Cat /var/log/iscsi_redirector</p>
 
 <p class="codetext">Start single service: cluster start&nbsp; &lt;Service Name&gt;</p>
 
-<h3>Restart local service from CLI</h3>
+<h2>Restart local service from CLI</h2>
 
 <p class="codedescription">Description: Restart a single cluster service from the CLI</p>
 
@@ -1771,31 +1771,31 @@ Cat /var/log/iscsi_redirector</p>
 
 <p class="codetext">cluster start</p>
 
-<h3>Start local service from CLI</h3>
+<h2>Start local service from CLI</h2>
 
 <p class="codedescription">Description: Start stopped cluster services from the CLI</p>
 
 <p class="codetext">cluster start #NOTE: This will start all stopped services</p>
 
-<h3>Cluster add node from cmdline</h3>
+<h2>Cluster add node from cmdline</h2>
 
 <p class="codedescription">Description: Perform cluster add-node from CLI</p>
 
 <p class="codetext">ncli cluster discover-nodes | egrep "Uuid" | awk '{print $4}' | xargs -I UUID ncli cluster add-node node-uuid=UUID</p>
 
-<h3>Find number of vDisks</h3>
+<h2>Find number of vDisks</h2>
 
 <p class="codedescription">Description: Displays the number of vDisks</p>
 
 <p class="codetext">vdisk_config_printer | grep vdisk_id | wc -l</p>
 
-<h3>Find cluster id</h3>
+<h2>Find cluster id</h2>
 
 <p class="codedescription">Description: Find the cluster ID for the current cluster</p>
 
 <p class="codetext">zeus_config_printer | grep cluster_id</p>
 
-<h3>Open port</h3>
+<h2>Open port</h2>
 
 <p class="codedescription">Description: Enable port through IPtables</p>
 
@@ -1805,67 +1805,67 @@ Cat /var/log/iscsi_redirector</p>
 <br/>
 sudo service iptables restart</p>
 
-<h3>Check for Shadow Clones</h3>
+<h2>Check for Shadow Clones</h2>
 
 <p class="codedescription">Description: Displays the shadow clones in the following format:&nbsp; name#id@svm_id</p>
 
 <p class="codetext">vdisk_config_printer | grep '#'</p>
 
-<h3>Reset Latency Page Stats</h3>
+<h2>Reset Latency Page Stats</h2>
 
 <p class="codedescription">Description: Reset the Latency Page (&lt;CVM IP&gt;:2009/latency) counters</p>
 
 <p class="codetext">allssh “ wget $i:2009/latency/reset”</p>
 
-<h3>Find Number of vDisks</h3>
+<h2>Find Number of vDisks</h2>
 
 <p class="codedescription">Description: Find the current number of vDisks (files) on DSF</p>
 
 <p class="codetext">vdisk_config_printer | grep vdisk_id | wc -l</p>
 
-<h3>Start Curator scan from CLI</h3>
+<h2>Start Curator scan from CLI</h2>
 
 <p class="codedescription">Description: Starts a Curator full scan from the CLI</p>
 
 <p class="codetext">allssh “ wget -O - "http://$i:2010/master/api/client/StartCuratorTasks?task_type=2"; “</p>
 
-<h3>Compact ring</h3>
+<h2>Compact ring</h2>
 
 <p class="codedescription">Description: Compact the metadata ring</p>
 
 <p class="codetext">allssh “nodetool -h localhost compact”</p>
 
-<h3>Find NOS version</h3>
+<h2>Find NOS version</h2>
 
 <p class="codedescription">Description: Find the NOS&nbsp; version (NOTE: can also be done using NCLI)</p>
 
 <p class="codetext">allssh “cat /etc/nutanix/release_version”</p>
 
-<h3>Find CVM version</h3>
+<h2>Find CVM version</h2>
 
 <p class="codedescription">Description: Find the CVM image version</p>
 
 <p class="codetext">allssh “cat /etc/nutanix/svm-version”</p>
 
-<h3>Manually fingerprint vDisk(s)</h3>
+<h2>Manually fingerprint vDisk(s)</h2>
 
 <p class="codedescription">Description: Create fingerprints for a particular vDisk (For dedupe)&nbsp; NOTE: dedupe must be enabled on the container</p>
 
 <p class="codetext">vdisk_manipulator –vdisk_id=&lt;vDisk ID&gt; --operation=add_fingerprints</p>
 
-<h3>Echo Factory_Config.json for all cluster nodes</h3>
+<h2>Echo Factory_Config.json for all cluster nodes</h2>
 
 <p class="codedescription">Description: Echos the factory_config.jscon for all nodes in the cluster</p>
 
 <p class="codetext">allssh “cat /etc/nutanix/factory_config.json”</p>
 
-<h3>Upgrade a single Nutanix node’s NOS version</h3>
+<h2>Upgrade a single Nutanix node’s NOS version</h2>
 
 <p class="codedescription">Description: Upgrade a single node's NOS version to match that of the cluster</p>
 
 <p class="codetext">~/cluster/bin/cluster -u &lt;NEW_NODE_IP&gt; upgrade_node</p>
 
-<h3>&nbsp;List files (vDisk) on DSF</h3>
+<h2>&nbsp;List files (vDisk) on DSF</h2>
 
 <p class="codedescription">Description: List files and associated information for vDisks stored on DSF</p>
 
@@ -1875,7 +1875,7 @@ sudo service iptables restart</p>
 
 <p class="codetext">Nfs_ls --help</p>
 
-<h3>Install Nutanix Cluster Check (NCC)</h3>
+<h2>Install Nutanix Cluster Check (NCC)</h2>
 
 <p class="codedescription">Description: Installs the Nutanix Cluster Check (NCC) health script to test for potential issues and cluster health</p>
 
@@ -1897,7 +1897,7 @@ sudo service iptables restart</p>
 <br/>
 echo "source ~/ncc/ncc_completion.bash" &gt;&gt; ~/.bashrc</p>
 
-<h3>Run Nutanix Cluster Check (NCC)</h3>
+<h2>Run Nutanix Cluster Check (NCC)</h2>
 
 <p class="codedescription">Description: Runs the Nutanix Cluster Check (NCC) health script to test for potential issues and cluster health.&nbsp; This is a great first step when troubleshooting any cluster issues.</p>
 
@@ -1909,27 +1909,27 @@ echo "source ~/ncc/ncc_completion.bash" &gt;&gt; ~/.bashrc</p>
 </section>
 
 <section data-type="sect1">
-<h2>Metrics and Thresholds</h2>
+<h1>Metrics and Thresholds</h1>
 
 <p>The following section will cover specific metrics and thresholds on the Nutanix back end.&nbsp; More updates to these coming shortly!</p>
 </section>
 
 <section data-type="sect1">
-<h2>Gflags</h2>
+<h1>Gflags</h1>
 
 <p>More coming soon!</p>
 </section>
 
 <section data-type="sect1">
-<h2>Troubleshooting &amp; Advanced Administration</h2>
+<h1>Troubleshooting &amp; Advanced Administration</h1>
 
-<h3>Find Acropolis logs</h3>
+<h2>Find Acropolis logs</h2>
 
 <p class="codedescription">Description: Find Acropolis logs for the cluster</p>
 
 <p class="codetext">allssh “cat ~/data/logs/Acropolis.log”</p>
 
-<h3>Find cluster error logs</h3>
+<h2>Find cluster error logs</h2>
 
 <p class="codedescription">Description: Find ERROR logs for the cluster</p>
 
@@ -1939,7 +1939,7 @@ echo "source ~/ncc/ncc_completion.bash" &gt;&gt; ~/.bashrc</p>
 
 <p class="codetext">allssh "cat ~/data/logs/Stargate.ERROR"</p>
 
-<h3>Find cluster fatal logs</h3>
+<h2>Find cluster fatal logs</h2>
 
 <p class="codedescription">Description: Find FATAL logs for the cluster</p>
 
@@ -1949,7 +1949,7 @@ echo "source ~/ncc/ncc_completion.bash" &gt;&gt; ~/.bashrc</p>
 
 <p class="codetext">allssh "cat ~/data/logs/Stargate.FATAL"</p>
 
-<h3>Using the 2009 Page (Stargate)</h3>
+<h2>Using the 2009 Page (Stargate)</h2>
 
 <p>In most cases Prism should be able to give you all of the information and data points you require. &nbsp;However,&nbsp;in certain scenarios, or if you want some more detailed data you can leverage the Stargate aka 2009 page. &nbsp;The 2009 page can be viewed by navigating to &lt;CVM IP&gt;:2009.</p>
 
@@ -2019,7 +2019,7 @@ echo "source ~/ncc/ncc_completion.bash" &gt;&gt; ~/.bashrc</p>
 <p>For more specific details the vdisk_stats page holds a plethora of information.</p>
 </div>
 
-<h3>Using the 2009/vdisk_stats Page</h3>
+<h2>Using the 2009/vdisk_stats Page</h2>
 
 <p>The 2009 vdisk_stats page is a detailed page which provides even further data points per vDisk. &nbsp;This page includes details and a histogram of items like randomness, latency histograms, I/O sizes and working set details.</p>
 
@@ -2113,7 +2113,7 @@ echo "source ~/ncc/ncc_completion.bash" &gt;&gt; ~/.bashrc</p>
 <figcaption>2009 Page - vDisk Stats - Extent Group Up-Migration</figcaption>
 </figure>
 
-<h3>Using the 2010 Page (Curator)</h3>
+<h2>Using the 2010 Page (Curator)</h2>
 
 <p>The 2010 page is a detailed page for monitoring the Curator MapReduce framework. &nbsp;This page provides details on jobs, scans, and associated tasks.&nbsp;</p>
 

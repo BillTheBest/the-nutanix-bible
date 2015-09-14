@@ -1,5 +1,5 @@
 <div data-type="part">
-<h1><span class="label">Part I. </span>A Brief Lesson in History</h1>
+<h1>A Brief Lesson in History</h1>
 
 <p>A brief look at the history of infrastructure and what has led us to where we are today.</p>
 
@@ -9,7 +9,7 @@
 <p>The datacenter has evolved significantly over the last several decades. The following sections will examine each era in detail.&nbsp;&nbsp;</p>
 
 <section data-type="sect1">
-<h2>The Era of the Mainframe</h2>
+<h1>The Era of the Mainframe</h1>
 
 <p>The mainframe ruled for many years and laid the core foundation of where we are today. It allowed companies to leverage the following key characteristics:</p>
 
@@ -28,7 +28,7 @@
 </section>
 
 <section data-type="sect1">
-<h2>The Move to Stand-Alone Servers</h2>
+<h1>The Move to Stand-Alone Servers</h1>
 
 <p>With mainframes, it was very difficult for organizations within a business to leverage these capabilities which partly led to the entrance of pizza boxes or stand-alone servers. Key characteristics of stand-alone servers included:</p>
 
@@ -48,7 +48,7 @@
 </section>
 
 <section data-type="sect1">
-<h2>Centralized Storage</h2>
+<h1>Centralized Storage</h1>
 
 <p>Businesses always need to make money and data is a key piece of that puzzle. With direct-attached storage (DAS), organizations either needed more space than was locally available, or data high availability (HA) where a server failure wouldn’t cause data unavailability.</p>
 
@@ -70,7 +70,7 @@
 </section>
 
 <section data-type="sect1">
-<h2>The Introduction of Virtualization</h2>
+<h1>The Introduction of Virtualization</h1>
 
 <p>At this point in time, compute utilization was low and resource efficiency was impacting the bottom line. Virtualization was then introduced and enabled multiple workloads and operating systems (OSs) to run as virtual machines (VMs) on a single piece of hardware. Virtualization enabled businesses to increase utilization of their pizza boxes, but also increased the number of silos and the impacts of an outage. Key characteristics of virtualization included:</p>
 
@@ -90,7 +90,7 @@
 </section>
 
 <section data-type="sect1">
-<h2>Virtualization Matures</h2>
+<h1>Virtualization Matures</h1>
 
 <p>The hypervisor became a very efficient and feature-filled solution. With the advent of tools, including VMware vMotion, HA, and DRS, users obtained the ability to provide VM high availability and migrate compute workloads dynamically. The only caveat was the reliance on centralized storage, causing the two paths to merge. The only down turn was the increased load on the storage array before and VM sprawl led to contention for storage I/O. Key characteristics included:</p>
 
@@ -118,7 +118,7 @@
 </section>
 
 <section data-type="sect1">
-<h2>Solid State Disks (SSDs)</h2>
+<h1>Solid State Disks (SSDs)</h1>
 
 <p>SSDs helped alleviate this I/O bottleneck by providing much higher I/O performance without the need for tons of disk enclosures.&nbsp; However, given the extreme advances in performance, the controllers and network had not yet evolved to handle the vast I/O available. Key characteristics of SSDs included:</p>
 
@@ -138,7 +138,7 @@
 </section>
 
 <section data-type="chapter">
-<h2>The Importance of Latency</h2>
+<h1>The Importance of Latency</h1>
 
 <p>The figure below characterizes the various latencies for specific types of I/O:</p>
 
@@ -248,7 +248,7 @@
 </ul>
 
 <section data-type="sect1">
-<h2>Looking at the Bandwidth</h2>
+<h1>Looking at the Bandwidth</h1>
 
 <p>For traditional storage, there are a few main types of media for I/O:</p>
 
@@ -322,7 +322,7 @@
 </section>
 
 <section data-type="sect1">
-<h2>The Impact to Memory Latency</h2>
+<h1>The Impact to Memory Latency</h1>
 
 <p>Typical main memory latency is ~100ns (will vary), we can perform the following calculations:</p>
 
@@ -381,7 +381,7 @@
 <p>The following sections will provide a technical perspective on what they actually mean.</p>
 
 <section data-type="sect1">
-<h2>Hyper-Convergence</h2>
+<h1>Hyper-Convergence</h1>
 
 <p>There are differing opinions on what hyper-convergence actually is.&nbsp; It also varies based on the scope of components (e.g. virtualization, networking, etc.). However, the core concept comes down to the following: natively combining two or more components into a single unit. ‘Natively’ is the key word here. In order to be the most effective, the components must be natively integrated and not just bundled together. In the case of Nutanix, we natively converge compute + storage to form a single node used in our appliance.&nbsp; For others, this might be converging storage with the network, etc. What it really means:</p>
 
@@ -399,7 +399,7 @@
 </section>
 
 <section data-type="sect1">
-<h2>Software-Defined Intelligence</h2>
+<h1>Software-Defined Intelligence</h1>
 
 <p>Software-defined intelligence is taking the core logic from normally proprietary or specialized hardware (e.g. ASIC / FPGA) and doing it in software on commodity hardware. For Nutanix, we take the traditional storage logic (e.g. RAID, deduplication, compression, etc.) and put that into software that runs in each of the Nutanix CVMs on standard x86 hardware. What it really means:</p>
 
@@ -417,7 +417,7 @@
 </section>
 
 <section data-type="sect1">
-<h2>Distributed Autonomous Systems</h2>
+<h1>Distributed Autonomous Systems</h1>
 
 <p>Distributed autonomous systems involve moving away from the traditional concept of having a single unit responsible for doing something and distributing that role among all nodes within the cluster.&nbsp; You can think of this as creating a purely distributed system. Traditionally, vendors have assumed that hardware will be reliable, which, in most cases can be true.&nbsp; However, core to distributed systems is the idea that hardware will eventually fail and handling that fault in an elegant and non-disruptive way is key.</p>
 
@@ -438,7 +438,7 @@
 </section>
 
 <section data-type="sect1">
-<h2>Incremental and linear scale out</h2>
+<h1>Incremental and linear scale out</h1>
 
 <p>Incremental and linear scale out relates to the ability to start with a certain set of resources and as needed scale them out while linearly increasing the performance of the system.&nbsp; All of the constructs mentioned above are critical enablers in making this a reality. For example, traditionally you’d have 3-layers of components for running virtual workloads: servers, storage, and network – all of which are scaled independently.&nbsp; As an example, when you scale out the number of servers you’re not scaling out your storage performance. With a hyper-converged platform like Nutanix, when you scale out with new node(s) you’re scaling out:</p>
 
@@ -465,7 +465,7 @@
 </section>
 
 <section data-type="sect1">
-<h2>Making Sense of It All</h2>
+<h1>Making Sense of It All</h1>
 
 <p>In summary:</p>
 

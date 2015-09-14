@@ -1,11 +1,11 @@
 <div data-type="part">
-<h1><span class="label">Part V. </span>Book of Hyper-V</h1>
+<h1>Book of Hyper-V</h1>
 
 <section data-type="chapter">
 <h1>Architecture</h1>
 
 <section data-type="sect1">
-<h2>Node Architecture</h2>
+<h1>Node Architecture</h1>
 
 <p>In Hyper-V deployments, the Controller VM (CVM) runs as a VM and disks are presented using disk passthrough.</p>
 
@@ -15,7 +15,7 @@
 </section>
 
 <section data-type="sect1">
-<h2>Configuration Maximums and Scalability</h2>
+<h1>Configuration Maximums and Scalability</h1>
 
 <p>The following configuration maximums and scalability limits are applicable:</p>
 
@@ -35,7 +35,7 @@
 <h1>How It Works</h1>
 
 <section data-type="sect1">
-<h2>Array Offloads – ODX</h2>
+<h1>Array Offloads – ODX</h1>
 
 <p>The Nutanix platform supports the Microsoft Offloaded Data Transfers (ODX), which allow the hypervisor to offload certain tasks to the array.&nbsp; This is much more efficient as the hypervisor doesn’t need to be the 'man in the middle'. Nutanix currently supports the ODX primitives for SMB, which include full copy and zeroing operations.&nbsp; However, contrary to VAAI which has a 'fast file' clone operation (using writable snapshots), the ODX primitives do not have an equivalent and perform a full copy.&nbsp; Given this, it is more efficient to rely on the native DSF clones which can currently be invoked via nCLI, REST, or Powershell CMDlets. Currently ODX IS invoked for the following operations:</p>
 
@@ -62,15 +62,15 @@
 <h1>Administration</h1>
 
 <section data-type="sect1">
-<h2>Important Pages</h2>
+<h1>Important Pages</h1>
 
 <p>More coming soon!</p>
 </section>
 
 <section data-type="sect1">
-<h2>Command Reference</h2>
+<h1>Command Reference</h1>
 
-<h3>Execute command on multiple remote hosts</h3>
+<h2>Execute command on multiple remote hosts</h2>
 
 <p class="codedescription">Description: Execute a powershell on one or many remote hosts</p>
 
@@ -82,13 +82,13 @@ Invoke-Command -ComputerName&nbsp; $targetServers {
 <br/>
 }</p>
 
-<h3>Check available VMQ Offloads</h3>
+<h2>Check available VMQ Offloads</h2>
 
 <p class="codedescription">Description: Display the available number of VMQ offloads for a particular host</p>
 
 <p class="codetext">gwmi –Namespace “root\virtualization\v2” –Class Msvm_VirtualEthernetSwitch | select elementname, MaxVMQOffloads</p>
 
-<h3>Disable VMQ for VMs matching a specific prefix</h3>
+<h2>Disable VMQ for VMs matching a specific prefix</h2>
 
 <p class="codedescription">Description: Disable VMQ for specific VMs</p>
 
@@ -96,7 +96,7 @@ Invoke-Command -ComputerName&nbsp; $targetServers {
 <br/>
 Get-VM | Where {$_.Name -match $vmPrefix} | Get-VMNetworkAdapter | Set-VMNetworkAdapter -VmqWeight 0</p>
 
-<h3>Enable VMQ for VMs matching a certain prefix</h3>
+<h2>Enable VMQ for VMs matching a certain prefix</h2>
 
 <p class="codedescription">Description: Enable VMQ for specific VMs</p>
 
@@ -104,7 +104,7 @@ Get-VM | Where {$_.Name -match $vmPrefix} | Get-VMNetworkAdapter | Set-VMNetwork
 <br/>
 Get-VM | Where {$_.Name -match $vmPrefix} | Get-VMNetworkAdapter | Set-VMNetworkAdapter -VmqWeight 1</p>
 
-<h3>Power-On VMs matching a certain prefix</h3>
+<h2>Power-On VMs matching a certain prefix</h2>
 
 <p class="codedescription">Description: Power-On VMs matchin a certain prefix</p>
 
@@ -112,7 +112,7 @@ Get-VM | Where {$_.Name -match $vmPrefix} | Get-VMNetworkAdapter | Set-VMNetwork
 <br/>
 Get-VM | Where {$_.Name -match $vmPrefix -and $_.StatusString -eq "Stopped"} | Start-VM</p>
 
-<h3>Shutdown VMs matching a certain prefix</h3>
+<h2>Shutdown VMs matching a certain prefix</h2>
 
 <p class="codedescription">Description: Shutdown VMs matchin a certain prefix</p>
 
@@ -120,7 +120,7 @@ Get-VM | Where {$_.Name -match $vmPrefix -and $_.StatusString -eq "Stopped"} | S
 <br/>
 Get-VM | Where {$_.Name -match $vmPrefix -and $_.StatusString -eq "Running"}} | Shutdown-VM -RunAsynchronously</p>
 
-<h3>Stop VMs matching a certain prefix</h3>
+<h2>Stop VMs matching a certain prefix</h2>
 
 <p class="codedescription">Description: Stop VMs matchin a certain prefix</p>
 
@@ -128,13 +128,13 @@ Get-VM | Where {$_.Name -match $vmPrefix -and $_.StatusString -eq "Running"}} | 
 <br/>
 Get-VM | Where {$_.Name -match $vmPrefix} | Stop-VM</p>
 
-<h3>Get Hyper-V host RSS settings</h3>
+<h2>Get Hyper-V host RSS settings</h2>
 
 <p class="codedescription">Description: Get Hyper-V host RSS (recieve side scaling) settings</p>
 
 <p class="codetext">Get-NetAdapterRss</p>
 
-<h3>Check Winsh and WinRM connectivity</h3>
+<h2>Check Winsh and WinRM connectivity</h2>
 
 <p class="codedescription">Description: Check Winsh and WinRM connectivity / status by performing a sample query which should return the computer system object not an error</p>
 
@@ -142,14 +142,14 @@ Get-VM | Where {$_.Name -match $vmPrefix} | Stop-VM</p>
 </section>
 
 <section data-type="sect1">
-<h2>Metrics and Thresholds</h2>
+<h1>Metrics and Thresholds</h1>
 
 <p>More coming soon!</p>
 </section>
 </section>
 
 <section data-type="sect1">
-<h2>Troubleshooting &amp; Advanced Administration</h2>
+<h1>Troubleshooting &amp; Advanced Administration</h1>
 
 <p>More coming soon!</p>
 </section>

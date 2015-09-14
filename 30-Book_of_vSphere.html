@@ -1,5 +1,5 @@
 <div data-type="part">
-<h1><span class="label">Part IV. </span>Book of vSphere</h1>
+<h1>Book of vSphere</h1>
 
 <section data-type="chapter">
 <h1>Architecture</h1>
@@ -35,7 +35,7 @@
 <h1>How It Works</h1>
 
 <section data-type="sect1">
-<h2>Array Offloads – VAAI</h2>
+<h1>Array Offloads – VAAI</h1>
 
 <p>The Nutanix platform supports the VMware APIs for Array Integration (VAAI),&nbsp;which allows the hypervisor to offload certain tasks to the array.&nbsp; This is much more efficient as the hypervisor doesn’t need to be the 'man in the middle'. Nutanix currently supports the VAAI primitives for NAS, including the ‘full file clone’, ‘fast file clone’, and ‘reserve space’ primitives.&nbsp; Here’s a good article explaining the various primitives: http://cormachogan.com/2012/11/08/vaai-comparison-block-versus-nas/.&nbsp;</p>
 
@@ -60,7 +60,7 @@
 </section>
 
 <section data-type="sect1">
-<h2>CVM Autopathing aka Ha.py</h2>
+<h1>CVM Autopathing aka Ha.py</h1>
 
 <p>In this section, I’ll cover how CVM 'failures' are handled (I’ll cover how we handle component failures in future update).&nbsp; A CVM 'failure' could include a user powering down the CVM, a CVM rolling upgrade, or any event which might bring down the CVM. DSF has a feature called autopathing where when a local CVM becomes unavailable, the I/Os are then transparently handled by other CVMs in the cluster. The hypervisor and CVM communicate using a private 192.168.5.0 network on a dedicated vSwitch (more on this above).&nbsp; This means that for all storage I/Os, these are happening to the internal IP addresses on the CVM (192.168.5.2).&nbsp; The external IP address of the CVM is used for remote replication and for CVM communication.</p>
 
@@ -84,15 +84,15 @@
 <h1>Administration</h1>
 
 <section data-type="sect1">
-<h2>Important Pages</h2>
+<h1>Important Pages</h1>
 
 <p>More coming soon!</p>
 </section>
 
 <section data-type="sect1">
-<h2>Command Reference</h2>
+<h1>Command Reference</h1>
 
-<h3>ESXi cluster upgrade</h3>
+<h2>ESXi cluster upgrade</h2>
 
  <p class="codedescription">Description: Perform an automated upgrade of ESXi hosts using the CLI
 <br/>
@@ -110,49 +110,49 @@
 
 <p>Performing a rolling reboot of ESXi hosts: For PowerCLI on automated hosts reboots</p>
 
-<h3>Restart ESXi host services</h3>
+<h2>Restart ESXi host services</h2>
 
  <p class="codedescription">Description: Restart each ESXi hosts services in a incremental manner</p>
 
 <p class="codetext">for i in `hostips`;do ssh root@$i "services.sh restart";done</p>
 
-<h3>Display ESXi host nics in ‘Up’ state</h3>
+<h2>Display ESXi host nics in ‘Up’ state</h2>
 
  <p class="codedescription">Description: Display the ESXi host's nics which are in a 'Up' state</p>
 
 <p class="codetext">for i in `hostips`;do echo $i &amp;&amp; ssh root@$i esxcfg-nics -l | grep Up;done</p>
 
-<h3>Display ESXi host 10GbE nics and status</h3>
+<h2>Display ESXi host 10GbE nics and status</h2>
 
  <p class="codedescription">Description: Display the ESXi host's 10GbE nics and status</p>
 
 <p class="codetext">for i in `hostips`;do echo $i &amp;&amp; ssh root@$i esxcfg-nics -l | grep ixgbe;done</p>
 
-<h3>Display ESXi host active adapters</h3>
+<h2>Display ESXi host active adapters</h2>
 
  <p class="codedescription">Description: Display the ESXi host's active, standby and unused adapters</p>
 
 <p class="codetext">for i in `hostips`;do echo $i &amp;&amp;&nbsp; ssh root@$i "esxcli network vswitch standard policy failover get --vswitch-name vSwitch0";done</p>
 
-<h3>Display ESXi host routing tables</h3>
+<h2>Display ESXi host routing tables</h2>
 
  <p class="codedescription">Description: Display the ESXi host's routing tables</p>
 
 <p class="codetext">for i in `hostips`;do ssh root@$i 'esxcfg-route -l';done</p>
 
-<h3>Check if VAAI is enabled on datastore</h3>
+<h2>Check if VAAI is enabled on datastore</h2>
 
  <p class="codedescription">Description: Check whether or not VAAI is enabled/supported for a datastore</p>
 
 <p class="codetext">vmkfstools -Ph /vmfs/volumes/&lt;Datastore Name&gt;</p>
 
-<h3>Set VIB acceptance level to community supported</h3>
+<h2>Set VIB acceptance level to community supported</h2>
 
  <p class="codedescription">Description: Set the vib acceptance level to CommunitySupported allowing for 3rd party vibs to be installed</p>
 
 <p class="codetext">esxcli software acceptance set --level CommunitySupported</p>
 
-<h3>Install VIB</h3>
+<h2>Install VIB</h2>
 
  <p class="codedescription">Description: Install a vib without checking the signature</p>
 
@@ -162,13 +162,13 @@
 
 <p class="codetext">esxcli software vib install --depoturl=/&lt;VIB directory&gt;/&lt;VIB name&gt; --no-sig-check</p>
 
-<h3>Check ESXi ramdisk space</h3>
+<h2>Check ESXi ramdisk space</h2>
 
  <p class="codedescription">Description: Check free space of ESXi ramdisk</p>
 
 <p class="codetext">for i in `hostips`;do echo $i; ssh root@$i 'vdf -h';done</p>
 
-<h3>Clear pynfs logs</h3>
+<h2>Clear pynfs logs</h2>
 
  <p class="codedescription">Description: Clears the pynfs logs on each ESXi host</p>
 
@@ -176,14 +176,14 @@
 </section>
 
 <section data-type="sect1">
-<h2>Metrics and Thresholds</h2>
+<h1>Metrics and Thresholds</h1>
 
 <p>More coming soon!</p>
 </section>
 </section>
 
 <section data-type="sect1">
-<h2>Troubleshooting &amp; Advanced Administration</h2>
+<h1>Troubleshooting &amp; Advanced Administration</h1>
 
 <p>More coming soon!</p>
 </section>
