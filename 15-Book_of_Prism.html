@@ -983,7 +983,7 @@ $vms = Get-NTNXVM | where {$_.vmName -match $searchString}</p>
   <tr>
     <td>Nova</td>
     <td>Compute</td>
-    <td>X</td>
+    <td></td>
     <td>X</td>
     <td></td>
     <td></td>
@@ -999,7 +999,7 @@ $vms = Get-NTNXVM | where {$_.vmName -match $searchString}</p>
   <tr>
     <td>Cinder</td>
     <td>Block storage</td>
-    <td>X</td>
+    <td></td>
     <td>X</td>
     <td></td>
     <td></td>
@@ -1015,7 +1015,7 @@ $vms = Get-NTNXVM | where {$_.vmName -match $searchString}</p>
   <tr>
     <td>Neutron</td>
     <td>Networking</td>
-    <td>X</td>
+    <td></td>
     <td>X</td>
     <td></td>
     <td></td>
@@ -1054,13 +1054,12 @@ $vms = Get-NTNXVM | where {$_.vmName -match $searchString}</p>
 <figcaption>OpenStack - SVM Load Balancing</figcaption>
 </figure>
 
-<p>Nutanix integrates with the OpenStack platform at the API level.</p>
+<p>For environments spanning multiple sites the OpenStack Controller will talk to multiple Acropolis SVMs across sites.</p>
 
-<p>We take the OpenStack APIs and translate them into native Acropolis API calls. &nbsp;This OpenStack driver runs in Acropolis Services VM (SVM) and is what handles the calls from the OpenStack Controller.</p>
-
-<p>The figure shows how the OpenStack components map to the OpenStack + Nutanix solution:</p>
-
-<p>&nbsp;</p>
+<p>The figure shows an example of the deployment across multiple sites:</p>
+<figure><img alt="" src="imagesv2/openstack_siteha.png" />
+<figcaption>OpenStack - Multi-Site</figcaption>
+</figure>
 </section>
 </section>
 </div>
