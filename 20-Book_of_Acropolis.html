@@ -336,7 +336,7 @@ storage, compute and virtualization platform.
 
 <ul>
 	<li>Key Role: Dynamic read cache</li>
-	<li>Description: The Content Cache (aka “Elastic Dedupe Engine”) is a deduplicated read cache which spans both the CVM’s memory and SSD.&nbsp; Upon a read request of data not in the cache (or based upon a particular fingerprint), the data will be placed into the single-touch pool of the content cache which completely sits in memory, where it will use LRU until it is ejected from the cache.&nbsp; Any subsequent read request will “move” (no data is actually moved, just cache metadata) the data into the memory portion of the multi-touch pool, which consists of both memory and SSD.&nbsp; From here there are two LRU cycles, one for the in-memory piece upon which eviction will move the data to the SSD section of the multi-touch pool where a new LRU counter is assigned.&nbsp; Any read request for data in the multi-touch pool will cause the data to go to the peak of the multi-touch pool where it will be given a new LRU counter.&nbsp; Fingerprinting is configured at the container level and can be configured via the UI.&nbsp; By default, fingerprinting is disabled.</li>
+	<li>Description: The Content Cache is a deduplicated read cache which spans both the CVM’s memory and SSD.&nbsp; Upon a read request of data not in the cache (or based upon a particular fingerprint), the data will be placed into the single-touch pool of the Content Cache which completely sits in memory, where it will use LRU until it is evicted from the cache.&nbsp; Any subsequent read request will “move” (no data is actually moved, just cache metadata) the data into the memory portion of the multi-touch pool, which consists of both memory and SSD.&nbsp; From here there are two LRU cycles, one for the in-memory piece upon which eviction will move the data to the SSD section of the multi-touch pool where a new LRU counter is assigned.&nbsp; Any read request for data in the multi-touch pool will cause the data to go to the peak of the multi-touch pool where it will be given a new LRU counter.</li>
 </ul>
 
 <p>The following figure shows a high-level overview of the Content Cache:</p>
@@ -345,7 +345,13 @@ storage, compute and virtualization platform.
 <figcaption>DSF Content Cache</figcaption>
 </figure>
 
-<h2>1.1.1.4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Extent Cache</h2>
+<div data-type="note" class="note">
+<h1>Cache Granularity and Logic</h1>
+
+<p>Data is brought into the cache at a 4K granularity and all caching is done real-time (e.g. no delay or batch process data to pull data into the cache).</p>
+</div>
+
+<h2>Extent Cache</h2>
 
 <ul>
 	<li>Key Role: In-memory read cache</li>
@@ -514,6 +520,8 @@ storage, compute and virtualization platform.
 <p>Use performance tier deduplication on your base images (you can manually fingerprint them using vdisk_manipulator) to take advantage of the content cache.</p>
 
 <p>Use capacity tier deduplication for P2V / V2V,&nbsp;when using Hyper-V since ODX does a full data copy, or when doing cross-container clones (not usually recommended).</p>
+
+<p>In most other cases compression will yield the highest capacity savings and should be used instead.</p>
 </div>
 </section>
 
@@ -585,43 +593,43 @@ storage, compute and virtualization platform.
 <table>
   <tr>
     <th></th>
-    <th colspan="2">FT1 (RF2 equiv.)</th>
-    <th colspan="2">FT2 (RF3 equiv.)</th>
+    <th colspan="2"><center>FT1 (RF2 equiv.)</center></th>
+    <th colspan="2"><center>FT2 (RF3 equiv.)</center></th>
   </tr>
   <tr>
     <td>Cluster Size<br/>(nodes)</td>
     <td>EC Strip Size<br/>(data/parity blocks)</td>
-    <td>EC Overhead<br/>(vs. 2)</td>
+    <td>EC Overhead<br/>(vs. 2X of RF2)</td>
     <td>EC Strip Size<br/>(data/parity)</td>
-    <td>EC Overhead<br/>(vs. 3)</td>
+    <td>EC Overhead<br/>(vs. 3X of RF3)</td>
   </tr>
   <tr>
     <td>4</td>
     <td>2/1</td>
-    <td>1.5</td>
+    <td>1.5X</td>
     <td>N/A</td>
     <td>N/A</td>
   </tr>
   <tr>
     <td>5</td>
     <td>3/1</td>
-    <td>1.33</td>
+    <td>1.33X</td>
     <td>N/A</td>
     <td>N/A</td>
   </tr>
   <tr>
     <td>6</td>
     <td>4/1</td>
-    <td>1.25</td>
+    <td>1.25X</td>
     <td>N/A</td>
     <td>N/A</td>
   </tr>
   <tr>
     <td>7+</td>
     <td>4/1</td>
-    <td>1.25</td>
+    <td>1.25X</td>
     <td>4/2</td>
-    <td>1.5</td>
+    <td>1.5X</td>
   </tr>
 </table>
 
@@ -656,6 +664,12 @@ storage, compute and virtualization platform.
 <figure><img alt="" class="iimagesv2ec_3png" src="imagesv2/ec_3.png" />
 <figcaption>DSF Encoded Strip - Post-savings</figcaption>
 </figure>
+
+<div data-type="note" class="note">
+<h1>Pro tip</h1>
+
+<p>Erasure Coding pairs perfectly with inline compression which will add to the storage savings.  I leverage inline compression + EC in my environments.</p>
+</div>
 </section>
 
 <section data-type="sect1">
@@ -1235,6 +1249,15 @@ This should only be used for non-production scenarios and the cluster IPs should
 <figure class="large"><img alt="" class="iimagesv2data_locality2png" src="imagesv2/data_locality2.png" />
 <figcaption>Data Locality</figcaption>
 </figure>
+
+<div data-type="note" class="note">
+<h1>Thresholds for Data Migration</h1>
+
+<p>Data locality is a real-time operation and an extent group will be migrated when the following occurs:
+"3 touches within a 10 minute window where multiple reads every 10 second sampling count as a single touch".
+</p>
+</div>
+
 </section>
 
 <section data-type="sect1">
@@ -1297,6 +1320,12 @@ This should only be used for non-production scenarios and the cluster IPs should
 	<li>Description: Disk level metrics are pulled directly from the physical disk devices (via the CVM) and represent what the back-end is seeing.&nbsp; This includes data hitting the OpLog or Extent Store where an I/O is performed on the disk.&nbsp; This data can be viewed for one of more disk(s), the disk(s) for a particular node, or the aggregate disks in the cluster.&nbsp; In common cases, it is expected that the disk ops should match the number of incoming writes as well as reads not served from the memory portion of the cache.&nbsp; Any reads being served by the memory portion of the cache will not be counted here as the op is not hitting the disk device.</li>
 	<li>When to use: When looking to see how many ops are served from cache or hitting the disksm</li>
 </ul>
+
+<div data-type="note" class="note">
+<h1>Metric and Stat Retention</h1>
+
+<p>Metrics and time series data is stored locally for 90 days in Prism Element.  For Prism Central and Insights, data can be stored indefinitely (assuming capacity is available).</p>
+</div>
 </section>
 </section>
 
@@ -1307,7 +1336,7 @@ This should only be used for non-production scenarios and the cluster IPs should
 </section>
 
 <section data-type="chapter">
-<h1>Hypervisor</h1>
+<h1>Acropolis Hypervisor</h1>
 
 <section data-type="sect1">
 <h1>Node Architecture</h1>
@@ -2218,7 +2247,7 @@ echo "source ~/ncc/ncc_completion.bash" &gt;&gt; ~/.bashrc</p>
 
 <p>The figure shows the 'MapReduce Jobs' table:</p>
 
-<figure><img alt="" class="iimagesv22010pagescurator_mrjobs2png" src="imagesv2/2010Pages/curator_mrjobs2.png" />
+<figure class="large"><img alt="" class="iimagesv22010pagescurator_mrjobs2png" src="imagesv2/2010Pages/curator_mrjobs2.png" />
 <figcaption>2010 Page - MapReduce Jobs</figcaption>
 </figure>
 
@@ -2234,7 +2263,7 @@ echo "source ~/ncc/ncc_completion.bash" &gt;&gt; ~/.bashrc</p>
 
 <p>The figure shows the&nbsp;'Queued Curator Jobs' and 'Last Successful Curator Scans' section:</p>
 
-<figure><img alt="" class="iimagesv22010pagescurator_queue_lastsuccessful2png" src="imagesv2/2010Pages/curator_queue_lastsuccessful2.png" />
+<figure class="large"><img alt="" class="iimagesv22010pagescurator_queue_lastsuccessful2png" src="imagesv2/2010Pages/curator_queue_lastsuccessful2.png" />
 <figcaption>2010 Page - Queued and Successful Scans</figcaption>
 </figure>
 </section>
