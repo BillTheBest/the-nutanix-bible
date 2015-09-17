@@ -1345,6 +1345,68 @@ $vms = Get-NTNXVM | where {$_.vmName -match $searchString}</p>
 <figcaption>OpenStack - Multi-Site</figcaption>
 </figure>
 </section>
+
+<section data-type="sect2">
+<h2>Troubleshooting &amp; Advanced Administration</h2>
+
+<section data-type="sect3">
+<h3>Key log locations</h3>
+
+</section>
+
+<section data-type="sect3">
+<h3>Command Reference</h3>
+
+<p>Load Keystone source (perform before running other commands)</p>
+
+<p class="codetext">source keystonerc_admin</p>
+
+<p>List Keystone services</p>
+
+<p class="codetext">keystone service-list</p>
+
+<p>List Keystone endpoints</p>
+
+<p class="codetext">keystone endpoint-list</p>
+
+<p>Create Keystone endpoint</p>
+
+<p class="codetext">
+	keystone endpoint-create \ <br/>
+  --service-id=&lt;SERVICE_ID&gt; \ <br/>
+  --publicurl=http://&lt;IP&#58;PORT&gt; \ <br/>
+  --internalurl=http://&lt;IP&#58;PORT&gt; \ <br/>
+  --region=&lt;REGION_NAME&gt; \ <br/>
+  --adminurl=http://&lt;IP:PORT&gt; <br/>
+</p>
+
+<p>List Nova instances</p>
+
+<p class="codetext">nova list</p>
+
+<p>Show instance details</p>
+
+<p class="codetext">nova show &lt;INSTANCE_NAME&gt;</p>
+
+<p>List Nova hypersivor hosts</p>
+
+<p class="codetext">nova hypervisor-list</p>
+
+<p>Show hyprevisor host details</p>
+
+<p class="codetext">nova hypervisor-show &lt;HOST_ID&gt;</p>
+
+<p>List Glance images</p>
+
+<p class="codetext">glance image-list</p>
+
+<p>Show Glance image details</p>
+
+<p class="codetext">glance image-show &lt;IMAGE_ID&gt;</p>
+
+</section>
+
+</section>
 </section>
 </section>
 </section>
