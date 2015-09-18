@@ -594,7 +594,7 @@ one-click management and interface for datacenter operations.</p>
 
 <p>Power on all VMs</p>
 
-<p class="codetext">Example: vm.on *</p>
+<p class="codetext">Example: vm.on &#42;</p>
 
 <p>Power on range of VMs</p>
 
@@ -1458,7 +1458,7 @@ $vms = Get-NTNXVM | where {$_.vmName -match $searchString}</p>
   </tr>
   <tr>
     <td>Nova</td>
-    <td>/var/log/nova/nova-api.log<br>/var/log/nova/nova-scheduler.log<br>/var/log/nova/nove-compute.log*</td>
+    <td>/var/log/nova/nova-api.log<br>/var/log/nova/nova-scheduler.log<br>/var/log/nova/nove-compute.log&#42;</td>
   </tr>
   <tr>
     <td>Swift</td>
@@ -1474,11 +1474,11 @@ $vms = Get-NTNXVM | where {$_.vmName -match $searchString}</p>
   </tr>
   <tr>
     <td>Neutron</td>
-    <td>/var/log/neutron/server.log<br>/var/log/neutron/dhcp-agent.log*<br>/var/log/neutron/l3-agent.log*<br>/var/log/neutron/metadata-agent.log*<br>/var/log/neutron/openvswitch-agent.log*</td>
+    <td>/var/log/neutron/server.log<br>/var/log/neutron/dhcp-agent.log&#42;<br>/var/log/neutron/l3-agent.log&#42;<br>/var/log/neutron/metadata-agent.log&#42;<br>/var/log/neutron/openvswitch-agent.log&#42;</td>
   </tr>
 </table>
 <p>
-	Logs marked with * are on the Acropolis SVM only.
+	Logs marked with &#42; are on the Acropolis SVM only.
 </p>
 
 </section>
@@ -1534,7 +1534,6 @@ $vms = Get-NTNXVM | where {$_.vmName -match $searchString}</p>
 <p class="codetext">glance image-show &lt;IMAGE_ID&gt;</p>
 
 </section>
-
 </section>
 </section>
 </section>
