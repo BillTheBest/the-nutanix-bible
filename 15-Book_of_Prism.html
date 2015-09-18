@@ -1425,22 +1425,22 @@ Add serice endpoint for Glance
   # Default glance port (integer value) <br/>
   port=9292 <br/>
 	... <br/>
-  # A list of the glance api servers available to nova. Prefix
-  # with https:// for ssl-based glance api servers.
-  # ([hostname|ip]:port) (list value)
+  # A list of the glance api servers available to nova. Prefix <br/>
+  # with https:// for ssl-based glance api servers. <br/>
+  # ([hostname|ip]:port) (list value) <br/>
   api_servers=&lt;ASVM_IP&gt;:9292
 </p>
 <p>
 	Next we will edit Cinder.conf which is located at /etc/cinder/cinder.conf and edit the following items:
 </p>
 <p class="codetext">
-	# Default glance host name or IP (string value)
-  glance_host=&lt;ASVM_IP&gt;
-  # Default glance port (integer value)
-  glance_port=9292
-  # A list of the glance API servers available to cinder
-  # ([hostname|ip]:port) (list value)
-  glance_api_servers=$glance_host:$glance_port
+	# Default glance host name or IP (string value) <br/>
+  glance_host=&lt;ASVM_IP&gt; <br/>
+  # Default glance port (integer value) <br/>
+  glance_port=9292 <br/>
+  # A list of the glance API servers available to cinder <br/>
+  # ([hostname|ip]:port) (list value) <br/>
+  glance_api_servers=$glance_host:$glance_port <br/>
 </p>
 <p>
 	After the files have been edited we will restart the Nova and Cinder services to take the new configuration settings.  The services can be restarted with the following commands below or by running the scripts which are available for download.
