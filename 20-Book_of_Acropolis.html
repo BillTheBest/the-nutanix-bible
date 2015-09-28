@@ -824,12 +824,12 @@ storage, compute and virtualization platform.
 <p>Below we breakdown some common scenarios and what level of awareness will be utilized:</p>
 
 <ul>
-	<li>&lt; 3 blocks –&gt; <strong>NODE</strong> awareness</li>
-	<li>3+ blocks uniformly populated –&gt; <strong>BLOCK + NODE</strong> awareness</li>
+	<li>&lt; 3 blocks: <strong>NODE</strong> awareness</li>
+	<li>3+ blocks uniformly populated: <strong>BLOCK + NODE</strong> awareness</li>
 	<li>3+ blocks not uniformly populated
 	<ul>
-		<li>If SSD <strong>or</strong> HDD tier variance between blocks is &gt; max variance –&gt; <strong>NODE</strong> awareness</li>
-		<li>If SSD and HDD tier variance between blocks is &lt; max variance&nbsp; –&gt; <strong>BLOCK</strong> + NODE awareness</li>
+		<li>If SSD <strong>or</strong> HDD tier variance between blocks is &gt; max variance: <strong>NODE (pre 4.5) or BEST EFFORT BLOCK (post 4.5)</strong> awareness</li>
+		<li>If SSD and HDD tier variance between blocks is &lt; max variance: <strong>BLOCK + NODE</strong> awareness</li>
 	</ul>
 	</li>
 </ul>
@@ -1382,6 +1382,13 @@ This should only be used for non-production scenarios and the cluster IPs should
 </figure>
 
 <p>Communication between Acropolis and KVM occurs via Libvirt.&nbsp;</p>
+
+<div data-type="note" class="note">
+<h1>Processor Generation Compatability</h1>
+
+<p>Similar to VMware's Enhanced vMotion Capability (EVC) which allows VMs to move between different processor generations; Acropolis Hypervisor will determine the lowest processor generation in the cluster and constrain all QEMU domains to that level.  This allows mixing of processor generations within an AHV cluster and ensures the ability to live migrate between hosts.</p>
+</div>
+
 </section>
 
 <section data-type="sect1">
@@ -1752,6 +1759,14 @@ Cat /var/log/iscsi_redirector</p>
 <p>Check status</p>
 
 <p class="codetext">upgrade_status</p>
+
+<h2>Node(s) upgrade</h2>
+
+<p class="codedescription">Description: Perform upgrade of specified node(s) to current clusters version</p>
+
+<p>From any CVM running the desired version run the following command:</p>
+
+<p class="codetext">cluster -u &lt;NODE_IP(s)&gt; upgrade_node</p>
 
 <h2>Hypervisor upgrade status</h2>
 
