@@ -773,6 +773,27 @@ storage, compute and virtualization platform.
 <figcaption>Block Failure Replica Placement</figcaption>
 </figure>
 
+<div data-type="note" class="note">
+	<h1>Data Awareness Conditions</h1>
+<p>Below we breakdown some common scenarios and what level of awareness will be utilized:</p>
+
+<ul>
+	<li>&lt; 3 blocks: <strong>NODE</strong> awareness</li>
+	<li>3+ blocks uniformly populated: <strong>BLOCK + NODE</strong> awareness</li>
+	<li>3+ blocks not uniformly populated
+	<ul>
+		<li>If SSD <strong>or</strong> HDD tier variance between blocks is &gt; max variance: <strong>NODE (pre 4.5) or BEST EFFORT BLOCK (post 4.5)</strong> awareness</li>
+		<li>If SSD and HDD tier variance between blocks is &lt; max variance: <strong>BLOCK + NODE</strong> awareness</li>
+	</ul>
+	</li>
+</ul>
+
+<p>Max tier variance is calculated as: 100 / (RF+1)</p>
+<ul>
+	<li>E.g., 33% for RF2 or 25% for RF3</li>
+</ul>
+</div>
+
 <h2>Metadata</h2>
 
 <p>As mentioned in the Scalable Metadata section above, Nutanix leverages a heavily modified Cassandra platform to store metadata and other essential information.&nbsp; Cassandra leverages a ring-like structure and replicates to n number of peers within the ring to ensure data consistency and availability.</p>
@@ -799,7 +820,69 @@ storage, compute and virtualization platform.
 <figcaption>Full Cassandra Node Block Aware Placement</figcaption>
 </figure>
 
-<p>&nbsp;</p>
+<div data-type="note" class="note">
+	<h1>Metadata Awareness Conditions</h1>
+<p>Below we breakdown some common scenarios and what level of awareness will be utilized:</p>
+
+<ul>
+	<li>FT1 (Data RF2 / Metadata RF3) will be block aware if:
+		<ul>
+			<li>
+				&gt; 3 blocks
+			</li>
+			<li>Let X be the number of nodes in the block with max nodes. Then, the remaining blocks should have at least 2X nodes.
+				<ul>
+					<li>
+						Example: 4 blocks with 2,3,4,2 nodes per block respectively.
+						<ul>
+							<li>
+								The max node block has 4 nodes which means the other 3 blocks should have 2x4 (8) nodes.  In this case it <strong>WOULD NOT</strong> be block aware as the remaining blocks only have 7 nodes.
+							</li>
+						</ul>
+					</li>
+					<br/>
+					<li>
+						Example: 4 blocks with 3,3,4,3 nodes per block respectively.
+						<ul>
+							<li>
+								The max node block has 4 nodes which means the other 3 blocks should have 2x4==8 nodes.  In this case it <strong>WOULD</strong> be block aware as the remaining blocks have 9 nodes which is above our minimum.
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</li>
+		</ul>
+	</li>
+	<li>FT2 (Data RF3 / Metadata RF5) will be block aware if:
+		<ul>
+			<li>
+				&gt; 5 blocks
+			</li>
+			<li>Let X be the number of nodes in the block with max nodes. Then, the remaining blocks should have at least 4X nodes.
+				<ul>
+					<li>
+						Example: 6 blocks with 2,3,4,2,3,3 nodes per block respectively.
+						<ul>
+							<li>
+							The max node block has 4 nodes which means the other 3 blocks should have 4x4==16 nodes.  In this case it <strong>WOULD NOT</strong> be block aware as the remaining blocks only have 13 nodes.
+							</li>
+						</ul>
+						</li>
+					<br/>
+					<li>
+						Example: 6 blocks with 2,4,4,4,4,4 nodes per block respectively.
+						<ul>
+							<li>
+								The max node block has 4 nodes which means the other 3 blocks should have 4x4==16 nodes.  In this case it <strong>WOULD</strong> be block aware as the remaining blocks have  18 nodes which is above our minimum.
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</li>
+		</ul>
+	</li>
+</ul>
+</div>
 
 <h2>Configuration Data</h2>
 
@@ -821,24 +904,6 @@ storage, compute and virtualization platform.
 
 <p>NOTE: Prior to 4.5, this migration was not automatic and must be done manually.</p>
 
-<p>Below we breakdown some common scenarios and what level of awareness will be utilized:</p>
-
-<ul>
-	<li>&lt; 3 blocks: <strong>NODE</strong> awareness</li>
-	<li>3+ blocks uniformly populated: <strong>BLOCK + NODE</strong> awareness</li>
-	<li>3+ blocks not uniformly populated
-	<ul>
-		<li>If SSD <strong>or</strong> HDD tier variance between blocks is &gt; max variance: <strong>NODE (pre 4.5) or BEST EFFORT BLOCK (post 4.5)</strong> awareness</li>
-		<li>If SSD and HDD tier variance between blocks is &lt; max variance: <strong>BLOCK + NODE</strong> awareness</li>
-	</ul>
-	</li>
-</ul>
-
-<p>NOTE: max tier variance is calculated as: 100 / (RF+1)</p>
-
-<ul>
-	<li>E.g., 33% for RF2 or 25% for RF3</li>
-</ul>
 </section>
 
 <section data-type="sect1">
