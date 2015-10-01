@@ -355,7 +355,7 @@ storage, compute and virtualization platform.
 
 <ul>
 	<li>Key Role: In-memory read cache</li>
-	<li>Description: The Extent Cache is an in-memory read cache that is completely in the CVM’s memory.&nbsp; This will store non-fingerprinted extents for containers where fingerprinting and deduplication are disabled.&nbsp; As of version 3.5, this is separate from the Content Cache, however these will be merging in a subsequent release.</li>
+	<li>Description: The Extent Cache is an in-memory read cache that is completely in the CVM’s memory.&nbsp; This will store non-fingerprinted extents for containers where fingerprinting and deduplication are disabled.&nbsp; As of version 3.5, this is separate from the Content Cache, however these are merged in 4.5 with the unified cache.</li>
 </ul>
 </section>
 
@@ -488,44 +488,6 @@ storage, compute and virtualization platform.
 </section>
 
 <section data-type="sect1">
-<h1>Elastic Dedupe Engine</h1>
-
-<p>For a visual explanation, you can watch the following video: <a href="https://youtu.be/C-rp13cDpNw">LINK</a></p>
-
-<div class="video-container"><iframe allowfullscreen="" frameborder="0" src="https://www.youtube.com/embed//C-rp13cDpNw"></iframe></div>
-
-<p>The Elastic Dedupe Engine is a software-based feature of DSF which allows for data deduplication in the capacity (HDD) and performance (SSD/Memory) tiers.&nbsp; Streams of data are fingerprinted during ingest using a SHA-1 hash at a 16K granularity.&nbsp; This fingerprint is only done on data ingest and is then stored persistently as part of the written block’s metadata.&nbsp; NOTE: Initially a 4K granularity was used for fingerprinting, however after testing 16K offered the best blend of deduplication with reduced metadata overhead.&nbsp; Deduplicated data is pulled into the cache at a 4K granularity.</p>
-
-<p>Contrary to traditional approaches which utilize background scans requiring the data to be re-read, Nutanix performs the fingerprint in-line on ingest.&nbsp; For duplicate data that can be deduplicated in the capacity tier, the data does not need to be scanned or re-read, essentially duplicate copies can be removed.</p>
-
-<p>The following figure shows an example of how the Elastic Dedupe Engine scales and handles local VM I/O requests:</p>
-
-<figure class="large"><img alt="" class="iimagesv2dedup_1png" src="imagesv2/dedup_1.png" />
-<figcaption>Elastic Dedupe Engine - Scale</figcaption>
-</figure>
-
-<p>Fingerprinting is done during data ingest of data with an I/O size of 64K or greater.&nbsp; Intel acceleration is leveraged for the SHA-1 computation which accounts for very minimal CPU overhead.&nbsp; In cases where fingerprinting is not done during ingest (e.g., smaller I/O sizes), fingerprinting can be done as a background process. The Elastic Deduplication Engine spans both the capacity disk tier (HDD), but also the performance tier (SSD/Memory).&nbsp; As duplicate data is determined, based upon multiple copies of the same fingerprints, a background process will remove the duplicate data using the DSF Map Reduce framework (Curator). For data that is being read, the data will be pulled into the DSF Content Cache which is a multi-tier/pool cache.&nbsp; Any subsequent requests for data having the same fingerprint will be pulled directly from the cache.&nbsp; To learn more about the Content Cache and pool structure, please refer to the ‘Content Cache’ sub-section in the I/O path overview.</p>
-
-<p>The following figure shows an example of how the Elastic Dedupe Engine interacts with the DSF I/O path:</p>
-
-<figure><img alt="" class="iimagesv2dedup_2png" src="imagesv2/dedup_2.png" />
-<figcaption>EDE I/O Path</figcaption>
-</figure>
-
-<p>You can view the current deduplication rates via Prism on the Storage &gt; Dashboard page.</p>
-
-<div data-type="note" class="note">
-<h1>Pro tip</h1>
-
-<p>Use performance tier deduplication on your base images (you can manually fingerprint them using vdisk_manipulator) to take advantage of the content cache.</p>
-
-<p>Use capacity tier deduplication for P2V / V2V,&nbsp;when using Hyper-V since ODX does a full data copy, or when doing cross-container clones (not usually recommended).</p>
-
-<p>In most other cases compression will yield the highest capacity savings and should be used instead.</p>
-</div>
-</section>
-
-<section data-type="sect1">
 <h1>Compression</h1>
 
 <p>For a visual explanation, you can watch the following video: <a href="https://youtu.be/ERDqOCzDcQY">LINK</a></p>
@@ -541,6 +503,17 @@ storage, compute and virtualization platform.
 <figure><img alt="" class="iimagesv2compression_1png" src="imagesv2/compression_1.png" />
 <figcaption>Inline Compression I/O Path</figcaption>
 </figure>
+
+<div data-type="note" class="note">
+<h1>Pro tip</h1>
+
+<p>Almost always use inline compression (compression delay = 0) as it will only compress larger / sequential writes and not impact random write performance.</p>
+
+<p>
+	Inline compression also pairs perfectly with erasure coding.
+</p>
+
+</div>
 
 <p>For post-process compression, all new write I/O is written in an un-compressed state and follows the normal DSF I/O path.&nbsp; After the compression delay (configurable) is met and the data has become cold (down-migrated to the HDD tier via ILM), the data is eligible to become compressed. Post-process compression uses the Curator MapReduce framework and all nodes will perform compression tasks.&nbsp; Compression tasks will be throttled by Chronos.</p>
 
@@ -559,24 +532,18 @@ storage, compute and virtualization platform.
 </figure>
 
 <p>You can view the current compression rates via Prism on the Storage &gt; Dashboard page.</p>
-
-<div data-type="note" class="note">
-<h1>Pro tip</h1>
-
-<p>Almost always use inline compression (compression delay = 0) as it will only compress larger / sequential writes and not impact random write performance.</p>
-</div>
 </section>
 
 <section data-type="sect1">
 <h1>Erasure Coding</h1>
 
-<p>The Nutanix platform relies on a replication factor (RF) for data protection and availability.&nbsp; This method provides the highest degree of availability because it does not require reading from more than one storage location or data re-computation on failure.&nbsp; However, this does come at the cost of storage resources as full copies are required.&nbsp;</p>
+<p>The Nutanix platform relies leverages factor (RF) for data protection and availability.&nbsp; This method provides the highest degree of availability because it does not require reading from more than one storage location or data re-computation on failure.&nbsp; However, this does come at the cost of storage resources as full copies are required.&nbsp;</p>
 
 <p>To provide a balance between availability while reducing the amount of storage required, DSF provides the ability to encode data using erasure codes (EC).</p>
 
 <p>Similar to the concept of RAID (levels 4, 5, 6, etc.) where parity is calculated, EC encodes a strip of data blocks on different nodes and calculates parity.&nbsp; In the event of a host and/or disk failure, the parity can be leveraged to calculate any missing data blocks (decoding).&nbsp; In the case of DSF, the data block is an extent group and each data block must be on a different node and belong to a different vDisk.</p>
 
-<p>The number of data and parity blocks in a strip is configurable based upon the desired failures to tolerate.&nbsp; The configuration is commonly referred to as &lt;number of data blocks&gt;/&lt;number of parity blocks&gt;.</p>
+<p>The number of data and parity blocks in a strip is configurable based upon the desired failures to tolerate.&nbsp; The configuration is commonly referred to as the number of &lt;data blocks&gt;/&lt;number of parity blocks&gt;.</p>
 
 <p>For example, “RF2 like” availability (e.g., N+1) could consist of 3 or 4 data blocks and 1 parity block in a strip (e.g., 3/1 or 4/1).&nbsp; “RF3 like” availability (e.g. N+2) could consist of 3 or 4 data blocks and 2 parity blocks in a strip (e.g. 3/2 or 4/2).</p>
 
@@ -586,9 +553,9 @@ storage, compute and virtualization platform.
 <p>You can override the default strip size (4/1 for “RF2 like” or 4/2 for “RF3 like”) via NCLI ‘ctr [create / edit] … erasure-code=&lt;N&gt;/&lt;K&gt;’ where N is the number of data blocks and K is the number of parity blocks.</p>
 </div>
 
-<p>The expected overhead can be calculated as &lt;# parity blocks&gt; / &lt;# parity blocks + # data blocks&gt;.&nbsp; For example, a 4/1 strip has a 25% overhead or 1.25X compared to the 2X of RF2.&nbsp; A 4/2 strip has a 50% overhead or 1.5X compared to the 3X of RF3.</p>
+<p>The expected overhead can be calculated as &lt;# parity blocks&gt; / &lt;# data blocks&gt;.&nbsp; For example, a 4/1 strip has a 25% overhead or 1.25X compared to the 2X of RF2.&nbsp; A 4/2 strip has a 50% overhead or 1.5X compared to the 3X of RF3.</p>
 
-<p>The following table characterizes the encoded strip size and overheads:</p>
+<p>The following table characterizes the encoded strip sizes and example overheads:</p>
 
 <table>
   <tr>
@@ -669,6 +636,64 @@ storage, compute and virtualization platform.
 <h1>Pro tip</h1>
 
 <p>Erasure Coding pairs perfectly with inline compression which will add to the storage savings.  I leverage inline compression + EC in my environments.</p>
+</div>
+</section>
+
+<section data-type="sect1">
+<h1>Elastic Dedupe Engine</h1>
+
+<p>For a visual explanation, you can watch the following video: <a href="https://youtu.be/C-rp13cDpNw">LINK</a></p>
+
+<div class="video-container"><iframe allowfullscreen="" frameborder="0" src="https://www.youtube.com/embed//C-rp13cDpNw"></iframe></div>
+
+<p>The Elastic Dedupe Engine is a software-based feature of DSF which allows for data deduplication in the capacity (HDD) and performance (SSD/Memory) tiers.&nbsp; Streams of data are fingerprinted during ingest using a SHA-1 hash at a 16K granularity.&nbsp; This fingerprint is only done on data ingest and is then stored persistently as part of the written block’s metadata.&nbsp; NOTE: Initially a 4K granularity was used for fingerprinting, however after testing 16K offered the best blend of deduplication with reduced metadata overhead.&nbsp; Deduplicated data is pulled into the content cache at a 4K granularity.</p>
+
+<p>Contrary to traditional approaches which utilize background scans requiring the data to be re-read, Nutanix performs the fingerprint in-line on ingest.&nbsp; For duplicate data that can be deduplicated in the capacity tier, the data does not need to be scanned or re-read, essentially duplicate copies can be removed.</p>
+
+<p>
+	To make the metadata overhead more efficient, fingerprint refcounts are monitored to track dedupability.  Fingerprints with low refcounts will be discarded to minimize the metadata overhead. To minimize fragmentation full extents will be preferred for capacity tier deduplication.
+</p>
+
+<div data-type="note" class="note">
+<h1>Pro tip</h1>
+
+<p>Use performance tier deduplication on your base images (you can manually fingerprint them using vdisk_manipulator) to take advantage of the content cache.</p>
+
+<p>Use capacity tier deduplication for P2V / V2V,&nbsp;when using Hyper-V since ODX does a full data copy, or when doing cross-container clones (not usually recommended as a single container is preferred).</p>
+
+<p>In most other cases compression will yield the highest capacity savings and should be used instead.</p>
+</div>
+
+<p>The following figure shows an example of how the Elastic Dedupe Engine scales and handles local VM I/O requests:</p>
+
+<figure class="large"><img alt="" class="iimagesv2dedup_1png" src="imagesv2/dedup_1.png" />
+<figcaption>Elastic Dedupe Engine - Scale</figcaption>
+</figure>
+
+<p>Fingerprinting is done during data ingest of data with an I/O size of 64K or greater.&nbsp; Intel acceleration is leveraged for the SHA-1 computation which accounts for very minimal CPU overhead.&nbsp; In cases where fingerprinting is not done during ingest (e.g., smaller I/O sizes), fingerprinting can be done as a background process. The Elastic Deduplication Engine spans both the capacity disk tier (HDD), but also the performance tier (SSD/Memory).&nbsp; As duplicate data is determined, based upon multiple copies of the same fingerprints, a background process will remove the duplicate data using the DSF Map Reduce framework (Curator). For data that is being read, the data will be pulled into the DSF Content Cache which is a multi-tier/pool cache.&nbsp; Any subsequent requests for data having the same fingerprint will be pulled directly from the cache.&nbsp; To learn more about the Content Cache and pool structure, please refer to the ‘Content Cache’ sub-section in the I/O path overview.</p>
+
+<div data-type="note" class="note">
+<h1>Fingerprinted vDisk Offsets</h1>
+<p>
+	Prior to 4.5 only the first 12GB of a vDisk was eligible to be fingerprinted.  This was done to maintain a smaller metadata footprint and since the OS is normally the most common data.  As of 4.5 this has increased to 24GB due to higher metadata efficiencies.
+</p>
+</div>
+
+<p>The following figure shows an example of how the Elastic Dedupe Engine interacts with the DSF I/O path:</p>
+
+<figure><img alt="" class="iimagesv2dedup_2png" src="imagesv2/dedup_2.png" />
+<figcaption>EDE I/O Path</figcaption>
+</figure>
+
+<p>You can view the current deduplication rates via Prism on the Storage &gt; Dashboard page.</p>
+
+<div data-type="note" class="note">
+<h1>Dedup + Compression</h1>
+
+<p>
+	As of 4.5 both deduplication and compression can be enabled on the same container.  However, unless the data is dedupable (conditions explained earlier in section), stick with compression.
+</p>
+
 </div>
 </section>
 
