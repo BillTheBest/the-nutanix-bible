@@ -1300,6 +1300,283 @@ You can view the Nova services using the OpenStack portal under 'Admin'->'System
 <figure><img alt="" src="imagesv2/openstack_regions.png" />
 <figcaption>OpenStack - Deployment Layout</figcaption>
 </figure>
+<p>
+	The figure shows an example application of the constructs:
+</p>
+
+<figure><img alt="" src="imagesv2/openstack_regions_example.png" />
+<figcaption>OpenStack - Deployment Layout - Example</figcaption>
+</figure>
+<p>
+	You can view and manage hosts, host aggregates and availability zones using the OpenStack portal under 'Admin'->'System'->'Host Aggregates'.
+</p>
+
+<p>The figure shows the host aggregates, availability zones and hosts:</p>
+
+<figure class="large"><img alt="" src="imagesv2/openstack_hostagg_az.png" />
+<figcaption>OpenStack Host Aggregates and Availability Zones</figcaption>
+</figure>
+
+</section>
+
+<section data-type="sect3">
+<h3>Services Design and Scaling</h3>
+
+<p>For larger deployments it is recommended to have multiple Acropolis OVMs connected to the OpenStack Controller abstracted by a load balancer. This allows for HA and of the OVMs as well as distribution of transactions. The OVM(s) don't contain any state information allowing them to be scaled.</p>
+
+<p>The figure shows an example of scaling OVMs for a single site:</p>
+
+<figure><img alt="" src="imagesv2/openstack_svmha2.png" />
+<figcaption>OpenStack - OVM Load Balancing</figcaption>
+</figure>
+
+<p>For environments spanning multiple sites the OpenStack Controller will talk to multiple Acropolis OVMs across sites.</p>
+
+<p>The figure shows an example of the deployment across multiple sites:</p>
+<figure><img alt="" src="imagesv2/openstack_siteha2.png" />
+<figcaption>OpenStack - Multi-Site</figcaption>
+</figure>
+</section>
+<section data-type="sect3">
+<h3>Deployment</h3>
+<h4>Acropolis OVM</h4>
+<p>
+	The Acropolis OVM can be deployed using the following steps:
+</p>
+<p>
+	First we will import the provided Acropolis OVM disk image to Acropolis cluster.  This can be done by copying the disk image over using SCP or by specifying a URL to copy the file from.  Note: It is possible to deploy this VM anywhere, not necessarily on a Acropolis cluster.
+</p>
+<p>To copy the file SCP the image to any CVM IP on port 2222, the run the following command to create the image from the disk:</p>
+<p class="codetext">image.create &lt;IMAGE_NAME&gt; clone_from_vmdisk=&lt;IMAGE_PATH&gt; container=&lt;CONTAINER_NAME&gt;</p>
+<p>
+	To import the disk image using Images API, run the following command:
+</p>
+<p class="codetext">image.create &lt;IMAGE_NAME&gt; source_url=&lt;SOURCE_URL&gt; container=&lt;CONTAINER_NAME&gt;</p>
+<p>Next create the Acropolis VM for the OVM by running the following ACLI commands on any CVM:</p>
+<p class="codetext">vm.create &lt;VM_NAME&gt; num_vcpus=2 memory=16G<br/>
+vm.disk_create &lt;VM_NAME&gt; clone_from_image=&lt;IMAGE_NAME&gt;<br/>
+vm.nic_create &lt;VM_NAME&gt; network=&lt;NETWORK_NAME&gt;<br/>
+vm.on &lt;VM_NAME&gt;</p>
+<p>Once the VM has been created and powered on SSH to Service VM using the provided credentials</p>
+<p>
+	Next we'll configure the OVM by running the following commands:
+</p>
+<p class="codetext"># Register OpenStack Driver service <br/>
+	ovmctl --add=service --name=&lt;OVM_NAME&gt; --ip=&lt;OVM_IP&gt; --username=root --password=admin</p>
+
+<p class="codetext"># Register OpenStack Controller <br/>
+	ovmctl --add=controller --name=&lt;OS_CONTROLLER_NAME&gt; --ip=&lt;OS_CONTROLLER_IP&gt; --username=admin --password=admin</p>
+
+<p class="codetext">#Register Acropolis Cluster(s) <br/>
+	ovmctl --add=cluster --name=&lt;CLUSTER_NAME&gt; --ip=&lt;CLUSTER_IP&gt; --username=&lt;PRISM_USER&gt; --password=&lt;PRISM_PASSWORD&gt; --vnc=8081</p>
+<p>
+	Now that the OVM has been configured, we'll configure the OpenStack Controller to know about the Glance and Neutron endpoints.
+</p>
+<p>
+	First we will get the Keystone service ids for Glance and Neutron by running the following commands on the OpenStack Controller:
+</p>
+<p class="codetext">source keystonerc_admin <br/>
+	keystone service-list
+</p>
+<p>
+	The output should look similar to the following:
+</p>
+<p class="codetext">
++----------------------------------+------------+-----------------+<br/>
+|                id                |    name    |       type      |<br/>
++----------------------------------+------------+-----------------+<br/>
+| e95f5c6a56dc4d93b016dbad0b72351e | ceilometer |     metering    |<br/>
+| 09f82d2cacc64e6082755fe15f35dbcc |   cinder   |      volume     |<br/>
+| f169a9e6a5744b4f8f88897a4bd2b16a |  cinderv2  |     volumev2    |<br/>
+| 9e539e8dee264dd9a086677427434982 |   glance   |      image      |<br/>
+| e0d6cc81400642e092c3290e82a3b607 |    heat    |  orchestration  |<br/>
+| 9082586f93eb4ac3be59b880a163c2b8 |  keystone  |     identity    |<br/>
+| f4c4266142c742a78b330f8bafe5e49e |  neutron   |     network     |<br/>
+| df0cc41a9de2490a8ae403f4b026adab |    nova    |     compute     |<br/>
+| 829d9667fd194102898e489503f6bbad |  nova_ec2  |       ec2       |<br/>
+| b00d961b5b0c4ebbb9bdc742ff6570bf |   novav3   |    computev3    |<br/>
+| 717c7602de9d44eba95e821a9a4aaf26 |   sahara   | data-processing |<br/>
+| 23b80e6d3fd84c62943d3602e3f6cdc7 |   swift    |   object-store  |<br/>
+| 6284a3da6d9243e98d3e923e46122109 |  swift_s3  |        s3       |<br/>
+| f3f5eae89c1e4e57be222505637dfb36 |   trove    |     database    |<br/>
++----------------------------------+------------+-----------------+<br/>
+ </p>
+
+<p>
+	We will then create the two endpoints for Glance and Neutron using the services ids gathered previously:
+</p>
+<p class="codetext">
+	# Add Keystone endpoint for Glance <br/>
+	keystone endpoint-create \ <br/>
+	--service-id=&lt;GLANCE_SERVICE_ID&gt; \ <br/>
+	--publicurl=http://&lt;OVM_IP&gt;:9292 \ <br/>
+	--internalurl=http://&lt;OVM_IP&gt;:9292 \ <br/>
+	--region=&lt;REGION_NAME&gt; \ <br/>
+	--adminurl=http://&lt;OVM_IP&gt;:9292
+</p>
+
+<p class="codetext">
+	# Add Keystone endpoint for Neutron <br/>
+	keystone endpoint-create \ <br/>
+	--service-id=&lt;NEUTRON_SERVICE_ID&gt; \ <br/>
+	--publicurl=http://&lt;OVM_IP&gt;:9696 \ <br/>
+	--internalurl=http://&lt;OVM_IP&gt;:9696 \ <br/>
+	--region=&lt;REGION_NAME&gt; \ <br/>
+	--adminurl=http://&lt;OVM_IP&gt;:9696
+</p>
+<p>
+	After the endpoints have been created we will update the Nova and Cinder configuration files with new Acropolis OVM IP of Glance host.</p>
+<p>
+	First we will edit Nova.conf which is located at /etc/nova/nova.conf and edit the following lines:
+</p>
+<p class="codetext">
+	[glance] <br/>
+	... <br/>
+  # Default glance hostname or IP address (string value) <br/>
+  host=&lt;OVM_IP&gt; <br/>
+  <br/>
+  # Default glance port (integer value) <br/>
+  port=9292 <br/>
+	... <br/>
+  # A list of the glance api servers available to nova. Prefix <br/>
+  # with https:// for ssl-based glance api servers. <br/>
+  # ([hostname|ip]:port) (list value) <br/>
+  api_servers=&lt;OVM_IP&gt;:9292
+</p>
+<p>
+	Next we will edit Cinder.conf which is located at /etc/cinder/cinder.conf and edit the following items:
+</p>
+<p class="codetext">
+	# Default glance host name or IP (string value) <br/>
+  glance_host=&lt;OVM_IP&gt; <br/>
+  # Default glance port (integer value) <br/>
+  glance_port=9292 <br/>
+  # A list of the glance API servers available to cinder <br/>
+  # ([hostname|ip]:port) (list value) <br/>
+  glance_api_servers=$glance_host:$glance_port <br/>
+</p>
+<p>
+	After the files have been edited we will restart the Nova and Cinder services to take the new configuration settings.  The services can be restarted with the following commands below or by running the scripts which are available for download.
+</p>
+
+<p class="codetext">
+	# Restart Nova services<br/>
+	service openstack-nova-api restart<br/>
+	service openstack-nova-consoleauth restart<br/>
+	service openstack-nova-scheduler restart<br/>
+	service openstack-nova-conductor restart<br/>
+	service openstack-nova-cert restart<br/>
+	service openstack-nova-novncproxy restart<br/>
+	<br/>
+	# OR you can also use the script which can be downloaded as part of the helper tools:<br/>
+	~/openstack/commands/nova-restart <br/>
+	<br/>
+	# Restart Cinder <br/>
+	service openstack-cinder-api restart<br/>
+	service openstack-cinder-scheduler restart<br/>
+	service openstack-cinder-backup restart <br/>
+	<br/>
+	# OR you can also use the script which can be downloaded as part of the helper tools:<br/>
+	~/openstack/commands/cinder-restart
+</p>
+
+</section>
+
+<section data-type="sect2">
+<h2>Troubleshooting &amp; Advanced Administration</h2>
+
+<section data-type="sect3">
+<h3>Key log locations</h3>
+<table>
+  <tr>
+    <th>Component</th>
+    <th>Key Log Location(s)</th>
+  </tr>
+  <tr>
+    <td>Keystone</td>
+    <td>/var/log/keystone/keystone.log</td>
+  </tr>
+  <tr>
+    <td>Horizon</td>
+    <td>/var/log/horizon/horizon.log</td>
+  </tr>
+  <tr>
+    <td>Nova</td>
+    <td>/var/log/nova/nova-api.log<br/>/var/log/nova/nova-scheduler.log<br/>/var/log/nova/nove-compute.log&#42;</td>
+  </tr>
+  <tr>
+    <td>Swift</td>
+    <td>/var/log/swift/swift.log</td>
+  </tr>
+  <tr>
+    <td>Cinder</td>
+    <td>/var/log/cinder/api.log<br/>/var/log/cinder/scheduler.log<br/>/var/log/cinder/volume.log</td>
+  </tr>
+  <tr>
+    <td>Glance</td>
+    <td>/var/log/glance/api.log<br/>/var/log/glance/registry.log</td>
+  </tr>
+  <tr>
+    <td>Neutron</td>
+    <td>/var/log/neutron/server.log<br/>/var/log/neutron/dhcp-agent.log&#42;<br/>/var/log/neutron/l3-agent.log&#42;<br/>/var/log/neutron/metadata-agent.log&#42;<br/>/var/log/neutron/openvswitch-agent.log&#42;</td>
+  </tr>
+</table>
+<p>
+	Logs marked with &#42; are on the Acropolis OVM only.
+</p>
+
+</section>
+
+<section data-type="sect3">
+<h3>Command Reference</h3>
+
+<p>Load Keystone source (perform before running other commands)</p>
+
+<p class="codetext">source keystonerc_admin</p>
+
+<p>List Keystone services</p>
+
+<p class="codetext">keystone service-list</p>
+
+<p>List Keystone endpoints</p>
+
+<p class="codetext">keystone endpoint-list</p>
+
+<p>Create Keystone endpoint</p>
+
+<p class="codetext">
+	keystone endpoint-create \ <br/>
+  --service-id=&lt;SERVICE_ID&gt; \ <br/>
+  --publicurl=http://&lt;IP&#58;PORT&gt; \ <br/>
+  --internalurl=http://&lt;IP&#58;PORT&gt; \ <br/>
+  --region=&lt;REGION_NAME&gt; \ <br/>
+  --adminurl=http://&lt;IP:PORT&gt; <br/>
+</p>
+
+<p>List Nova instances</p>
+
+<p class="codetext">nova list</p>
+
+<p>Show instance details</p>
+
+<p class="codetext">nova show &lt;INSTANCE_NAME&gt;</p>
+
+<p>List Nova hypersivor hosts</p>
+
+<p class="codetext">nova hypervisor-list</p>
+
+<p>Show hyprevisor host details</p>
+
+<p class="codetext">nova hypervisor-show &lt;HOST_ID&gt;</p>
+
+<p>List Glance images</p>
+
+<p class="codetext">glance image-list</p>
+
+<p>Show Glance image details</p>
+
+<p class="codetext">glance image-show &lt;IMAGE_ID&gt;</p>
+
 </section>
 </section>
 </section>
