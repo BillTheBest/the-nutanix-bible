@@ -367,7 +367,86 @@ one-click management and interface for datacenter operations.</p>
 <section data-type="sect1">
 <h1>Cluster Expansion (add node)</h1>
 
-<p>Coming soon!</p>
+<p>
+	The ability to dynamically scale the Acropolis cluster is core to its functionality.  To scale an Acropolis cluster, rack / stack / cable the nodes and power them on.  Once the nodes are powered up they will be discoverable by the current cluster using mDNS.
+</p>
+
+<p>
+	The figure shows an example 7 node cluster with 1 node which has been discovered:
+</p>
+
+<figure><img alt="" src="imagesv2/Prism/addnode/expand_1.png" />
+<figcaption>Add Node - Discovery</figcaption>
+</figure>
+
+<p>
+	Multiple nodes can be discovered and added to the cluster concurrently.
+</p>
+
+<p>
+	Once the nodes have been discovered you can begin the expansion by clicking 'Expand Cluster' on the upper right hand corner of the 'Hardware' page:
+</p>
+
+<figure><img alt="" src="imagesv2/Prism/addnode/expand_2a.png" />
+<figcaption>Hardware Page - Expand Cluster</figcaption>
+</figure>
+
+<p>
+	You can also being the cluster expansion process from any page by clicking on the gear icon:
+</p>
+
+<figure><img alt="" src="imagesv2/Prism/addnode/expand_2b.png" />
+<figcaption>Gear Menu - Expand Cluster</figcaption>
+</figure>
+
+<p>
+	This launches the expand cluster menu where you can select the node(s) to add and specify IP addresses for the components:
+</p>
+
+<figure><img alt="" src="imagesv2/Prism/addnode/expand_3.png" />
+<figcaption>Expand Cluster - Host Selection</figcaption>
+</figure>
+
+<p>
+	After the hosts have been selected you'll be prompted to upgrade a hypervisor image which will be used to image the nodes being added:
+</p>
+
+<figure><img alt="" src="imagesv2/Prism/addnode/expand_4.png" />
+<figcaption>Expand Cluster - Host Configuration</figcaption>
+</figure>
+
+<p>
+	After the upload is completed you can click on 'Expand Cluster' to being the imaging and expansion process:
+</p>
+
+<figure><img alt="" src="imagesv2/Prism/addnode/expand_5.png" />
+<figcaption>Expand Cluster - Execution</figcaption>
+</figure>
+
+<p>
+	The job will then be submitted and the corresponding task item will appear:
+</p>
+
+<figure><img alt="" src="imagesv2/Prism/addnode/expand_6.png" />
+<figcaption>Expand Cluster - Execution</figcaption>
+</figure>
+
+<p>
+	Detailed tasks status can be viewed by expanding the task(s):
+</p>
+
+<figure><img alt="" src="imagesv2/Prism/addnode/expand_7.png" />
+<figcaption>Expand Cluster - Execution</figcaption>
+</figure>
+
+<p>
+	After the imaging and add node process has been completed you'll see the updated cluster size and resources:
+</p>
+
+<figure><img alt="" src="imagesv2/Prism/addnode/expand_9.png" />
+<figcaption>Expand Cluster - Execution</figcaption>
+</figure>
+
 </section>
 
 <section data-type="sect1">
