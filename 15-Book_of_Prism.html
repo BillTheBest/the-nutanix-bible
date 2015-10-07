@@ -750,9 +750,9 @@ one-click management and interface for datacenter operations.</p>
 
  <p class="codedescription">Description: Adds a public key for cluster access</p>
 
-<p>SCP private key to CVM</p>
+<p>SCP public key to CVM</p>
 
-<p>Add private key to cluster</p>
+<p>Add public key to cluster</p>
 
 <p class="codetext">ncli cluster add-public-key name=myPK file-path=~/mykey.pub</p>
 
@@ -1395,6 +1395,10 @@ You can view the Nova services using the OpenStack portal under 'Admin'->'System
 <figcaption>OpenStack - OVM Load Balancing</figcaption>
 </figure>
 
+<p>
+	One method to achieve this for the OVM(s) is using Keepalived and HAproxy.
+</p>
+
 <p>For environments spanning multiple sites the OpenStack Controller will talk to multiple Acropolis OVMs across sites.</p>
 
 <p>The figure shows an example of the deployment across multiple sites:</p>
@@ -1587,6 +1591,12 @@ vm.on &lt;VM_NAME&gt;</p>
 <p>
 	Logs marked with &#42; are on the Acropolis OVM only.
 </p>
+
+<div data-type="note" class="note">
+<h1>Pro tip</h1>
+
+<p>Check NTP if a service is seen as state 'down' in OpenStack Manager (Admin UI or CLI) eventhough the service is running in the OVM.  Many services have a requirement for time to be in sync between the OpenStack Controller and Acropolis OVM.</p>
+</div>
 
 </section>
 
