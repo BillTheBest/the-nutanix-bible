@@ -1556,6 +1556,7 @@ This should only be used for non-production scenarios and the cluster IPs should
 
 <section data-type="sect2">
 <h2>VM High Availability (HA)</h2>
+
 </section>
 </section>
 
@@ -1576,31 +1577,33 @@ This should only be used for non-production scenarios and the cluster IPs should
 
 <h2>Enable 10GbE links only on OVS</h2>
 
- <p class="codedescription">Description: Enable 10g only on bond0</p>
+ <p class="codedescription">Description: Enable 10g only on bond0 for local host</p>
 
-<p class="codetext">manage_ovs --interfaces 10g update_uplinks
-<br/>
-allssh “source /etc/profile &gt; /dev/null 2&gt;&amp;1; manage_ovs --interfaces 10g update_uplinks”</p>
+<p class="codetext">manage_ovs --interfaces 10g update_uplinks</p>
+<p class="codedescription">Description: Show ovs uplinks for full cluster</p>
+<p>
+allssh “manage_ovs --interfaces 10g update_uplinks”
+</p>
 
 <h2>Show OVS uplinks</h2>
 
- <p class="codedescription">Description: Show ovs uplinks</p>
+ <p class="codedescription">Description: Show ovs uplinks for local host</p>
 
 <p class="codetext">manage_ovs show_uplinks</p>
 
  <p class="codedescription">Description: Show ovs uplinks for full cluster</p>
 
-<p class="codetext">allssh “source /etc/profile &gt; /dev/null 2&gt;&amp;1; manage_ovs show_uplinks”</p>
+<p class="codetext">allssh “manage_ovs show_uplinks”</p>
 
 <h2>Show OVS interfaces</h2>
 
- <p class="codedescription">Description: Show ovs interfaces</p>
+ <p class="codedescription">Description: Show ovs interfaces for local host</p>
 
 <p class="codetext">manage_ovs show_interfaces</p>
 
 <p>Show interfaces for full cluster</p>
 
-<p class="codetext">allssh “source /etc/profile &gt; /dev/null 2&gt;&amp;1; manage_ovs show_interfaces”</p>
+<p class="codetext">allssh “manage_ovs show_interfaces”</p>
 
 <h2>Show OVS switch information</h2>
 
