@@ -1194,7 +1194,7 @@ This should only be used for non-production scenarios and the cluster IPs should
 <figcaption>Metro Availability - Site Failure</figcaption>
 </figure>
 
-<p>In the event where there is a link failure between the two sites, each cluster will operate independently.&nbsp; Once the link comes back up, the sites will be re-synchronized and synchronous replication will start occurring.</p>
+<p>In the event where there is a link failure between the two sites, each cluster will operate independently.&nbsp; Once the link comes back up, the sites will be re-synchronized (deltas-only) and synchronous replication will start occurring.</p>
 
 <p>The following figure shows an example link failure:</p>
 
@@ -1704,7 +1704,7 @@ This should only be used for non-production scenarios and the cluster IPs should
 		Most loaded host = Host running VMs with most memory (GB)
 	</li>
 	<li>
-		Conservation overhead = 1.5 - 2
+		Fragmentation = 1.5 - 2
 	</li>
 </ul>
 
