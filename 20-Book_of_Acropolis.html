@@ -1559,30 +1559,16 @@ This should only be used for non-production scenarios and the cluster IPs should
 <p>
 	Acropolis hypervisor VM HA is a feature built to ensure VM availability in the event of a host or block outage.  In the event of a host failure the VMs previously running on that host will be restarted on other healthy nodes throughout the cluster.
 </p>
+
+<div data-type="note" class="note">
+<h1>Best effort HA by default</h1>
 <p>
-	VM HA comes in two main types:
-</p>
-<ul>
-	<li>
-		Best effort (default)
-		<ul>
-			<li>
-				This is automatically enabled when an AHV cluster is created and does not require any manual configuration or intervention.  In this mode, when a host becomes unavailable, the previously running VMs will be restarted on the remaining healthy hosts if possible.  Since this is best effort (meaning resources aren't reserved) the ability to restart all VMs will be dependent on available AHV resources.
-			</li>
-		</ul>
-	</li>
-	<li>
-		Guaranteed (reserved resources)
-		<ul>
-			<li>
-				Resources are reserved to ensure that all running VMs can be restarted in the event of host failure(s).
-			</li>
-		</ul>
-	</li>
-</ul>
+	By default any AHV cluster will have best effort HA for VMs.  In this mode, when a host becomes unavailable, the previously running VMs will be restarted on the remaining healthy hosts if possible.  Since this is best effort (meaning resources aren't reserved) the ability to restart all VMs will be dependent on available AHV resources.
+</p
+</div>
 
 <p>
-	For guaranteed there are two main types of resource reservations:
+	There are two main types of resource reservations for HA:
 </p>
 
 <ul>
@@ -1703,7 +1689,7 @@ This should only be used for non-production scenarios and the cluster IPs should
 </p>
 
 <p>
-	When calculating the segment based reservation there are a few key constructs.  The first is the segment size which will be equal to the memory footprint of the largest VM.  For extremely large segments multiple VMs can fit in a single segment.
+	When calculating the segment based reservation there are a few key constructs.  The first is the segment size which will be equal to the memory footprint of the largest VM.  Multiple VMs can fit into a single segment.
 </p>
 
 <p>
@@ -1723,7 +1709,7 @@ This should only be used for non-production scenarios and the cluster IPs should
 </ul>
 
 <p>
-	Based upon these input you can calculate the expected number of reserved segments:
+	Based upon these inputs you can calculate the expected number of reserved segments:
 </p>
 
 <ul>
