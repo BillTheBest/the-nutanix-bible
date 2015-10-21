@@ -384,7 +384,7 @@ storage, compute and virtualization platform.
 
 <div class="video-container"><iframe allowfullscreen="" frameborder="0" src="https://www.youtube.com/embed//MlQczJhQI3U"></iframe></div>
 
-<p>Metadata is at the core of any intelligent system and is even more critical for any filesystem or storage array.&nbsp; In terms of DSF, there are a few key structs that are critical for its success: it has to be right 100% of the time (known as“strictly consistent”), it has to be scalable, and it has to perform at massive scale.&nbsp; As mentioned in the architecture section above, DSF utilizes a “ring-like” structure as a key-value store which stores essential metadata as well as other platform data (e.g., stats, etc.). In order to ensure metadata availability and redundancy a RF is utilized among an odd amount of nodes (e.g., 3, 5, etc.). Upon a metadata write or update, the row is written to a node in the ring and then replicated to n number of peers (where n is dependent on cluster size).&nbsp; A majority of nodes must agree before anything is committed, which is enforced using the Paxos algorithm.&nbsp; This ensures strict consistency for all data and metadata stored as part of the platform.</p>
+<p>Metadata is at the core of any intelligent system and is even more critical for any filesystem or storage array.&nbsp; In terms of DSF, there are a few key structs that are critical for its success: it has to be right 100% of the time (known as “strictly consistent”), it has to be scalable, and it has to perform at massive scale.&nbsp; As mentioned in the architecture section above, DSF utilizes a “ring-like” structure as a key-value store which stores essential metadata as well as other platform data (e.g., stats, etc.). In order to ensure metadata availability and redundancy a RF is utilized among an odd amount of nodes (e.g., 3, 5, etc.). Upon a metadata write or update, the row is written to a node in the ring and then replicated to n number of peers (where n is dependent on cluster size).&nbsp; A majority of nodes must agree before anything is committed, which is enforced using the Paxos algorithm.&nbsp; This ensures strict consistency for all data and metadata stored as part of the platform.</p>
 
 <p>The following figure shows an example of a metadata insert/update for a 4 node cluster:</p>
 
@@ -1573,9 +1573,9 @@ This should only be used for non-production scenarios and the cluster IPs should
 </p>
 
 <div data-type="note" class="note">
-<h1>Best effort HA by default</h1>
+<h1>Default VM restart policy</h1>
 <p>
-	By default any AHV cluster will have best effort HA for VMs.  In this mode, when a host becomes unavailable, the previously running VMs will be restarted on the remaining healthy hosts if possible.  Since this is best effort (meaning resources aren't reserved) the ability to restart all VMs will be dependent on available AHV resources.
+	By default any AHV cluster will do its best to restart VM(s) in the event of a host failure.  In this mode, when a host becomes unavailable, the previously running VMs will be restarted on the remaining healthy hosts if possible.  Since this is best effort (meaning resources aren't reserved) the ability to restart all VMs will be dependent on available AHV resources.
 </p>
 </div>
 
@@ -1769,7 +1769,7 @@ This should only be used for non-production scenarios and the cluster IPs should
 <p class="codetext">manage_ovs --interfaces 10g update_uplinks</p>
 <p class="codedescription">Description: Show ovs uplinks for full cluster</p>
 <p>
-allssh “manage_ovs --interfaces 10g update_uplinks”
+allssh "manage_ovs --interfaces 10g update_uplinks"
 </p>
 
 <h2>Show OVS uplinks</h2>
@@ -1780,7 +1780,7 @@ allssh “manage_ovs --interfaces 10g update_uplinks”
 
  <p class="codedescription">Description: Show ovs uplinks for full cluster</p>
 
-<p class="codetext">allssh “manage_ovs show_uplinks”</p>
+<p class="codetext">allssh "manage_ovs show_uplinks"</p>
 
 <h2>Show OVS interfaces</h2>
 
@@ -1790,7 +1790,7 @@ allssh “manage_ovs --interfaces 10g update_uplinks”
 
 <p>Show interfaces for full cluster</p>
 
-<p class="codetext">allssh “manage_ovs show_interfaces”</p>
+<p class="codetext">allssh "manage_ovs show_interfaces"</p>
 
 <h2>Show OVS switch information</h2>
 
@@ -2144,7 +2144,7 @@ sudo service iptables restart</p>
 
 <p class="codedescription">Description: Reset the Latency Page (&lt;CVM IP&gt;:2009/latency) counters</p>
 
-<p class="codetext">allssh “ wget $i:2009/latency/reset”</p>
+<p class="codetext">allssh "wget $i:2009/latency/reset"</p>
 
 <h2>Find Number of vDisks</h2>
 
@@ -2156,25 +2156,25 @@ sudo service iptables restart</p>
 
 <p class="codedescription">Description: Starts a Curator full scan from the CLI</p>
 
-<p class="codetext">allssh “ wget -O - "http://$i:2010/master/api/client/StartCuratorTasks?task_type=2"; “</p>
+<p class="codetext">allssh "wget -O - "http://$i:2010/master/api/client/StartCuratorTasks?task_type=2";"</p>
 
 <h2>Compact ring</h2>
 
 <p class="codedescription">Description: Compact the metadata ring</p>
 
-<p class="codetext">allssh “nodetool -h localhost compact”</p>
+<p class="codetext">allssh "nodetool -h localhost compact"</p>
 
 <h2>Find NOS version</h2>
 
 <p class="codedescription">Description: Find the NOS&nbsp; version (NOTE: can also be done using NCLI)</p>
 
-<p class="codetext">allssh “cat /etc/nutanix/release_version”</p>
+<p class="codetext">allssh "cat /etc/nutanix/release_version"</p>
 
 <h2>Find CVM version</h2>
 
 <p class="codedescription">Description: Find the CVM image version</p>
 
-<p class="codetext">allssh “cat /etc/nutanix/svm-version”</p>
+<p class="codetext">allssh "cat /etc/nutanix/svm-version"</p>
 
 <h2>Manually fingerprint vDisk(s)</h2>
 
@@ -2186,7 +2186,7 @@ sudo service iptables restart</p>
 
 <p class="codedescription">Description: Echos the factory_config.jscon for all nodes in the cluster</p>
 
-<p class="codetext">allssh “cat /etc/nutanix/factory_config.json”</p>
+<p class="codetext">allssh "cat /etc/nutanix/factory_config.json"</p>
 
 <h2>Upgrade a single Nutanix node’s NOS version</h2>
 
@@ -2256,7 +2256,7 @@ echo "source ~/ncc/ncc_completion.bash" &gt;&gt; ~/.bashrc</p>
 
 <p class="codedescription">Description: Find Acropolis logs for the cluster</p>
 
-<p class="codetext">allssh “cat ~/data/logs/Acropolis.log”</p>
+<p class="codetext">allssh "cat ~/data/logs/Acropolis.log"</p>
 
 <h2>Find cluster error logs</h2>
 

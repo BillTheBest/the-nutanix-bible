@@ -86,7 +86,7 @@ Invoke-Command -ComputerName&nbsp; $targetServers {
 
 <p class="codedescription">Description: Display the available number of VMQ offloads for a particular host</p>
 
-<p class="codetext">gwmi –Namespace “root\virtualization\v2” –Class Msvm_VirtualEthernetSwitch | select elementname, MaxVMQOffloads</p>
+<p class="codetext">gwmi –Namespace "root\virtualization\v2" –Class Msvm_VirtualEthernetSwitch | select elementname, MaxVMQOffloads</p>
 
 <h2>Disable VMQ for VMs matching a specific prefix</h2>
 
@@ -138,7 +138,7 @@ Get-VM | Where {$_.Name -match $vmPrefix} | Stop-VM</p>
 
 <p class="codedescription">Description: Check Winsh and WinRM connectivity / status by performing a sample query which should return the computer system object not an error</p>
 
-<p class="codetext">allssh “'source /etc/profile &gt; /dev/null 2&gt;&amp;1; winsh "get-wmiobject win32_computersystem"'; done</p>
+<p class="codetext">allssh "winsh "get-wmiobject win32_computersystem"</p>
 </section>
 
 <section data-type="sect1">
