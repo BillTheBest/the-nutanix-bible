@@ -616,7 +616,7 @@ storage, compute and virtualization platform.
 
 <p>In this scenario, we have a mix of both RF2 and RF3 data whose primary copies are local and replicas are distributed to other nodes throughout the cluster.</p>
 
-<p>When a Curator full scan runs, it will find eligible extent groups which are available to become encoded.&nbsp; After the eligible candidates are found, the encoding tasks will be distributed and throttled via Chronos.</p>
+<p>When a Curator full scan runs, it will find eligible extent groups which are available to become encoded.  Eligible extent groups must be "write-cold" meaning they haven't been written to for &gt; 1 hour. After the eligible candidates are found, the encoding tasks will be distributed and throttled via Chronos.</p>
 
 <p>The following figure shows an example 4/1 and 3/2 strip:</p>
 
