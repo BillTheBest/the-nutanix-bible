@@ -36,6 +36,9 @@
       ga('send', 'pageview');
 
     </script>
+    {{ header }}
+  </head>
+  <body data-type="book">
     <!-- Google Tag Manager -->
     <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-TR9PVL"
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
@@ -45,9 +48,6 @@
     '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
     })(window,document,'script','dataLayer','GTM-TR9PVL');</script>
     <!-- End Google Tag Manager -->
-    {{ header }}
-  </head>
-  <body data-type="book">
     <div class="container">
     {{ content }}
     </div>
