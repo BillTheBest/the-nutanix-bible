@@ -1425,9 +1425,9 @@ You can view the Nova services using the OpenStack portal under 'Admin'->'System
 </p>
 <p class="codetext">image.create &lt;IMAGE_NAME&gt; source_url=&lt;SOURCE_URL&gt; container=&lt;CONTAINER_NAME&gt;</p>
 <p>Next create the Acropolis VM for the OVM by running the following ACLI commands on any CVM:</p>
-<p class="codetext">vm.create &lt;VM_NAME&gt; num_vcpus=2 memory=16G<br>
-vm.disk_create &lt;VM_NAME&gt; clone_from_image=&lt;IMAGE_NAME&gt;<br>
-vm.nic_create &lt;VM_NAME&gt; network=&lt;NETWORK_NAME&gt;<br>
+<p class="codetext">vm.create &lt;VM_NAME&gt; num_vcpus=2 memory=16G<br/>
+vm.disk_create &lt;VM_NAME&gt; clone_from_image=&lt;IMAGE_NAME&gt;<br/>
+vm.nic_create &lt;VM_NAME&gt; network=&lt;NETWORK_NAME&gt;<br/>
 vm.on &lt;VM_NAME&gt;
 </p>
 
@@ -1441,11 +1441,11 @@ vm.on &lt;VM_NAME&gt;
   After the RPM has been downloaded we'll install it on the OVM(s):
 </p>
 
-<p class="codetext"># Install OVM RPM<br>
-	# If CentOS <br>
-  yum install &lt;OVM_RPM_NAME&gt; <br>
-  <br>
-  # If Redhat <br>
+<p class="codetext"># Install OVM RPM<br/>
+	# If CentOS <br/>
+  yum install &lt;OVM_RPM_NAME&gt; <br/>
+  <br/>
+  # If Redhat <br/>
   rpm -i &lt;OVM_RPM_NAME&gt;
 </p>
 
@@ -1453,37 +1453,37 @@ vm.on &lt;VM_NAME&gt;
 	Next we'll configure the OVM(s) by running the following commands (must be run on every OVM):
 </p>
 
-<p class="codetext"># Enter OVM Shell (if not already) <br>
+<p class="codetext"># Enter OVM Shell (if not already) <br/>
 	ovmctl
 </p>
 
-<p class="codetext"># Register OpenStack Driver service <br>
+<p class="codetext"># Register OpenStack Driver service <br/>
 	ovmctl --add=service --name=&lt;OVM_NAME&gt; --ip=&lt;OVM_IP&gt; --username=root --password=admin
 </p>
 
 <p class="codetext">
-# Register OpenStack Controller <br>
-# Items in '[]' are optional <br>
+# Register OpenStack Controller <br/>
+# Items in '[]' are optional <br/>
 ovmctl --add=controller --name=&lt;OS_CONTROLLER_NAME&gt; --ip=&lt;OS_CONTROLLER_IP&gt; --username=&lt;OS_CONTROLLER_USERNAME&gt; --password=&lt;OS_CONTROLLER_PASSWORD&gt; [--auth_strategy=&lt;&gt; --auth_region=&lt;&gt; --auth_tenant=&lt;&gt; --auth_password=&lt;&gt; --db_nova=&lt;&gt; --db_cinder=&lt;&gt; --db_glance=&lt;&gt; --db_neutron=&lt;&gt; --db_nova_password=&lt;NOVA_DB_PASSWORD&gt; --db_cinder_password=&lt;CINDER_DB_PASSWORD&gt; --db_glance_password=&lt;GLANCE_DB_PASSWORD&gt; --db_neutron_password=&lt;NEUTRON_DB_PASSWORD&gt; --rpc_backend=&lt;&gt; --rpc_username=&lt;&gt; --rpc_password=&lt;&gt;]
-			<br>
-			<br>
- The following values are used as defaults:<br>
-      <span style="margin-left:2em">Authentication: auth_strategy = keystone, auth_region = RegionOne</span><br>
-      <span style="margin-left:4em">auth_tenant = services, auth_password = admin</span><br>
-      <span style="margin-left:2em">Database: db_{nova,cinder,glance,neutron} = mysql, db_{nova,cinder,glance,neutron}_password = admin</span><br>
+			<br/>
+			<br/>
+ The following values are used as defaults:<br/>
+      <span style="margin-left:2em">Authentication: auth_strategy = keystone, auth_region = RegionOne</span><br/>
+      <span style="margin-left:4em">auth_tenant = services, auth_password = admin</span><br/>
+      <span style="margin-left:2em">Database: db_{nova,cinder,glance,neutron} = mysql, db_{nova,cinder,glance,neutron}_password = admin</span><br/>
       <span style="margin-left:2em">RPC: rpc_backend = rabbit, rpc_username = guest, rpc_password = guest</span>
 </p>
 
 <p class="codetext">
-# Register Acropolis Cluster(s) (run for each cluster to add) <br>
-# Items in '[]' are optional <br>
+# Register Acropolis Cluster(s) (run for each cluster to add) <br/>
+# Items in '[]' are optional <br/>
 ovmctl --add=cluster --name=&lt;CLUSTER_NAME&gt; --ip=&lt;CLUSTER_IP&gt; --username=&lt;PRISM_USER&gt; --password=&lt;PRISM_PASSWORD&gt; --vnc=8081 [--num_vcpus_per_core=&lt;&gt; --container_name=&lt;&gt; --image_cache=&lt;enable|disable&gt; --image_cache_url=&lt;&gt;]
-		<br>
-		<br>
-The following values are used as defaults: <br>
-    <span style="margin-left:2em">Number of VCPUs per core = 4</span><br>
-    <span style="margin-left:2em">Container name = default</span><br>
-    <span style="margin-left:2em">Image cache = disabled, Image cache URL = None</span><br>
+		<br/>
+		<br/>
+The following values are used as defaults: <br/>
+    <span style="margin-left:2em">Number of VCPUs per core = 4</span><br/>
+    <span style="margin-left:2em">Container name = default</span><br/>
+    <span style="margin-left:2em">Image cache = disabled, Image cache URL = None</span><br/>
 </p>
 <p>
 	Now that the OVM has been configured, we'll configure the OpenStack Controller to know about the Glance and Neutron endpoints.
